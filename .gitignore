@@ -1,27 +1,3 @@
-Last login: Thu Feb 21 19:58:33 on ttys000
-192-168-0-106:~ mihai.coman$ cd /Applications/MAMP
-192-168-0-106:MAMP mihai.coman$ cd htdocs/
-192-168-0-106:htdocs mihai.coman$ sudo vim .gitignore 
-Password:
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .htaccess
 /config.php
 admin/config.php
