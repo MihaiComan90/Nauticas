@@ -1,9 +1,9 @@
 .htaccess
 /config.php
 admin/config.php
-
+.idea/
 !index.html
-.idea
+
 download/
 image/data/
 image/cache/
@@ -18,8 +18,3 @@ vqmod/logs/*
 vqmod/vqcache/*
 vqmod/checked.cache
 vqmod/mods.cache
-~                                                                               
-~                                                                               
-~                                                                               
-".gitignore" 20L, 237C
-
