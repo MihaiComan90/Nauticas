@@ -1,137 +1,124 @@
 <?php
-class ModelCatalogProduct extends Model {
+class ModelCatalogProductVariant extends Model {
 
-    const PRODUCT_VARIANT_IMAGE_LABEL = 'variant_image_';
+    const VARIANT_IMAGE_DIRECTORY = 'product/variants/';
 
-	public function addProduct($data) {
-		$this->event->trigger('pre.admin.product.add', $data);
+	public function addProductVariant($product_id, $data) {
 
-		$this->db->query("INSERT INTO " . DB_PREFIX . "product SET model = '" . $this->db->escape($data['model']) . "', sku = '" . $this->db->escape($data['sku']) . "', upc = '" . $this->db->escape($data['upc']) . "', ean = '" . $this->db->escape($data['ean']) . "', jan = '" . $this->db->escape($data['jan']) . "', isbn = '" . $this->db->escape($data['isbn']) . "', mpn = '" . $this->db->escape($data['mpn']) . "', location = '" . $this->db->escape($data['location']) . "', quantity = '" . (int)$data['quantity'] . "', minimum = '" . (int)$data['minimum'] . "', subtract = '" . (int)$data['subtract'] . "', stock_status_id = '" . (int)$data['stock_status_id'] . "', date_available = '" . $this->db->escape($data['date_available']) . "', manufacturer_id = '" . (int)$data['manufacturer_id'] . "', shipping = '" . (int)$data['shipping'] . "', price = '" . (float)$data['price'] . "', points = '" . (int)$data['points'] . "', weight = '" . (float)$data['weight'] . "', weight_class_id = '" . (int)$data['weight_class_id'] . "', length = '" . (float)$data['length'] . "', width = '" . (float)$data['width'] . "', height = '" . (float)$data['height'] . "', length_class_id = '" . (int)$data['length_class_id'] . "', status = '" . (int)$data['status'] . "', tax_class_id = '" . (int)$data['tax_class_id'] . "', sort_order = '" . (int)$data['sort_order'] . "', date_added = NOW()");
+        $this->load->language('common/filemanager');
 
-		$product_id = $this->db->getLastId();
+        $json = array();
 
-		if (isset($data['image'])) {
-			$this->db->query("UPDATE " . DB_PREFIX . "product SET image = '" . $this->db->escape($data['image']) . "' WHERE product_id = '" . (int)$product_id . "'");
-		}
+        // Check user has permission
+        if (!$this->user->hasPermission('modify', 'common/filemanager')) {
+            $json['error'] = $this->language->get('error_permission');
+        }
 
-		foreach ($data['product_description'] as $language_id => $value) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "product_description SET product_id = '" . (int)$product_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "', description = '" . $this->db->escape($value['description']) . "', tag = '" . $this->db->escape($value['tag']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'");
-		}
+        if(isset($data['variant_image'])){
+            // Make sure we have the correct directory
+            $directory = rtrim(DIR_IMAGE . 'catalog/' . str_replace(array('../', '..\\', '..'), '', self::VARIANT_IMAGE_DIRECTORY), '/');
 
-		if (isset($data['product_store'])) {
-			foreach ($data['product_store'] as $store_id) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "product_to_store SET product_id = '" . (int)$product_id . "', store_id = '" . (int)$store_id . "'");
-			}
-		}
+            // Check its a directory
+            if (!is_dir($directory)) {
+                $json['error'] = $this->language->get('error_directory');
+            }
 
-		if (isset($data['product_attribute'])) {
-			foreach ($data['product_attribute'] as $product_attribute) {
-				if ($product_attribute['attribute_id']) {
-					foreach ($product_attribute['product_attribute_description'] as $language_id => $product_attribute_description) {
-						$this->db->query("INSERT INTO " . DB_PREFIX . "product_attribute SET product_id = '" . (int)$product_id . "', attribute_id = '" . (int)$product_attribute['attribute_id'] . "', language_id = '" . (int)$language_id . "', text = '" .  $this->db->escape($product_attribute_description['text']) . "'");
-					}
-				}
-			}
-		}
+            if (!$json) {
+                if (!empty($data['variant_image']['name']) && is_file($data['variant_image']['tmp_name'])) {
+                    // Sanitize the filename
+                    $filename = basename(html_entity_decode($data['variant_image']['name'], ENT_QUOTES, 'UTF-8'));
 
-		if (isset($data['product_option'])) {
-			foreach ($data['product_option'] as $product_option) {
-				if ($product_option['type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox' || $product_option['type'] == 'image') {
-					if (isset($product_option['product_option_value'])) {
-						$this->db->query("INSERT INTO " . DB_PREFIX . "product_option SET product_id = '" . (int)$product_id . "', option_id = '" . (int)$product_option['option_id'] . "', required = '" . (int)$product_option['required'] . "'");
+                    // Validate the filename length
+                    if ((utf8_strlen($filename) < 3) || (utf8_strlen($filename) > 255)) {
+                        $json['error'] = $this->language->get('error_filename');
+                    }
 
-						$product_option_id = $this->db->getLastId();
+                    // Allowed file extension types
+                    $allowed = array(
+                        'jpg',
+                        'jpeg',
+                        'gif',
+                        'png'
+                    );
 
-						foreach ($product_option['product_option_value'] as $product_option_value) {
-							$this->db->query("INSERT INTO " . DB_PREFIX . "product_option_value SET product_option_id = '" . (int)$product_option_id . "', product_id = '" . (int)$product_id . "', option_id = '" . (int)$product_option['option_id'] . "', option_value_id = '" . (int)$product_option_value['option_value_id'] . "', quantity = '" . (int)$product_option_value['quantity'] . "', subtract = '" . (int)$product_option_value['subtract'] . "', price = '" . (float)$product_option_value['price'] . "', price_prefix = '" . $this->db->escape($product_option_value['price_prefix']) . "', points = '" . (int)$product_option_value['points'] . "', points_prefix = '" . $this->db->escape($product_option_value['points_prefix']) . "', weight = '" . (float)$product_option_value['weight'] . "', weight_prefix = '" . $this->db->escape($product_option_value['weight_prefix']) . "'");
-						}
-					}
-				} else {
-					$this->db->query("INSERT INTO " . DB_PREFIX . "product_option SET product_id = '" . (int)$product_id . "', option_id = '" . (int)$product_option['option_id'] . "', value = '" . $this->db->escape($product_option['value']) . "', required = '" . (int)$product_option['required'] . "'");
-				}
-			}
-		}
+                    if (!in_array(utf8_strtolower(utf8_substr(strrchr($filename, '.'), 1)), $allowed)) {
+                        $json['error'] = $this->language->get('error_filetype');
+                    }
 
-		if (isset($data['product_discount'])) {
-			foreach ($data['product_discount'] as $product_discount) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "product_discount SET product_id = '" . (int)$product_id . "', customer_group_id = '" . (int)$product_discount['customer_group_id'] . "', quantity = '" . (int)$product_discount['quantity'] . "', priority = '" . (int)$product_discount['priority'] . "', price = '" . (float)$product_discount['price'] . "', date_start = '" . $this->db->escape($product_discount['date_start']) . "', date_end = '" . $this->db->escape($product_discount['date_end']) . "'");
-			}
-		}
+                    // Allowed file mime types
+                    $allowed = array(
+                        'image/jpeg',
+                        'image/pjpeg',
+                        'image/png',
+                        'image/x-png',
+                        'image/gif'
+                    );
 
-		if (isset($data['product_special'])) {
-			foreach ($data['product_special'] as $product_special) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "product_special SET product_id = '" . (int)$product_id . "', customer_group_id = '" . (int)$product_special['customer_group_id'] . "', priority = '" . (int)$product_special['priority'] . "', price = '" . (float)$product_special['price'] . "', date_start = '" . $this->db->escape($product_special['date_start']) . "', date_end = '" . $this->db->escape($product_special['date_end']) . "'");
-			}
-		}
+                    if (!in_array($data['variant_image']['type'], $allowed)) {
+                        $json['error'] = $this->language->get('error_filetype');
+                    }
 
-		if (isset($data['product_image'])) {
-			foreach ($data['product_image'] as $product_image) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "product_image SET product_id = '" . (int)$product_id . "', image = '" . $this->db->escape($product_image['image']) . "', sort_order = '" . (int)$product_image['sort_order'] . "'");
-			}
-		}
+                    // Check to see if any PHP files are trying to be uploaded
+                    $content = file_get_contents($data['variant_image']['tmp_name']);
 
-		if (isset($data['product_download'])) {
-			foreach ($data['product_download'] as $download_id) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "product_to_download SET product_id = '" . (int)$product_id . "', download_id = '" . (int)$download_id . "'");
-			}
-		}
+                    if (preg_match('/\<\?php/i', $content)) {
+                        $json['error'] = $this->language->get('error_filetype');
+                    }
 
-		if (isset($data['product_category'])) {
-			foreach ($data['product_category'] as $category_id) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "product_to_category SET product_id = '" . (int)$product_id . "', category_id = '" . (int)$category_id . "'");
-			}
-		}
+                    // Return any upload error
+                    if ($data['variant_image']['error'] != UPLOAD_ERR_OK) {
+                        $json['error'] = $this->language->get('error_upload_' . $data['variant_image']['error']);
+                    }
+                } else {
+                    $json['error'] = $this->language->get('error_upload');
+                }
+            }
 
-		if (isset($data['product_filter'])) {
-			foreach ($data['product_filter'] as $filter_id) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "product_filter SET product_id = '" . (int)$product_id . "', filter_id = '" . (int)$filter_id . "'");
-			}
-		}
+            if (!$json) {
+                move_uploaded_file($data['variant_image']['tmp_name'], $directory . '/' . $filename);
+            }
+        }
 
-		if (isset($data['product_related'])) {
-			foreach ($data['product_related'] as $related_id) {
-				$this->db->query("DELETE FROM " . DB_PREFIX . "product_related WHERE product_id = '" . (int)$product_id . "' AND related_id = '" . (int)$related_id . "'");
-				$this->db->query("INSERT INTO " . DB_PREFIX . "product_related SET product_id = '" . (int)$product_id . "', related_id = '" . (int)$related_id . "'");
-				$this->db->query("DELETE FROM " . DB_PREFIX . "product_related WHERE product_id = '" . (int)$related_id . "' AND related_id = '" . (int)$product_id . "'");
-				$this->db->query("INSERT INTO " . DB_PREFIX . "product_related SET product_id = '" . (int)$related_id . "', related_id = '" . (int)$product_id . "'");
-			}
-		}
-
-		if (isset($data['product_reward'])) {
-			foreach ($data['product_reward'] as $customer_group_id => $product_reward) {
-				if ((int)$product_reward['points'] > 0) {
-					$this->db->query("INSERT INTO " . DB_PREFIX . "product_reward SET product_id = '" . (int)$product_id . "', customer_group_id = '" . (int)$customer_group_id . "', points = '" . (int)$product_reward['points'] . "'");
-				}
-			}
-		}
-
-		if (isset($data['product_layout'])) {
-			foreach ($data['product_layout'] as $store_id => $layout_id) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "product_to_layout SET product_id = '" . (int)$product_id . "', store_id = '" . (int)$store_id . "', layout_id = '" . (int)$layout_id . "'");
-			}
-		}
-
-		if (isset($data['keyword'])) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'product_id=" . (int)$product_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
-		}
-
-		if (isset($data['product_recurrings'])) {
-			foreach ($data['product_recurrings'] as $recurring) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "product_recurring` SET `product_id` = " . (int)$product_id . ", customer_group_id = " . (int)$recurring['customer_group_id'] . ", `recurring_id` = " . (int)$recurring['recurring_id']);
-			}
-		}
-
-		$this->cache->delete('product');
-
-		$this->event->trigger('post.admin.product.add', $product_id);
+        $this->db->query("INSERT INTO " . DB_PREFIX . "product_variants 
+                            VALUES( 
+                                product_id = '" . (int)($product_id) . "', 
+                                sku = '" . $this->db->escape($data['sku']) . "', 
+                                upc = '" . $this->db->escape($data['upc']) . "', 
+                                ean = '" . $this->db->escape($data['ean']) . "', 
+                                jan = '" . $this->db->escape($data['jan']) . "', 
+                                isbn = '" . $this->db->escape($data['isbn']) . "', 
+                                mpn = '" . $this->db->escape($data['mpn']) . "', 
+                                location = '" . $this->db->escape($data['location']) . "',
+                                quantity = '" . (int)$data['quantity'] . "', 
+                                minimum = '" . (int)$data['minimum'] . "', 
+                                subtract = '" . (int)$data['subtract'] . "', 
+                                stock_status_id = '" . (int)$data['stock_status_id'] . "', 
+                                date_available = '" . $this->db->escape($data['date_available']) . "', 
+                                manufacturer_id = '" . (int)$data['manufacturer_id'] . "', 
+                                shipping = '" . (int)$data['shipping'] . "', 
+                                price = '" . (float)$data['price'] . "', 
+                                points = '" . (int)$data['points'] . "', 
+                                weight = '" . (float)$data['weight'] . "', 
+                                weight_class_id = '" . (int)$data['weight_class_id'] . "', 
+                                length = '" . (float)$data['length'] . "', 
+                                width = '" . (float)$data['width'] . "', 
+                                height = '" . (float)$data['height'] . "', 
+                                length_class_id = '" . (int)$data['length_class_id'] . "', 
+                                status = '" . (int)$data['status'] . "', 
+                                tax_class_id = '" . (int)$data['tax_class_id'] . "', 
+                                sort_order = '" . (int)$data['sort_order'] . "', 
+                                date_modified = NOW() 
+                            ");
 
 		return $product_id;
 	}
 
-	public function editProduct($product_id, $data) {
+	public function editProductVariant($product_id, $data) {
 		$this->event->trigger('pre.admin.product.edit', $data);
 
-        $this->db->query("UPDATE " . DB_PREFIX . "product SET model = '" . $this->db->escape($data['model']) . "', sku = '" . $this->db->escape($data['sku']) . "', upc = '" . $this->db->escape($data['upc']) . "', ean = '" . $this->db->escape($data['ean']) . "', jan = '" . $this->db->escape($data['jan']) . "', isbn = '" . $this->db->escape($data['isbn']) . "', mpn = '" . $this->db->escape($data['mpn']) . "', location = '" . $this->db->escape($data['location']) . "', quantity = '" . (int)$data['quantity'] . "', minimum = '" . (int)$data['minimum'] . "', subtract = '" . (int)$data['subtract'] . "', stock_status_id = '" . (int)$data['stock_status_id'] . "', date_available = '" . $this->db->escape($data['date_available']) . "', manufacturer_id = '" . (int)$data['manufacturer_id'] . "', shipping = '" . (int)$data['shipping'] . "', price = '" . (float)$data['price'] . "', points = '" . (int)$data['points'] . "', weight = '" . (float)$data['weight'] . "', weight_class_id = '" . (int)$data['weight_class_id'] . "', length = '" . (float)$data['length'] . "', width = '" . (float)$data['width'] . "', height = '" . (float)$data['height'] . "', length_class_id = '" . (int)$data['length_class_id'] . "', status = '" . (int)$data['status'] . "', tax_class_id = '" . (int)$data['tax_class_id'] . "', sort_order = '" . (int)$data['sort_order'] . "', date_modified = NOW() WHERE product_id = '" . (int)$product_id . "'");
+		$test = $this->load->controller('common/filemanager/upload', $data);
+
+		$this->db->query("UPDATE " . DB_PREFIX . "product SET model = '" . $this->db->escape($data['model']) . "', sku = '" . $this->db->escape($data['sku']) . "', upc = '" . $this->db->escape($data['upc']) . "', ean = '" . $this->db->escape($data['ean']) . "', jan = '" . $this->db->escape($data['jan']) . "', isbn = '" . $this->db->escape($data['isbn']) . "', mpn = '" . $this->db->escape($data['mpn']) . "', location = '" . $this->db->escape($data['location']) . "', quantity = '" . (int)$data['quantity'] . "', minimum = '" . (int)$data['minimum'] . "', subtract = '" . (int)$data['subtract'] . "', stock_status_id = '" . (int)$data['stock_status_id'] . "', date_available = '" . $this->db->escape($data['date_available']) . "', manufacturer_id = '" . (int)$data['manufacturer_id'] . "', shipping = '" . (int)$data['shipping'] . "', price = '" . (float)$data['price'] . "', points = '" . (int)$data['points'] . "', weight = '" . (float)$data['weight'] . "', weight_class_id = '" . (int)$data['weight_class_id'] . "', length = '" . (float)$data['length'] . "', width = '" . (float)$data['width'] . "', height = '" . (float)$data['height'] . "', length_class_id = '" . (int)$data['length_class_id'] . "', status = '" . (int)$data['status'] . "', tax_class_id = '" . (int)$data['tax_class_id'] . "', sort_order = '" . (int)$data['sort_order'] . "', date_modified = NOW() WHERE product_id = '" . (int)$product_id . "'");
 
 		if (isset($data['image'])) {
 			$this->db->query("UPDATE " . DB_PREFIX . "product SET image = '" . $this->db->escape($data['image']) . "' WHERE product_id = '" . (int)$product_id . "'");
@@ -154,22 +141,11 @@ class ModelCatalogProduct extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_attribute WHERE product_id = '" . (int)$product_id . "'");
 
 		if (!empty($data['product_attribute'])) {
-			foreach ($data['product_attribute'] as $row => $product_attribute) {
+			foreach ($data['product_attribute'] as $product_attribute) {
 				if ($product_attribute['attribute_id']) {
 					foreach ($product_attribute['product_attribute_description'] as $language_id => $product_attribute_description) {
 						$this->db->query("INSERT INTO " . DB_PREFIX . "product_attribute SET product_id = '" . (int)$product_id . "', attribute_id = '" . (int)$product_attribute['attribute_id'] . "', language_id = '" . (int)$language_id . "', text = '" .  $this->db->escape($product_attribute_description['text']) . "'");
 					}
-					/*Start variant options here*/
-					if(isset($product_attribute['option_variant']) && is_array($product_attribute['option_variant'])) {
-                        $this->load->model('catalog/product_variant');
-                        if(isset($data[self::PRODUCT_VARIANT_IMAGE_LABEL.$row])) {
-                            $data['product_attribute'][$row]['option_variant']['variant_image'] = $data[self::PRODUCT_VARIANT_IMAGE_LABEL.$row];
-                            unset($data[self::PRODUCT_VARIANT_IMAGE_LABEL.$row]);
-                        }
-                        $variantOptions = $data['product_attribute'][$row]['option_variant'];
-                        $this->model_catalog_product_variant->addProductVariant($product_id, $variantOptions);
-                    }
-					/**/
 				}
 			}
 		}
