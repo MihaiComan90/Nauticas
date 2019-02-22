@@ -167,7 +167,7 @@ class ModelCatalogProduct extends Model {
                             unset($data[self::PRODUCT_VARIANT_IMAGE_LABEL.$row]);
                         }
                         $variantOptions = $data['product_attribute'][$row]['option_variant'];
-                        $this->model_catalog_product_variant->addProductVariant($product_id, $variantOptions);
+                        $this->model_catalog_product_variant->addProductVariant($product_id, $product_attribute['attribute_id'], $variantOptions);
                     }
 					/**/
 				}

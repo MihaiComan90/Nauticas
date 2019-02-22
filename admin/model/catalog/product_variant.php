@@ -3,7 +3,26 @@ class ModelCatalogProductVariant extends Model {
 
     const VARIANT_IMAGE_DIRECTORY = 'product/variants/';
 
-	public function addProductVariant($product_id, $data) {
+    public function uninstall() {
+        $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "product_variants`");
+    }
+
+    public function install() {
+        $this->db->query("
+			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "product_variants` (
+			  `variant_id` INT(11) NOT NULL AUTO_INCREMENT,
+			  `product_id` INT(11) NOT NULL,
+			  `attribute_id` INT(11) NOT NULL,
+			  `price` FLOAT(12,4) NULL,
+			  `image` VARCHAR(100) NULL,
+			  `custom_url` VARCHAR(100) NULL,
+			  `date_added` DATETIME NOT NULL,
+			  `date_modified` DATETIME NOT NULL,
+			  PRIMARY KEY (`variant_id`)
+			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
+    }
+
+	public function addProductVariant($product_id, $attribute_id, $data) {
 
         $this->load->language('common/filemanager');
 
@@ -75,39 +94,20 @@ class ModelCatalogProductVariant extends Model {
             }
 
             if (!$json) {
-                move_uploaded_file($data['variant_image']['tmp_name'], $directory . '/' . $filename);
+                $destination = $directory . '/' . $filename;
+                move_uploaded_file($data['variant_image']['tmp_name'], $destination);
             }
         }
 
         $this->db->query("INSERT INTO " . DB_PREFIX . "product_variants 
-                            VALUES( 
+                            SET 
                                 product_id = '" . (int)($product_id) . "', 
-                                sku = '" . $this->db->escape($data['sku']) . "', 
-                                upc = '" . $this->db->escape($data['upc']) . "', 
-                                ean = '" . $this->db->escape($data['ean']) . "', 
-                                jan = '" . $this->db->escape($data['jan']) . "', 
-                                isbn = '" . $this->db->escape($data['isbn']) . "', 
-                                mpn = '" . $this->db->escape($data['mpn']) . "', 
-                                location = '" . $this->db->escape($data['location']) . "',
-                                quantity = '" . (int)$data['quantity'] . "', 
-                                minimum = '" . (int)$data['minimum'] . "', 
-                                subtract = '" . (int)$data['subtract'] . "', 
-                                stock_status_id = '" . (int)$data['stock_status_id'] . "', 
-                                date_available = '" . $this->db->escape($data['date_available']) . "', 
-                                manufacturer_id = '" . (int)$data['manufacturer_id'] . "', 
-                                shipping = '" . (int)$data['shipping'] . "', 
-                                price = '" . (float)$data['price'] . "', 
-                                points = '" . (int)$data['points'] . "', 
-                                weight = '" . (float)$data['weight'] . "', 
-                                weight_class_id = '" . (int)$data['weight_class_id'] . "', 
-                                length = '" . (float)$data['length'] . "', 
-                                width = '" . (float)$data['width'] . "', 
-                                height = '" . (float)$data['height'] . "', 
-                                length_class_id = '" . (int)$data['length_class_id'] . "', 
-                                status = '" . (int)$data['status'] . "', 
-                                tax_class_id = '" . (int)$data['tax_class_id'] . "', 
-                                sort_order = '" . (int)$data['sort_order'] . "', 
-                                date_modified = NOW() 
+                                attribute_id = '" . (int)($attribute_id) . "', 
+                                price = '" . (float)($data['price']) . "', 
+                                image = '" . $this->db->escape($filename) . "',
+                                custom_url = '" . $this->db->escape($data['url']) . "', 
+                                date_modified = NOW(),
+                                date_added = NOW() 
                             ");
 
 		return $product_id;
