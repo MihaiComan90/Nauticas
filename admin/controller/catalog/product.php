@@ -583,6 +583,7 @@ class ControllerCatalogProduct extends Controller {
         $data['option_variant_customurl_label'] = $this->language->get('option_variant_customurl_label');
         $data['option_variant_customimage_label'] = $this->language->get('option_variant_customimage_label');
         $data['option_variant_customprice_label'] = $this->language->get('option_variant_customprice_label');
+        $data['variants_img_dir'] = DIR_IMAGE . VARIANT_IMAGE_PATH;
         /* End*/
 		$data['entry_text'] = $this->language->get('entry_text');
 		$data['entry_option'] = $this->language->get('entry_option');
@@ -1097,10 +1098,17 @@ class ControllerCatalogProduct extends Controller {
 			$attribute_info = $this->model_catalog_attribute->getAttribute($product_attribute['attribute_id']);
 
 			if ($attribute_info) {
+			    $variants = array();
+                if ($product_id = $this->request->get['product_id']) {
+                    $this->load->model('catalog/product_variant');
+                    $variants = $this->model_catalog_product_variant->getProductAttributeVariants($product_id, $product_attribute['attribute_id']);
+                }
+
 				$data['product_attributes'][] = array(
 					'attribute_id'                  => $product_attribute['attribute_id'],
 					'name'                          => $attribute_info['name'],
-					'product_attribute_description' => $product_attribute['product_attribute_description']
+					'product_attribute_description' => $product_attribute['product_attribute_description'],
+                    'product_variants'              => $variants
 				);
 			}
 		}

@@ -560,7 +560,7 @@
                                         <td class="text-left"><?php echo $entry_attribute; ?></td>
                                         <td class="text-left"><?php echo $entry_text; ?></td>
                                         <td class="text-left"><?php echo $entry_attribute_option; ?></td>
-                                        <td></td>
+                                        <td class="text-left"></td>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -585,8 +585,45 @@
                                                         class="form-control"><?php echo isset($product_attribute['product_attribute_description'][$language['language_id']]) ? $product_attribute['product_attribute_description'][$language['language_id']]['text'] : ''; ?></textarea>
                                             </div>
                                             <?php } ?></td>
-                                        <td class="text-left" style="width: 40%;">
-                                            <input type="text" name="product_attribute[<?php echo $attribute_row; ?>][option_name]" value="<?php echo $product_attribute['name']; ?>" placeholder="<?php echo $entry_attribute_option; ?>" class="form-control"/>
+                                        <td class="text-left attribute-option-box_<?php echo $attribute_row; ?>" data-row="<?php echo $attribute_row; ?>" style="width: 40%;">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <label for="option_variant_<?php echo $attribute_row; ?>"><?php echo $option_variant_label?></label>
+                                                </span>
+                                                <span class="input-group-addon">
+                                                    <input type="checkbox" id="option_variant_<?php echo $attribute_row; ?>" name="product_attribute[<?php echo $attribute_row ?>][option_variant][enable]" value="1" <?php if($product_attribute['product_variants']) { echo "checked"; } ?>/>
+                                                </span>
+                                            </div>
+                                            <?php if($product_attribute['product_variants']) { ?>
+                                            <div class="input-group attribute_option_box">
+                                                <input type="hidden" id="option_variant_<?php echo attribute_row;?>" checked name="product_attribute[<?php echo $attribute_row ?>][option_variant][variant_id]" value="<?php echo $product_attribute[product_variants][$attribute_row][variant_id]; ?>">
+                                                <span class="input-group-addon">
+                                                    <label for=""><?php echo $option_variant_customurl_label?></label>
+                                                </span>
+                                                <span class="input-group-addon">
+                                                    <input type="text" class="form-control" id="variant_customurl_<?php echo $attribute_row; ?>" name="product_attribute[<?php echo $attribute_row ?>][option_variant][custom_url]" value="<?php echo $product_attribute[product_variants][$attribute_row][custom_url]; ?>">
+                                                </span>
+                                            </div>
+                                            <div class="input-group attribute_option_box">
+                                                <span class="input-group-addon">
+                                                    <label for=""><?php echo $option_variant_customimage_label?></label>
+                                                </span>
+                                                <span class="input-group-addon">
+                                                    <?php if ($product_attribute['product_variants'][$attribute_row][image]) : ?>
+                                                        <img src="<?php echo $product_attribute['product_variants'][$attribute_row][thumb_image]; ?>" alt="" />
+                                                        <input type="hidden" name="product_attribute[<?php echo $attribute_row ?>][option_variant][image]" value="<?php echo $product_attribute[product_variants][$attribute_row][image]; ?>">
+                                                    <?php endif; ?>
+                                                    <input type="file" accept="image/*" class="form-control" id="variant_customimage_<?php echo $attribute_row?>" name="variant_image_<?php echo $attribute_row; ?>">
+                                                </span>
+                                            </div>
+                                            <div class="input-group attribute_option_box">
+                                                <span class="input-group-addon">
+                                                    <label for=""><?php echo $option_variant_customprice_label?></label>
+                                                </span>
+                                                <span class="input-group-addon">
+                                                    <input type="number" class="form-control" id="variant_customprice_<?php $attribute_row; ?>" name="product_attribute[<?php echo $attribute_row ?>][option_variant][price]" value="<?php echo $product_attribute[product_variants][$attribute_row][price]; ?>"/>
+                                                </span></div>
+                                            <?php } ?>
                                         </td>
                                         <td class="text-left">
                                             <button type="button"
