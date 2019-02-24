@@ -1,0 +1,116 @@
+<modification>
+<version>1.0.0</version>
+<link>http://www.willows-consulting.com</link>
+<author>Willows Consulting Ltd.</author>
+<code>willows_gdpr_policy_in_contact_form</code>
+<name>GDPR Toolkit - Store Policy in Contact Form</name>
+<id>willows_gdpr_store_policy_in_contact_form</id>
+
+<!-- ************ STORE POLICY ACCEPTANCE IN THE CONTACT FORM ************** -->
+<file path="catalog/controller/information/contact.php">
+  <operation error="log">
+    <search><![CDATA[if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {]]></search>
+    <add position="before"><![CDATA[			$this->load->model('setting/setting');
+    			$settings = $this->model_setting_setting->getSetting('gdpr');
+
+    			if($settings['gdpr_store_policy_acceptance'] && isset($this->request->post['agree'])) {
+    				$this->load->model('catalog/information');
+    				$this->load->model('module/gdpr');
+    				$this->load->model('account/customer');
+
+    				$information_info = $this->model_catalog_information->getInformation($this->config->get('config_account_id'));
+    				$policy_data = array(
+    					'customer_email' => isset($this->request->post['email']) ? $this->request->post['email'] : '',
+    					'customer_id' => 0,
+    					'date_accepted' => date("Y-m-d H:i:s"),
+    					'policy_id' => $information_info['information_id'],
+    					'policy_name' => $information_info['title'],
+    					'policy_content' => $information_info['description'],
+    				);
+
+    				$this->model_module_gdpr->storePolicyAcceptance($policy_data);
+    			}]]></add>
+  </operation>
+  <operation error="log">
+    <search><![CDATA[if (isset($this->error['enquiry'])) {]]></search>
+    <add position="before"><![CDATA[		if (isset($this->error['agree'])) {
+    			$data['error_agree'] = $this->error['agree'];
+    		} else {
+    			$data['error_agree'] = '';
+    		}]]></add>
+  </operation>
+  <operation error="log">
+    <search><![CDATA[if (isset($this->request->post['enquiry'])) {]]></search>
+    <add position="before"><![CDATA[		if ($this->config->get('config_account_id')) {
+    			$this->load->model('catalog/information');
+    			$this->load->language('information/gdpr_request');
+
+    			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_account_id'));
+
+    			if ($information_info) {
+    				$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information/agree', 'information_id=' . $this->config->get('config_account_id'), 'SSL'), $information_info['title'], $information_info['title']);
+    			} else {
+    				$data['text_agree'] = '';
+    			}
+    		} else {
+    			$data['text_agree'] = '';
+    		}
+
+    		if (isset($this->request->post['agree'])) {
+    			$data['agree'] = $this->request->post['agree'];
+    		} else {
+    			$data['agree'] = false;
+    		}]]></add>
+  </operation>
+  <operation error="log">
+    <search><![CDATA[return !$this->error;]]></search>
+    <add position="before"><![CDATA[		// Agree to terms
+    		if ($this->config->get('config_account_id')) {
+    			$this->load->language('information/gdpr_request');
+    			$this->load->model('catalog/information');
+
+    			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_account_id'));
+
+    			if ($information_info && !isset($this->request->post['agree'])) {
+    				$this->error['agree'] = sprintf($this->language->get('error_agree'), $information_info['title']);
+    			}
+    		}]]></add>
+  </operation>
+</file>
+
+<!-- ************ STORE POLICY ACCEPTANCE IN THE CONTACT FORM ************** -->
+<file path="catalog/view/theme/*/template/information/contact.tpl">
+  <operation error="log">
+    <search><![CDATA[</fieldset>]]></search>
+    <add position="before"><![CDATA[          <?php if ($text_agree) { ?>
+                <div class="form-group required">
+                  <div class="pull-right"><?php echo $text_agree; ?>
+                    <?php if ($agree) { ?>
+                    <input type="checkbox" name="agree" value="1" checked="checked" />
+                    <?php } else { ?>
+                    <input type="checkbox" name="agree" value="1" />
+                    <?php } ?>
+                  </div>
+                </div>
+                <div class="pull-right">
+                  <?php if ($error_agree) { ?>
+                  <div class="text-danger"><?php echo $error_agree; ?></div>
+                  <?php } ?>
+                </div>
+              <?php } ?>]]></add>
+  </operation>
+</file>
+
+<!-- ***************************************** -->
+<file path="">
+  <operation error="log">
+    <search><![CDATA[]]></search>
+    <add position="before"><![CDATA[]]></add>
+  </operation>
+  <operation error="log">
+    <search><![CDATA[]]></search>
+    <add position="before"><![CDATA[]]></add>
+  </operation>
+</file>
+
+</modification>

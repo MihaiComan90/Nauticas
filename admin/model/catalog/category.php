@@ -20,7 +20,8 @@ class ModelCatalogCategory extends Model {
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_path` WHERE category_id = '" . (int)$data['parent_id'] . "' ORDER BY `level` ASC");
 
-		foreach ($query->rows as $result) {
+		foreach ($query->rows as $result)
+		{
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "category_path` SET `category_id` = '" . (int)$category_id . "', `path_id` = '" . (int)$result['path_id'] . "', `level` = '" . (int)$level . "'");
 
 			$level++;
