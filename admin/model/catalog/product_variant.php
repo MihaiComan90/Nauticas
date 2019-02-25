@@ -112,16 +112,33 @@ class ModelCatalogProductVariant extends Model {
                                 attribute_id = '" . (int)($attribute_id) . "', 
                                 price = '" . (float)($data['price']) . "', 
                                 image = '" . $this->db->escape($filename) . "',
-                                custom_url = '" . $this->db->escape($data['url']) . "', 
+                                custom_url = '" . $this->db->escape($data['custom_url']) . "', 
                                 date_modified = NOW(),
                                 date_added = NOW() 
                             ");
+
+        $this->handleVariantUrlAlias($product_id,$this->db->getLastId(), $this->db->escape($data['custom_url']), 'insert');
 
         //$this->cache->set('product_variant_');
 		return $product_id;
 	}
 
-	public function editProductVariant($variantOptions) {
+	public function handleVariantUrlAlias($product_id, $variant_id, $url, $action = 'delete')
+    {
+
+        $this->db->query("DELETE FROM ". DB_PREFIX . "url_alias WHERE query LIKE 'product_id={$product_id}&variant={$variant_id}'");
+
+
+        if($action == 'insert' && strlen($url)) {
+            $this->db->query("INSERT INTO ". DB_PREFIX . "url_alias
+                      SET 
+                        query = 'product_id={$product_id}&variant={$variant_id}',
+                        keyword = '{$url}'
+            ");
+        }
+    }
+
+	public function editProductVariant($product_id, $variantOptions) {
 
         if(isset($variantOptions['variant_image']) && strlen($variantOptions['variant_image']['tmp_name'])){
             $filename = $this->handleVariantImage($variantOptions);
@@ -139,12 +156,17 @@ class ModelCatalogProductVariant extends Model {
                                 variant_id = '".(int)$variantOptions['variant_id']."'
                             ");
 
-		$this->cache->delete('product_variant_'. $variantOptions['variant_id']);
+        $this->handleVariantUrlAlias($product_id , $variantOptions['variant_id'], $this->db->escape($variantOptions['custom_url']) , 'insert');
 	}
 
-    public function deleteProductVariant($product_id, $attribute_id) {
+    public function deleteProductVariant($product_id, $attribute_id, $variant_id = null) {
 
-        $this->db->query("DELETE FROM " . DB_PREFIX . "product_variants WHERE product_id = '" . (int)$product_id . "' AND attribute_id = '".$attribute_id."'");
+        if(!is_null($variant_id)) {
+            $this->db->query("DELETE FROM " . DB_PREFIX . "product_variants WHERE variant_id ='{$variant_id}'");
+            $this->handleVariantUrlAlias($product_id, $variant_id, '');
+        } else {
+            $this->db->query("DELETE FROM " . DB_PREFIX . "product_variants WHERE product_id = '" . (int)$product_id . "' AND attribute_id = '".$attribute_id."'");
+        }
 
         $this->cache->delete('product');
     }

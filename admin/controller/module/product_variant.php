@@ -40,47 +40,16 @@ class ControllerModuleProductVariant extends Controller {
         $data['text_yes'] = $this->language->get('text_yes');
         $data['text_no'] = $this->language->get('text_no');
 
-        $data['entry_client_id'] = $this->language->get('entry_client_id');
-        $data['entry_secret'] = $this->language->get('entry_secret');
-        $data['entry_sandbox'] = $this->language->get('entry_sandbox');
-        $data['entry_debug'] = $this->language->get('entry_debug');
-        $data['entry_customer_group'] = $this->language->get('entry_customer_group');
-        $data['entry_button'] = $this->language->get('entry_button');
-        $data['entry_seamless'] = $this->language->get('entry_seamless');
-        $data['entry_locale'] = $this->language->get('entry_locale');
-        $data['entry_return_url'] = $this->language->get('entry_return_url');
-        $data['entry_status'] = $this->language->get('entry_status');
-
-        $data['help_sandbox'] = $this->language->get('help_sandbox');
-        $data['help_customer_group'] = $this->language->get('help_customer_group');
-        $data['help_seamless'] = $this->language->get('help_seamless');
-        $data['help_debug_logging'] = $this->language->get('help_debug_logging');
-        $data['help_locale'] = $this->language->get('help_locale');
-        $data['help_return_url'] = $this->language->get('help_return_url');
-
         $data['button_save'] = $this->language->get('button_save');
         $data['button_cancel'] = $this->language->get('button_cancel');
         $data['button_module_add'] = $this->language->get('button_module_add');
         $data['button_remove'] = $this->language->get('button_remove');
+        $data['enable_module_label'] = $this->language->get('enable_module_label');
+        $data['option_label_disable'] = $this->language->get('option_label_disable');
+        $data['option_label_enable'] = $this->language->get('option_label_enable');
 
-        if (isset($this->error['warning'])) {
-            $data['error_warning'] = $this->error['warning'];
-        } else {
-            $data['error_warning'] = '';
-        }
 
-        if (isset($this->error['client_id'])) {
-            $data['error_client_id'] = $this->error['client_id'];
-        } else {
-            $data['error_client_id'] = '';
-        }
-
-        if (isset($this->error['secret'])) {
-            $data['error_secret'] = $this->error['secret'];
-        } else {
-            $data['error_secret'] = '';
-        }
-
+        $data['variant_module_enabled'] = $this->config->get('product_variant_enable');
         $data['breadcrumbs'] = array();
 
         $data['breadcrumbs'][] = array(

@@ -578,6 +578,7 @@ class ControllerCatalogProduct extends Controller {
 		$data['entry_related'] = $this->language->get('entry_related');
 		$data['entry_attribute'] = $this->language->get('entry_attribute');
 		/*Variants section*/
+		$data['is_module_variant_enabled'] = $this->config->get('product_variant_enable');
         $data['entry_attribute_option'] = $this->language->get('entry_attribute_option');
         $data['option_variant_label'] = $this->language->get('option_variant_label');
         $data['option_variant_customurl_label'] = $this->language->get('option_variant_customurl_label');

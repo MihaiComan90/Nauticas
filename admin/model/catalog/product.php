@@ -159,23 +159,31 @@ class ModelCatalogProduct extends Model {
 					foreach ($product_attribute['product_attribute_description'] as $language_id => $product_attribute_description) {
 						$this->db->query("INSERT INTO " . DB_PREFIX . "product_attribute SET product_id = '" . (int)$product_id . "', attribute_id = '" . (int)$product_attribute['attribute_id'] . "', language_id = '" . (int)$language_id . "', text = '" .  $this->db->escape($product_attribute_description['text']) . "'");
 					}
-                    $this->load->model('catalog/product_variant');
-					/*Start variant options here*/
-					if(isset($product_attribute['option_variant']) && is_array($product_attribute['option_variant'])) {
-                        if(isset($data[self::PRODUCT_VARIANT_IMAGE_LABEL.$row])) {
-                            $data['product_attribute'][$row]['option_variant']['variant_image'] = $data[self::PRODUCT_VARIANT_IMAGE_LABEL.$row];
-                            unset($data[self::PRODUCT_VARIANT_IMAGE_LABEL.$row]);
-                        }
-                        $variantOptions = $data['product_attribute'][$row]['option_variant'];
-                        if($variantOptions['variant_id']) {
-                            $this->model_catalog_product_variant->editProductVariant($variantOptions);
+
+					if($this->config->get('product_variant_enable')) {
+                        /*Start variant options here*/
+                        $this->load->model('catalog/product_variant');
+
+                        if(isset($product_attribute['option_variant']) && is_array($product_attribute['option_variant'])) {
+                            if(isset($data[self::PRODUCT_VARIANT_IMAGE_LABEL.$row])) {
+                                $data['product_attribute'][$row]['option_variant']['variant_image'] = $data[self::PRODUCT_VARIANT_IMAGE_LABEL.$row];
+                                unset($data[self::PRODUCT_VARIANT_IMAGE_LABEL.$row]);
+                            }
+                            $variantOptions = $data['product_attribute'][$row]['option_variant'];
+                            if(isset($variantOptions['enable'])) {
+                                if($variantOptions['variant_id']) {
+                                    $this->model_catalog_product_variant->editProductVariant($product_id, $variantOptions);
+                                } else {
+                                    $this->model_catalog_product_variant->addProductVariant($product_id, $product_attribute['attribute_id'], $variantOptions);
+                                }
+                            } elseif(isset($variantOptions['variant_id'])) {
+                                $this->model_catalog_product_variant->deleteProductVariant($product_id, $product_attribute['attribute_id'], $variantOptions['variant_id']);
+                            }
                         } else {
-                            $this->model_catalog_product_variant->addProductVariant($product_id, $product_attribute['attribute_id'], $variantOptions);
+                            $this->model_catalog_product_variant->deleteProductVariant($product_id, $product_attribute['attribute_id']);
                         }
-                    } else {
-                        $this->model_catalog_product_variant->deleteProductVariant($product_id, $product_attribute['attribute_id']);
+                        /**/
                     }
-					/**/
 				}
 			}
 		}
