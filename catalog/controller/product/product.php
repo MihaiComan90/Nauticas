@@ -159,6 +159,16 @@ class ControllerProductProduct extends Controller {
 		$product_info = $this->model_catalog_product->getProduct($product_id);
 
 		if ($product_info) {
+            /*ProductVariant check for the variant in case it exists*/
+            if (isset($this->request->get['variant_id'])) {
+                $variant_id = (int)$this->request->get['variant_id'];
+                $this->load->model('catalog/product_variant');
+                $product_variant = $this->model_catalog_product_variant->loadProductVariant($variant_id);
+                if($product_variant) {
+                    $data['product_variant'] = $product_variant;
+                }
+            }
+            /**/
 			$url = '';
 
 			if (isset($this->request->get['path'])) {

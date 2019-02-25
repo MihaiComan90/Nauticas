@@ -24,6 +24,14 @@ class ModelCatalogProductVariant extends Model {
 
     public function handleVariantImage($data)
     {
+        $this->load->language('common/filemanager');
+
+        $json = array();
+
+        // Check user has permission
+        if (!$this->user->hasPermission('modify', 'common/filemanager')) {
+            $json['error'] = $this->language->get('error_permission');
+        }
         // Make sure we have the correct directory
         $directory = rtrim(DIR_IMAGE . 'catalog/' . str_replace(array('../', '..\\', '..'), '', self::VARIANT_IMAGE_DIRECTORY), '/');
 
@@ -86,24 +94,18 @@ class ModelCatalogProductVariant extends Model {
         if (!$json) {
             $destination = $directory . '/' . $filename;
             move_uploaded_file($data['variant_image']['tmp_name'], $destination);
+
+            return $filename;
         }
 
-        return $filename;
+        return $json;
     }
 
 	public function addProductVariant($product_id, $attribute_id, $data) {
 
-        $this->load->language('common/filemanager');
-
-        $json = array();
-
-        // Check user has permission
-        if (!$this->user->hasPermission('modify', 'common/filemanager')) {
-            $json['error'] = $this->language->get('error_permission');
-        }
-
         if(isset($data['variant_image'])){
-            $filename = $this->handleVariantImage($data);
+            $result = $this->handleVariantImage($data);
+            $filename = (is_array($result) && $result['error']? null : $result);
         }
 
         $this->db->query("INSERT INTO " . DB_PREFIX . "product_variants 
@@ -141,7 +143,8 @@ class ModelCatalogProductVariant extends Model {
 	public function editProductVariant($product_id, $variantOptions) {
 
         if(isset($variantOptions['variant_image']) && strlen($variantOptions['variant_image']['tmp_name'])){
-            $filename = $this->handleVariantImage($variantOptions);
+            $result  = $this->handleVariantImage($variantOptions);
+            $filename = (is_array($result) && $result['error']? null : $result);
         } elseif(isset($variantOptions['image'])) {
             $filename = $variantOptions['image'];
         }

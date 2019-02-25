@@ -577,7 +577,8 @@
                                             <input type="hidden"
                                                    name="product_attribute[<?php echo $attribute_row; ?>][attribute_id]"
                                                    value="<?php echo $product_attribute['attribute_id']; ?>"/></td>
-                                        <td <?php if(!$is_module_variant_enabled) : ?> colspan=2 <?php endif; ?> class="text-left"><?php foreach ($languages as $language) { ?>
+                                        <td <?php if(!$is_module_variant_enabled) : ?> colspan=2 <?php endif; ?> class="text-left">
+                                        <?php foreach ($languages as $language) { ?>
                                             <div class="input-group"><span class="input-group-addon"><img
                                                             src="view/image/flags/<?php echo $language['image']; ?>"
                                                             title="<?php echo $language['name']; ?>"/></span>

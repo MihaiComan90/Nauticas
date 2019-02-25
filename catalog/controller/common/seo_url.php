@@ -19,7 +19,18 @@ class ControllerCommonSeoUrl extends Controller {
 				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE keyword = '" . $this->db->escape($part) . "'");
 
 				if ($query->num_rows) {
-					$url = explode('=', $query->row['query']);
+                    $url = explode('=', $query->row['query']);
+
+                    /* ProductVariant check for variant_id in the url*/
+				    if($this->config->get('product_variant_enable') && stripos($query->row['query'],'&variant') !== false) {
+                        $queryParams = explode('&', $query->row['query']);
+                        $url = explode('=', $queryParams[0]);
+                        $variant_url = explode('=', $queryParams[1]);
+                        if(is_numeric($variant_url[1])) {
+                            $this->request->get['variant_id'] = $this->db->escape($variant_url[1]);
+                        }
+                    }
+                    /*End productvariant*/
 
 					if ($url[0] == 'product_id') {
 						$this->request->get['product_id'] = $url[1];
