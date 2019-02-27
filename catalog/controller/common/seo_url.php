@@ -115,7 +115,24 @@ class ControllerCommonSeoUrl extends Controller {
 					}
 
 					unset($data[$key]);
-				}
+				} elseif($data['route'] == 'product/product_variant' &&
+                    (isset($data['product_id']) && is_numeric($data['product_id'])) &&
+                    (isset($data['variant_id']) && is_numeric($data['variant_id']))) {
+
+				    $variantAlias = "product_id={$this->db->escape($data['product_id'])}&variant={$this->db->escape($data['variant_id'])}";
+				    $queryString = "SELECT * FROM " . DB_PREFIX . "url_alias WHERE `query` = '" . $variantAlias . "'";
+                    $query = $this->db->query($queryString);
+
+                    if ($query->num_rows && $query->row['keyword']) {
+                        $url .= '/' . $query->row['keyword'];
+
+                        return $url;
+                    } else {
+                        $url = '';
+
+                        break;
+                    }
+                }
 			}
 		}
 

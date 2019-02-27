@@ -55,4 +55,9 @@ class ModelCatalogProductVariant extends Model {
             return false;
         }
     }
+
+    public function getVariantCartKey($product_id, $variant_id)
+    {
+        return base64_encode(serialize(array('product_id' => $product_id, 'variant_id' => $variant_id)));
+    }
 }

@@ -333,9 +333,26 @@ class ControllerCheckoutCart extends Controller {
 			}
 
 			if (!$json) {
+                $successUrl = $this->url->link('product/product', 'product_id=' . (int)$product_id);
+
+                if($this->config->get('product_variant_enable')) {
+                    if (isset($this->request->post['variant_id'])) {
+                        $variant_id = (int)$this->request->post['variant_id'];
+                        $this->load->model('catalog/product_variant');
+                        $variantKey = $this->model_catalog_product_variant->getVariantCartKey($product_id, $variant_id);
+                        if(isset($this->session->data['cart_variant_ids']) && array_key_exists($variantKey, $this->session->data['cart_variant_ids'])) {
+                            $this->session->data['cart_variant_ids'][$variantKey] += $quantity;
+                        } else {
+                            $this->session->data['cart_variant_ids'][$variantKey] = $quantity;
+                        }
+
+                        $successUrl = $this->url->link('product/product_variant', 'product_id=' . (int)$product_id . '&variant_id=' . (int)$variant_id);
+                    }
+                }
+
 				$this->cart->add($this->request->post['product_id'], $quantity, $option, $recurring_id);
 
-				$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'product_id=' . $this->request->post['product_id']), $product_info['name'], $this->url->link('checkout/cart'));
+				$json['success'] = sprintf($this->language->get('text_success'), $successUrl, $product_info['name'], $this->url->link('checkout/cart'));
 
 				unset($this->session->data['shipping_method']);
 				unset($this->session->data['shipping_methods']);

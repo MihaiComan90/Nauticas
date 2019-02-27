@@ -10,6 +10,18 @@ class ControllerCommonCart extends Controller {
 		$total = 0;
 		$taxes = $this->cart->getTaxes();
 
+		if(isset($this->session->data['cart_variant_ids']) && $this->config->get('product_variant_enable')) {
+		    foreach($this->session->data['cart_variant_ids'] as $info => $quantity) {
+		        $unserializedInfo = unserialize(base64_decode($info));
+                $variantInfo[] = array(
+                    'variant_id' => $unserializedInfo['variant_id'],
+                    'product_id' => $unserializedInfo['product_id'],
+                    'quantity'   => $quantity
+                );
+            }
+
+        }
+
 		// Display prices
 		if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
 			$sort_order = array();
