@@ -159,15 +159,6 @@ class ControllerProductProduct extends Controller {
 		$product_info = $this->model_catalog_product->getProduct($product_id);
 
 		if ($product_info) {
-            /*ProductVariant check for the variant in case it exists*/
-            if (isset($this->request->get['variant_id'])) {
-                $variant_id = (int)$this->request->get['variant_id'];
-                $this->load->model('catalog/product_variant');
-                $product_variant = $this->model_catalog_product_variant->loadProductVariant($variant_id);
-                if($product_variant) {
-                    $data['product_variant'] = $product_variant;
-                }
-            }
             /**/
 			$url = '';
 
@@ -231,6 +222,9 @@ class ControllerProductProduct extends Controller {
 			$this->document->addScript('catalog/view/javascript/jquery/magnific/jquery.magnific-popup.min.js');
 			$this->document->addStyle('catalog/view/javascript/jquery/magnific/magnific-popup.css');
 			$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment.js');
+            if($this->config->get('product_variant_enable')) {
+                $this->document->addScript('catalog/view/javascript/product_variants/scripts.js');
+            }
 			$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
 			$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
 
@@ -482,6 +476,32 @@ class ControllerProductProduct extends Controller {
 			$data['content_bottom'] = $this->load->controller('common/content_bottom');
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
+
+            if($this->config->get('product_variant_enable')) {
+                /* ProductVariant check for the variant in case it exists */
+                $this->load->model('catalog/product_variant');
+                if (isset($this->request->get['variant_id'])) {
+                    $variant_id = (int)$this->request->get['variant_id'];
+                    $product_variant = $this->model_catalog_product_variant->loadProductVariant($variant_id);
+                    if($product_variant) {
+                        $data['product_variant'] = $product_variant;
+                        $data['tax_class_id'] = $product_info['tax_class_id'];
+                        $this->event->trigger('post.catalog.product.view', $data);
+                        if(isset($this->session->data['changed_details'])) {
+                            $data = $this->session->data['changed_details'];
+                            unset($this->session->data['changed_details']);
+                        }
+                    }
+                }
+                /* ProductVariant get all variants */
+                $product_variants = $this->model_catalog_product_variant->getProductVariants($product_id);
+                if($product_variants) {
+                    $this->load->language('product/product_variant');
+                    $data['choose_variant_label'] = $this->language->get('choose_variant_label');
+                    $data['product_variants'] = $product_variants;
+                }
+                $data['parent_product_url'] = $this->url->link('product/product', 'product_id=' . $product_id);
+            }
 
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/product/product.tpl')) {
 				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/product/product.tpl', $data));

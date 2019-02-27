@@ -5,14 +5,17 @@ class ControllerModuleProductVariant extends Controller {
 
     public function install() {
         $this->load->model('catalog/product_variant');
-
+        $this->load->model('extension/event');
         $this->model_catalog_product_variant->install();
+        $this->model_extension_event->addEvent('change_product_details', 'post.catalog.product.view', 'product/product_variants/changeProductDetails');
+
     }
 
     public function uninstall() {
         $this->load->model('catalog/product_variant');
-
         $this->model_catalog_product_variant->uninstall();
+        $this->load->model('extension/event');
+        $this->model_extension_event->deleteEvent('change_product_details');
     }
 
     public function index() {

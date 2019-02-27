@@ -627,7 +627,7 @@
                                                     <label for=""><?php echo $option_variant_customprice_label?></label>
                                                 </span>
                                                 <span class="input-group-addon">
-                                                    <input type="number" class="form-control" id="variant_customprice_<?php $attribute_row; ?>" name="product_attribute[<?php echo $attribute_row ?>]['option_variant']['price']" value="<?php echo $product_attribute['product_variants'][$attribute_row]['price']; ?>"/>
+                                                    <input type="number" step="0.01" class="form-control" id="variant_customprice_<?php $attribute_row; ?>" name="product_attribute[<?php echo $attribute_row ?>][option_variant][price]" value="<?php echo $product_attribute['product_variants'][$attribute_row]['price']; ?>"/>
                                                 </span></div>
                                             <?php } ?>
                                         </td>

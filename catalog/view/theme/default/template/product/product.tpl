@@ -310,10 +310,21 @@
               <div class="help-block" id="recurring-description"></div>
             </div>
             <?php } ?>
+            <?php if(isset($product_variants)) :?>
+              <select name="product_variants" id="product_variants">
+                  <option value="<?php echo $parent_product_url; ?>"><?php echo $choose_variant_label; ?></option>
+              <?php foreach($product_variants as $variant) : ?>
+                  <option <?php if(isset($product_variant) && $product_variant['variant_id'] && $product_variant['variant_id'] == $variant['variant_id']) : ?> selected <?php endif; ?> value="<?php echo $variant['custom_url'];?>"><?php echo $variant['attribute_name'] .' - '. $variant['variant_name']; ?></option>
+              <?php endforeach; ?>
+              </select>
+            <?php endif; ?>
             <div class="form-group">
               <label class="control-label" for="input-quantity"><?php echo $entry_qty; ?></label>
               <input type="text" name="quantity" value="<?php echo $minimum; ?>" size="2" id="input-quantity" class="form-control" />
               <input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
+                <?php if(isset($product_variant) && $product_variant['variant_id']) : ?>
+                    <input type="hidden" name="variant_id" value="<?php echo $product_variant['variant_id']; ?>" />
+                <?php endif; ?>
               <br />
               <button type="button" id="button-cart" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary btn-lg btn-block"><?php echo $button_cart; ?></button>
             </div>
