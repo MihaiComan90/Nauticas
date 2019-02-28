@@ -220,6 +220,10 @@ $registry->set('length', new Length($registry));
 // Cart
 $registry->set('cart', new Cart($registry));
 
+if($config->get('product_variant_enable') && class_exists('GeneralReflection')) {
+    $registry->set('reflection', new GeneralReflection($registry));
+}
+
 // Encryption
 $registry->set('encryption', new Encryption($config->get('config_encryption')));
 

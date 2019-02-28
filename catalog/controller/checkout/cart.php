@@ -336,6 +336,12 @@ class ControllerCheckoutCart extends Controller {
                 $successUrl = $this->url->link('product/product', 'product_id=' . (int)$product_id);
 
                 if($this->config->get('product_variant_enable')) {
+                    $args = array(
+                        'product_id' => $product_id,
+                        'quantity'   => $quantity,
+                        'option'     => $option,
+                        'recurring_id' => $recurring_id
+                    );
                     if (isset($this->request->post['variant_id'])) {
                         $variant_id = (int)$this->request->post['variant_id'];
                         $this->load->model('catalog/product_variant');
@@ -347,10 +353,12 @@ class ControllerCheckoutCart extends Controller {
                         }
 
                         $successUrl = $this->url->link('product/product_variant', 'product_id=' . (int)$product_id . '&variant_id=' . (int)$variant_id);
+                        $args['variant_id'] = $variant_id;
                     }
+                    $this->reflection->invokeMethod('cart-add', $args);
+                } else {
+                    $this->cart->add($product_id, $quantity, $option, $recurring_id);
                 }
-
-				$this->cart->add($product_id, $quantity, $option, $recurring_id);
 
 				$json['success'] = sprintf($this->language->get('text_success'), $successUrl, $product_info['name'], $this->url->link('checkout/cart'));
 

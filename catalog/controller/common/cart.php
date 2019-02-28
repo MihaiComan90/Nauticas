@@ -21,9 +21,9 @@ class ControllerCommonCart extends Controller {
                 );
             }
 
-            foreach($products as $k=>$product) {
-                if(isset($variantInfo[$product['product_id']])) {
-                    $products[$k]['product_variant'] = $variantInfo[$product['product_id']];
+            foreach($products as $key => $product) {
+                if(isset($variantInfo[$product['product_id']]) && $key == $variantInfo[$product['product_id']]['key']) {
+                    $products[$key]['product_variant'] = $variantInfo[$product['product_id']];
                 }
             }
 
@@ -132,7 +132,10 @@ class ControllerCommonCart extends Controller {
 				'quantity'  => $product['quantity'],
 				'price'     => $price,
 				'total'     => $total,
-				'href'      => $this->url->link('product/product', 'product_id=' . $product['product_id']),
+				'href'      => ($product['product_variant'] ?
+                                $data[$key]['href'] = $this->url->link('product/product_variant', 'product_id=' . $product['product_id'] . '&variant_id=' . (int)$product['product_variant']['variant_id']) :
+                                    $this->url->link('product/product', 'product_id=' . $product['product_id'])
+                               ),
                 'tax_class_id' => $product['tax_class_id'],
                 'product_variant' => $productVariant
 			);

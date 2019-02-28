@@ -84,10 +84,7 @@ class ControllerProductProductVariants extends Controller {
         }
 
         if($sufferedChanges) {
-            $refObject   = new ReflectionObject( $this->cart );
-            $refProperty = $refObject->getProperty( 'data' );
-            $refProperty->setAccessible( true );
-            $refProperty->setValue( $this->cart , $data);
+            $this->reflection->setReflectedProperty($this->cart, array('data' => $data));
         }
     }
 }
