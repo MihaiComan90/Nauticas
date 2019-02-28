@@ -1,26 +1,37 @@
 <?php
+
 class ControllerCommonCart extends Controller {
 	public function index() {
 		$this->load->language('common/cart');
-
 		// Totals
 		$this->load->model('extension/extension');
+        $productVariant = false;
+        $products = $this->cart->getProducts();
 
-		$total_data = array();
-		$total = 0;
-		$taxes = $this->cart->getTaxes();
+        if(isset($this->session->data['cart_variant_ids']) && $this->config->get('product_variant_enable')) {
+            $variantInfo = array();
 
-		if(isset($this->session->data['cart_variant_ids']) && $this->config->get('product_variant_enable')) {
-		    foreach($this->session->data['cart_variant_ids'] as $info => $quantity) {
-		        $unserializedInfo = unserialize(base64_decode($info));
-                $variantInfo[] = array(
+            foreach($this->session->data['cart_variant_ids'] as $info => $quantity) {
+                $unserializedInfo = unserialize(base64_decode($info));
+                $variantInfo[$unserializedInfo['product_id']] = array(
                     'variant_id' => $unserializedInfo['variant_id'],
-                    'product_id' => $unserializedInfo['product_id'],
-                    'quantity'   => $quantity
+                    'quantity'   => $quantity,
+                    'key'        => $info
                 );
             }
 
+            foreach($products as $k=>$product) {
+                if(isset($variantInfo[$product['product_id']])) {
+                    $products[$k]['product_variant'] = $variantInfo[$product['product_id']];
+                }
+            }
+
+            $this->event->trigger('post.cart.items.update', $products);
         }
+
+        $total_data = array();
+		$total = 0;
+		$taxes = $this->cart->getTaxes();
 
 		// Display prices
 		if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
@@ -118,7 +129,9 @@ class ControllerCommonCart extends Controller {
 				'quantity'  => $product['quantity'],
 				'price'     => $price,
 				'total'     => $total,
-				'href'      => $this->url->link('product/product', 'product_id=' . $product['product_id'])
+				'href'      => $this->url->link('product/product', 'product_id=' . $product['product_id']),
+                'tax_class_id' => $product['tax_class_id'],
+                'product_variant' => $productVariant
 			);
 		}
 

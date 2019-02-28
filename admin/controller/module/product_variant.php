@@ -8,7 +8,7 @@ class ControllerModuleProductVariant extends Controller {
         $this->load->model('extension/event');
         $this->model_catalog_product_variant->install();
         $this->model_extension_event->addEvent('change_product_details', 'post.catalog.product.view', 'product/product_variants/changeProductDetails');
-
+        $this->model_extension_event->addEvent('change_cart_details', 'post.cart.items.update', 'product/product_variants/changeCartItems');
     }
 
     public function uninstall() {
@@ -16,6 +16,7 @@ class ControllerModuleProductVariant extends Controller {
         $this->model_catalog_product_variant->uninstall();
         $this->load->model('extension/event');
         $this->model_extension_event->deleteEvent('change_product_details');
+        $this->model_extension_event->deleteEvent('change_cart_details');
     }
 
     public function index() {

@@ -56,4 +56,38 @@ class ControllerProductProductVariants extends Controller {
             $this->session->data['changed_details'] = $data;
         }
     }
+
+    public function changeCartItems($data)
+    {
+        $sufferedChanges = false;
+        if(count($data)) {
+            $this->load->model('catalog/product_variant');
+
+            foreach($data as $key => $product) {
+                if($product['product_variant']) {
+                    $variant = $this->model_catalog_product_variant->loadProductVariant($product['product_variant']['variant_id']);
+                    if($variant) {
+                        // Display prices
+                        if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
+                            $data[$key]['price'] = (float)$variant['price'];
+                        }
+                        // Display prices
+                        if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
+                            $data[$key]['total'] = (float)$variant['price'] * $data[$key]['quantity'];
+                        }
+
+                        $data[$key]['name'] .= ' - '. $variant['variant_name'];
+                        $sufferedChanges = true;
+                    }
+                }
+            }
+        }
+
+        if($sufferedChanges) {
+            $refObject   = new ReflectionObject( $this->cart );
+            $refProperty = $refObject->getProperty( 'data' );
+            $refProperty->setAccessible( true );
+            $refProperty->setValue( $this->cart , $data);
+        }
+    }
 }

@@ -5,7 +5,13 @@ class ModelCatalogProductVariant extends Model {
 
     public function loadProductVariant( $variant_id )
     {
-        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_variants WHERE variant_id = '{$variant_id}'");
+        $query = $this->db->query("SELECT 
+                                      pa.text as variant_name, 
+                                      pv.* 
+                                    FROM " . DB_PREFIX . "product_variants pv
+                                    INNER JOIN " . DB_PREFIX . "product_attribute pa ON (pv.product_id = pa.product_id) AND (pv.attribute_id = pa.attribute_id)
+                                    WHERE variant_id = '{$variant_id}' AND 
+                                        pa.language_id = '" . (int)$this->config->get('config_language_id') . "'" );
 
         if ($query->num_rows) {
             if(strlen($query->row['image'])) {

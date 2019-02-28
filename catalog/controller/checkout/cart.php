@@ -350,7 +350,7 @@ class ControllerCheckoutCart extends Controller {
                     }
                 }
 
-				$this->cart->add($this->request->post['product_id'], $quantity, $option, $recurring_id);
+				$this->cart->add($product_id, $quantity, $option, $recurring_id);
 
 				$json['success'] = sprintf($this->language->get('text_success'), $successUrl, $product_info['name'], $this->url->link('checkout/cart'));
 
@@ -486,7 +486,7 @@ class ControllerCheckoutCart extends Controller {
 
 			$json['total'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total));
 		}
-
+        //$this->session->data['cart_variant_ids']
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
