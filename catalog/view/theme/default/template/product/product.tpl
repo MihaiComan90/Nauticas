@@ -447,7 +447,7 @@ $('select[name=\'recurring_id\'], input[name="quantity"]').change(function(){
 });
 //--></script>
 <script type="text/javascript"><!--
-$('#button-cart').on('click', function() {
+$(document).on('click','#button-cart', function() {
 	$.ajax({
 		url: 'index.php?route=checkout/cart/add',
 		type: 'post',
@@ -487,11 +487,12 @@ $('#button-cart').on('click', function() {
 			if (json['success']) {
 				$('.breadcrumb').after('<div class="alert alert-success">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-				$('#cart > button').html('<i class="fa fa-shopping-cart"></i> ' + json['total']);
+				// Obsolete
+                // $('#cart > button').html('<i class="fa fa-shopping-cart"></i> ' + json['total']);
 
 				$('html, body').animate({ scrollTop: 0 }, 'slow');
 
-				$('#cart > ul').load('index.php?route=common/cart/info ul li');
+				$('#cart').load('index.php?route=common/cart/info');
 			}
 		}
 	});

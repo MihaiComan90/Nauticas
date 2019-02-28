@@ -3,12 +3,13 @@
 class ControllerCommonCart extends Controller {
 	public function index() {
 		$this->load->language('common/cart');
-		// Totals
-		$this->load->model('extension/extension');
-        $productVariant = false;
+        /*ProductVariant start analysing the basket*/
+		$productVariant = false;
         $products = $this->cart->getProducts();
 
-        if(isset($this->session->data['cart_variant_ids']) && $this->config->get('product_variant_enable')) {
+        if(!count($products)) {
+            unset($this->session->data['cart_variant_ids']);
+        } elseif(isset($this->session->data['cart_variant_ids']) && $this->config->get('product_variant_enable')) {
             $variantInfo = array();
 
             foreach($this->session->data['cart_variant_ids'] as $info => $quantity) {
@@ -28,7 +29,9 @@ class ControllerCommonCart extends Controller {
 
             $this->event->trigger('post.cart.items.update', $products);
         }
-
+        /*End ProductVariant*/
+        // Totals
+        $this->load->model('extension/extension');
         $total_data = array();
 		$total = 0;
 		$taxes = $this->cart->getTaxes();
