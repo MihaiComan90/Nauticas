@@ -59,6 +59,28 @@ class ControllerProductProductVariants extends Controller {
 
     public function changeCartItems($data)
     {
+        if(!count($data)) {
+            unset($this->session->data['cart_variant_ids']);
+            return;
+        }
+
+        $variantInfo = array();
+
+        foreach($this->session->data['cart_variant_ids'] as $info => $quantity) {
+            $unserializedInfo = unserialize(base64_decode($info));
+            $variantInfo[$unserializedInfo['product_id']] = array(
+                'variant_id' => $unserializedInfo['variant_id'],
+                'quantity'   => $quantity,
+                'key'        => $info
+            );
+        }
+
+        foreach($data as $key => $product) {
+            if(isset($variantInfo[$product['product_id']]) && $key == $variantInfo[$product['product_id']]['key']) {
+                $data[$key]['product_variant'] = $variantInfo[$product['product_id']];
+            }
+        }
+
         $sufferedChanges = false;
         if(count($data)) {
             $this->load->model('catalog/product_variant');

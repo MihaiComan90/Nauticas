@@ -73,9 +73,13 @@ class ControllerCheckoutCart extends Controller {
 
 			$data['products'] = array();
 
-			$products = $this->cart->getProducts();
+            $products = $this->cart->getProducts();
 
-			foreach ($products as $product) {
+            if(isset($this->session->data['cart_variant_ids']) && $this->config->get('product_variant_enable')) {
+                $this->event->trigger('post.cart.items.update', $products);
+            }
+
+			foreach ($this->cart->getProducts() as $product) {
 				$product_total = 0;
 
 				foreach ($products as $product_2) {
@@ -447,7 +451,12 @@ class ControllerCheckoutCart extends Controller {
 			$this->cart->remove($this->request->post['key']);
 
 			unset($this->session->data['vouchers'][$this->request->post['key']]);
-
+            if($this->config->get('product_variant_enable') && isset($this->session->data['cart_variant_ids'])) {
+                unset($this->session->data['cart_variant_ids'][$this->request->post['key']]);
+                if(!count($this->session->data['cart_variant_ids'])) {
+                    unset($this->session->data['cart_variant_ids']);
+                }
+            }
 			$this->session->data['success'] = $this->language->get('text_remove');
 
 			unset($this->session->data['shipping_method']);

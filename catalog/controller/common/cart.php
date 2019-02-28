@@ -7,26 +7,7 @@ class ControllerCommonCart extends Controller {
 		$productVariant = false;
         $products = $this->cart->getProducts();
 
-        if(!count($products)) {
-            unset($this->session->data['cart_variant_ids']);
-        } elseif(isset($this->session->data['cart_variant_ids']) && $this->config->get('product_variant_enable')) {
-            $variantInfo = array();
-
-            foreach($this->session->data['cart_variant_ids'] as $info => $quantity) {
-                $unserializedInfo = unserialize(base64_decode($info));
-                $variantInfo[$unserializedInfo['product_id']] = array(
-                    'variant_id' => $unserializedInfo['variant_id'],
-                    'quantity'   => $quantity,
-                    'key'        => $info
-                );
-            }
-
-            foreach($products as $key => $product) {
-                if(isset($variantInfo[$product['product_id']]) && $key == $variantInfo[$product['product_id']]['key']) {
-                    $products[$key]['product_variant'] = $variantInfo[$product['product_id']];
-                }
-            }
-
+        if(isset($this->session->data['cart_variant_ids']) && $this->config->get('product_variant_enable')) {
             $this->event->trigger('post.cart.items.update', $products);
         }
         /*End ProductVariant*/

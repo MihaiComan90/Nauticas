@@ -37,7 +37,11 @@ class ControllerCheckoutConfirm extends Controller {
 		// Validate minimum quantity requirements.
 		$products = $this->cart->getProducts();
 
-		foreach ($products as $product) {
+		if(isset($this->session->data['cart_variant_ids']) && $this->config->get('product_variant_enable')) {
+            $this->event->trigger('post.cart.items.update', $products);
+        }
+
+		foreach ($this->cart->getProducts() as $product) {
 			$product_total = 0;
 
 			foreach ($products as $product_2) {
