@@ -27,7 +27,7 @@ class GeneralReflection {
         list($className, $methodName) = explode('-', $classAction);
         $selfMethodName = $className . ucfirst($methodName);
 
-        if(method_exists($this, $selfMethodName)) {
+        if(method_exists($this, $selfMethodName) && (isset($this->{$className}) && method_exists($this->{$className}, $methodName))) {
             $this->{$selfMethodName}($args);
         }
     }
