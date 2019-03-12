@@ -113,8 +113,8 @@ class ControllerCommonCart extends Controller {
 				'quantity'  => $product['quantity'],
 				'price'     => $price,
 				'total'     => $total,
-				'href'      => ($product['product_variant'] ?
-                                $data[$key]['href'] = $this->url->link('product/product_variant', 'product_id=' . $product['product_id'] . '&variant_id=' . (int)$product['product_variant']['variant_id']) :
+				'href'      => (isset($product['product_variant']) && $product['product_variant'] ?
+                                    $this->url->link('product/product_variant', 'product_id=' . $product['product_id'] . '&variant_id=' . (int)$product['product_variant']['variant_id']) :
                                     $this->url->link('product/product', 'product_id=' . $product['product_id'])
                                ),
                 'tax_class_id' => $product['tax_class_id'],

@@ -5,6 +5,9 @@
     <li><a href="<?php echo $breadcrumb['href']; ?>"> <?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
+  <?php if ($variant_missing) { ?>
+  <div class="alert alert-notice"><i class="fa fa-exclamation-circle"></i> <?php echo $variant_missing; ?></div>
+  <?php } ?>
   <?php if ($error_warning) { ?>
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
   <?php } ?>
@@ -20,6 +23,9 @@
       <h1><?php echo $heading_title; ?></h1>
       <p><?php echo $text_description; ?></p>
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+        <?php if(isset($variant_id)) : ?>
+        <input type="hidden" name="variant_id" value="<?php echo $variant_id; ?>">
+        <?php endif; ?>
         <fieldset>
           <legend><?php echo $text_order; ?></legend>
           <div class="form-group required">

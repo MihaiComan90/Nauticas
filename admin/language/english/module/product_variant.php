@@ -13,3 +13,5 @@ $_['text_success'] = 'Module setting successfully updated';
 $_['option_label_disable'] = 'Disabled';
 $_['enable_module_label'] = 'Module is';
 $_['option_label_enable'] = 'Enabled';
+$_['column_variant'] = 'Variant';
+$_['variant_label_none'] = 'No variant';

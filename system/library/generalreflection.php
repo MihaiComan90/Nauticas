@@ -34,7 +34,7 @@ class GeneralReflection {
 
     protected function cartAdd($args = array())
     {
-        if (!$args['variant_id']) {
+        if (!isset($args['variant_id'])) {
             $this->cart->add($args['product_id'], $args['quantity'], $args['option'], $args['recurring_id']);
             return;
         }

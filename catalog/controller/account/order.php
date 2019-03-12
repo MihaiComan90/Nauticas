@@ -314,10 +314,19 @@ class ControllerAccountOrder extends Controller {
 				$product_info = $this->model_catalog_product->getProduct($product['product_id']);
 
 				if ($product_info) {
-					$reorder = $this->url->link('account/order/reorder', 'order_id=' . $order_id . '&order_product_id=' . $product['order_product_id'], 'SSL');
+				    $reorderQuery = 'order_id=' . $order_id . '&order_product_id=' . $product['order_product_id'];
+				    if(isset($product['variant_id'])) {
+				        $reorderQuery .= "&variant_id=".$product['variant_id'];
+                    }
+					$reorder = $this->url->link('account/order/reorder', $reorderQuery , 'SSL');
 				} else {
 					$reorder = '';
 				}
+
+                $returnQuery = 'order_id=' . $order_info['order_id'] . '&product_id=' . $product['product_id'];
+                if(isset($product['variant_id'])) {
+                    $returnQuery .= "&variant_id=".$product['variant_id'];
+                }
 
 				$data['products'][] = array(
 					'name'     => $product['name'],
@@ -327,7 +336,7 @@ class ControllerAccountOrder extends Controller {
 					'price'    => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
 					'total'    => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
 					'reorder'  => $reorder,
-					'return'   => $this->url->link('account/return/add', 'order_id=' . $order_info['order_id'] . '&product_id=' . $product['product_id'], 'SSL')
+					'return'   => $this->url->link('account/return/add', $returnQuery, 'SSL')
 				);
 			}
 
@@ -476,9 +485,29 @@ class ControllerAccountOrder extends Controller {
 						}
 					}
 
-					$this->cart->add($order_product_info['product_id'], $order_product_info['quantity'], $option_data);
+                    $successUrl = $this->url->link('product/product', 'product_id=' . $product_info['product_id']);
 
-					$this->session->data['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'product_id=' . $product_info['product_id']), $product_info['name'], $this->url->link('checkout/cart'));
+					if($this->config->get('product_variant_enable')) {
+                        $args = array(
+                            'product_id' => $order_product_info['product_id'],
+                            'quantity'   => $order_product_info['quantity'],
+                            'option'     => $option_data,
+                            'recurring_id' => null
+                        );
+                        if (isset($this->request->get['variant_id'])) {
+                            $variant_id = (int)$this->request->get['variant_id'];
+                            $this->load->model('catalog/product_variant');
+                            $variantKey = $this->model_catalog_product_variant->getVariantCartKey((int)$product_info['product_id'], $variant_id);
+                            $this->session->data['cart_variant_ids'][$variantKey] = $order_product_info['quantity'];
+                            $successUrl = $this->url->link('product/product_variant', 'product_id=' . (int)$order_product_info['product_id'] . '&variant_id=' . (int)$variant_id);
+                            $args['variant_id'] = $variant_id;
+                        }
+                        $this->reflection->invokeMethod('cart-add', $args);
+                    } else {
+                        $this->cart->add($order_product_info['product_id'], $order_product_info['quantity'], $option_data);
+                    }
+
+					$this->session->data['success'] = sprintf($this->language->get('text_success'), $successUrl, $product_info['name'], $this->url->link('checkout/cart'));
 
 					unset($this->session->data['shipping_method']);
 					unset($this->session->data['shipping_methods']);

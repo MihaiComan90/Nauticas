@@ -7,6 +7,7 @@ class ControllerProductProductVariants extends Controller {
 
         if(isset($data['product_variant'])){
             $options = $data['product_variant'];
+            $newVariantPrice = 0;
             /* Calculate percentage of current discount to base the variant price on*/
             if ((float)$data['special']) {
                 $percentageValue = (float)$data['special'] / (float)$data['price'];
@@ -86,7 +87,7 @@ class ControllerProductProductVariants extends Controller {
             $this->load->model('catalog/product_variant');
 
             foreach($data as $key => $product) {
-                if($product['product_variant']) {
+                if(isset($product['product_variant']) && $product['product_variant']) {
                     $variant = $this->model_catalog_product_variant->loadProductVariant($product['product_variant']['variant_id']);
                     if($variant) {
                         // Display prices

@@ -1447,12 +1447,21 @@ class ControllerCatalogProduct extends Controller {
 					}
 				}
 
-				$json[] = array(
+                /* ProductVariant check for the variant in case it exists */
+                $productVariants = false;
+                if($this->config->get('product_variant_enable')) {
+                    $this->load->model('catalog/product_variant');
+                    $productVariants = $this->model_catalog_product_variant->getProductVariants($result['product_id']);
+                }
+                /*End product Variant*/
+
+                $json[] = array(
 					'product_id' => $result['product_id'],
 					'name'       => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
 					'model'      => $result['model'],
 					'option'     => $option_data,
-					'price'      => $result['price']
+					'price'      => $result['price'],
+                    'product_variants' => $productVariants
 				);
 			}
 		}

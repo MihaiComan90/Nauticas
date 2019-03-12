@@ -4,7 +4,12 @@ class ModelCatalogProductVariant extends Model {
     const VARIANT_IMAGE_DIRECTORY = 'product/variants/';
 
     public function uninstall() {
-        $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "product_variants`");
+        $this->db->query("
+          DROP TABLE IF EXISTS `" . DB_PREFIX . "product_variants`;
+          ALTER TABLE `" . DB_PREFIX . "order_product` DROP COLUMN `variant_id`;
+          ALTER TABLE `" . DB_PREFIX . "order_product` DROP COLUMN `variant_name`;
+          ALTER TABLE `" . DB_PREFIX . "order_product` DROP COLUMN `variant_price`;
+          ALTER TABLE `" . DB_PREFIX . "return` DROP COLUMN `variant_id`;");
     }
 
     public function install() {
@@ -20,6 +25,16 @@ class ModelCatalogProductVariant extends Model {
 			  `date_modified` DATETIME NOT NULL,
 			  PRIMARY KEY (`variant_id`)
 			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
+
+        $this->db->query("
+            ALTER TABLE `".DB_PREFIX."order_product` ADD `variant_id` INT(10) NULL;
+            ALTER TABLE `".DB_PREFIX."order_product` ADD `variant_name` VARCHAR(100) NULL;
+            ALTER TABLE `".DB_PREFIX."order_product` ADD `variant_price` FLOAT(15,4) NULL;
+        ");
+
+        $this->db->query("
+            ALTER TABLE `".DB_PREFIX."return` ADD `variant_id` INT(10) NULL AFTER `product_id`;
+        ");
     }
 
     public function handleVariantImage($data)
@@ -190,5 +205,42 @@ class ModelCatalogProductVariant extends Model {
         }
 
         return $product_variants;
+    }
+
+    public function getProductVariants($product_id)
+    {
+        $selectQuery = "SELECT 
+              pa.text as variant_name,
+              ad.name as attribute_name,
+              pv.* 
+            FROM " . DB_PREFIX . "product_variants pv
+            INNER JOIN
+                " . DB_PREFIX . "product_attribute pa ON (pv.product_id = pa.product_id) AND (pv.attribute_id = pa.attribute_id)
+            INNER JOIN
+                " . DB_PREFIX . "attribute_description ad ON (ad.attribute_id = pv.attribute_id) AND (ad.language_id = pa.language_id)
+            WHERE 
+                pv.product_id = '" . (int)$product_id . "'
+            AND 
+                pa.language_id = '" . (int)$this->config->get('config_language_id') . "'";
+
+
+        $query = $this->db->query($selectQuery);
+
+        $this->load->model('tool/image');
+
+        if ($query->num_rows) {
+            $data = array();
+            foreach($query->rows as $k=>$row){
+                $data[$k] = $row;
+                if(strlen($row['image'])) {
+                    $imagePath = VARIANT_IMAGE_PATH . $row['image'];
+                    $data[$k]['image_thumb'] = $this->model_tool_image->resize($imagePath,$this->config->get('config_image_additional_width'), $this->config->get('config_image_additional_height'));
+                }
+            }
+
+            return $data;
+        } else {
+            return false;
+        }
     }
 }

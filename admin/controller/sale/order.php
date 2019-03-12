@@ -558,9 +558,9 @@ class ControllerSaleOrder extends Controller {
 
 	public function getForm() {
 		$this->load->model('sale/customer');
+        $this->load->language('module/product_variant');
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
+        $data['heading_title'] = $this->language->get('heading_title');
 		$data['text_form'] = !isset($this->request->get['order_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_default'] = $this->language->get('text_default');
@@ -570,7 +570,7 @@ class ControllerSaleOrder extends Controller {
 		$data['text_product'] = $this->language->get('text_product');
 		$data['text_voucher'] = $this->language->get('text_voucher');
 		$data['text_order'] = $this->language->get('text_order');
-
+        $data['variant_label_none'] = $this->language->get('variant_label_none');
 		$data['entry_store'] = $this->language->get('entry_store');
 		$data['entry_customer'] = $this->language->get('entry_customer');
 		$data['entry_customer_group'] = $this->language->get('entry_customer_group');
@@ -610,6 +610,7 @@ class ControllerSaleOrder extends Controller {
 
 		$data['column_product'] = $this->language->get('column_product');
 		$data['column_model'] = $this->language->get('column_model');
+        $data['column_variant'] = $this->language->get('column_variant');
 		$data['column_quantity'] = $this->language->get('column_quantity');
 		$data['column_price'] = $this->language->get('column_price');
 		$data['column_total'] = $this->language->get('column_total');
@@ -745,8 +746,8 @@ class ControllerSaleOrder extends Controller {
 
 			$products = $this->model_sale_order->getOrderProducts($this->request->get['order_id']);
 
-			foreach ($products as $product) {
-				$data['order_products'][] = array(
+			foreach ($products as $k => $product) {
+				$data['order_products'][$k] = array(
 					'product_id' => $product['product_id'],
 					'name'       => $product['name'],
 					'model'      => $product['model'],
@@ -756,6 +757,12 @@ class ControllerSaleOrder extends Controller {
 					'total'      => $product['total'],
 					'reward'     => $product['reward']
 				);
+
+				if(isset($product['variant_id']) && !is_null($product['variant_id'])) {
+				    $data['order_products'][$k]['variant_id'] = $product['variant_id'];
+                    $data['order_products'][$k]['variant_name'] = $product['variant_name'];
+                    $data['order_products'][$k]['variant_price'] = $product['variant_price'];
+                }
 			}
 
 			// Add vouchers to the API
