@@ -1,0 +1,26 @@
+@media only screen and (max-width: 1200px) {
+  #pav-mainnav .navbar {
+    margin-right: 0;
+  }
+  #search input:active,
+  #search input:focus {
+    right: inherit;
+    left: 0;
+  }
+  #header #cart .content {
+    right: -74px;
+  }
+}
+@media only screen and (max-width: 990px) {
+  #pav-mainnav .navbar {
+    margin-right: 0 !important;
+  }
+  #search_mobile .button-search {
+    left: 11px;
+    right: inherit;
+  }
+  #topbar .show-mobile .inner-toggle {
+    right: 0;
+    left: inherit;
+  }
+}

@@ -11,6 +11,7 @@ $_['text_edit']         = 'Editare conținutul HTML';
 $_['entry_name']        = 'Nume Modul';
 $_['entry_title']       = 'Titlul';
 $_['entry_description'] = 'Descriere';
+$_['entry_class']        = 'Class';
 $_['entry_status']      = 'Statut';
 
 // Error

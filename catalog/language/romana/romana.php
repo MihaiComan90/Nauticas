@@ -18,6 +18,7 @@ $_['text_select']           = ' --- Selectaţi --- ';
 $_['text_all_zones']        = 'Toate Zonele';
 $_['text_pagination']       = 'Afişare %d - %d din %d (%d pagini)';
 $_['text_loading']          = 'Încărcare...';
+$_['text_my_account']       = 'Contul Meu';
 
 // Buttons
 $_['button_address_add']    = 'Adăugați adresă';

@@ -1,0 +1,214 @@
+/******************************************************
+ * @package Pav Opencart Theme Framework for Opencart 1.5.x
+ * @version 1.1
+ * @author http://www.pavothemes.com
+ * @copyright	Copyright (C) Augus 2013 PavoThemes.com <@emai:pavothemes@gmail.com>.All rights reserved.
+ * @license		GNU General Public License version 2
+*******************************************************/
+
+/* Ipad landscape */
+
+@media (min-width: @screen-lg) {
+	.navbar-nav > li > a{
+		padding-left:12px;
+		padding-right:12px;
+	}
+}
+@media (min-width: @screen-md) and (max-width: @screen-md-max){
+	#menu-offcanvas{
+		display: none;
+	}
+	.navbar-nav > li > a {
+	    padding-left:10px;
+		padding-right:10px;
+	}
+
+    #header-main #logo{
+    	padding-top: 20px;
+    }
+    #pav-mainnav .navbar{
+    	margin-left: 0;
+    	.navbar-nav > li:hover{
+    		border-left: 1px solid transparent;
+    		border-right: 1px solid transparent;
+    	}
+    }
+    #search{
+    	position: relative;
+    	z-index: 9999;
+    	input{
+	    	width: 90px;
+	    	&:active,&:focus{
+	    		transition: all 0.6s ease 0s;
+			    width: 200px;
+			    position: absolute;
+			    right: 0;
+	    	}
+	    }
+    }
+    .product-info .image-additional{
+    	padding: 0 10px;
+    	img{
+    		margin-left: 5px;
+    	}
+    }
+    .product-block{
+		.product-meta{
+	    	bottom: 43px;
+	    	transform: none;
+	    }
+	    &:hover{
+	    	.product-meta{
+		    	bottom: 43px;
+		    	transform: none;
+		    }
+	    }	
+    }
+    .box-static li{
+    	border: none;
+    }
+    input.inputNew{
+    	width: 170px;
+    } 
+}
+/* Ipad Portrait */
+@media (min-width: @screen-sm) and (max-width: @screen-sm-max) {
+	#header-main .inner.logo{
+        float: none;
+        width: 100%;
+        text-align: center;
+    }
+    #header-main #logo{
+    	padding-bottom: 0;
+    	display: block;
+    }
+    #pav-mainnav .navbar{
+    	margin-left: 0;
+     	.navbar-nav > li:hover{
+    		border-left: 1px solid transparent !important;
+    		border-right: 1px solid transparent !important;
+    	}
+    }
+    .product-info .image-additional{
+    	padding: 0 10px;
+    	img{
+    		margin-left: 5px;
+    	}
+    }
+    .product-block{
+    	.product-meta{
+	    	bottom: 45px;
+	    	transform: none;
+	    }
+	    .column-image{
+	    	width: 45%;
+	    }
+    }
+    .box-static li{
+    	border: none;
+    }  
+}
+/* Iphone 5 landscape  */
+@media (max-width: @screen-xs-max) {
+	#topbar .show-mobile{
+		margin-left: 50px;
+	}
+	#header-main {
+		text-align: center;
+		#pav-mainnav{
+			position: absolute;
+			top: 0;
+			left: 0;
+			.navbar{
+				margin-left: 0;
+			}
+		}
+		.header-wrap > *{
+			display: inline-block;
+	    	float: none !important;
+		}
+		#search{
+			display: inline-block;
+	    	float: none !important;
+		} 
+	}
+	.navbar-inverse .navbar-toggle{
+		display: block;
+		float: none;
+		width: 45px;
+		height: 35px;
+		background-color: @orange;
+		border-color: @orange;
+		margin-left: 10px;
+		&:hover,&:focus{
+			background-color: @orange;
+		}
+	}
+	.product-info{
+		padding: 10px;
+		.column-image,
+		.column-detail{
+			float: none;
+		    margin: 0;
+		    padding: 0;
+		    width: 100%;
+		}
+	}
+	.product-block{
+		.product-meta{
+	    	bottom: 43px;
+	    	transform: none;
+	    }
+	    &:hover{
+	    	.product-meta{
+		    	bottom: 43px;
+		    	transform: none;
+		    }
+	    }	
+    }
+    .product-list .product-block{
+    	.group-item{
+    		float: none;
+    		width: auto;
+    	}
+    	.product-meta{
+    		float: none;
+    		width: auto;
+    	}
+    	.action{
+    		left: -13%;
+    		top: 10px;
+    	}
+    } 
+    .producttabs .nav-tabs li a{
+		font-size: 14px;
+	}
+	#menu-offcanvas embed {
+	    display: none;
+	}
+	.zoomContainer{
+		display: none;
+	}
+}
+
+/* Iphone 4 + 5 Portrait */ 
+@media (max-width: @screen-phone) {
+	.navbar-inverse .navbar-toggle{
+		display: block;
+		float: none;
+		width: 45px;
+		height: 35px;
+		background-color: @orange;
+		border-color:@orange;
+		margin-left: 10px;
+	}
+	.producttabs .nav-tabs li{
+		padding-right: 20px;
+	}
+	.producttabs .nav-tabs li a{
+		font-size: 14px;
+	}
+	.zoomContainer{
+		display: none;
+	}
+}

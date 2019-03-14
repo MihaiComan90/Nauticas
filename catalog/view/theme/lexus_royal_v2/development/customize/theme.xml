@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<theme>
+	<topbar>
+		 <title>Topbar Block</title>
+		 <description></description>
+	 	  <module>
+	 	 	<title>Topbar</title>
+	 	 	<field>
+	 	 		<name>widget_topbar_data</name>
+	 	 		<label>Topbar</label>
+	 	 		<type>textarea</type>
+	 	 		<lang>1</lang>
+	 	 		<default> <![CDATA[
+				<div class="social">
+					<ul>
+						<li class="facebook"><a href="#"><i class="fa fa-facebook stack"><span>Facebook</span></i></a></li>
+						<li class="twitter"><a href="#" class="twitter"><i class="fa fa-twitter stack"><span>Twitter</span></i></a></li>
+						<li class="google"><a href="#"><i class="fa fa-google-plus stack"><span>Google Plus</span></i></a></li>
+						<li class="youtube"><a href="#"><i class="fa fa-youtube stack"><span>Youtube</span></i></a></li>
+						<li class="pinterest"><a href="#"><i class="fa fa-pinterest stack"><span>Printerest</span></i></a></li>
+					</ul>
+				</div>
+
+	 	 		 ]]> </default>		
+	 		</field>
+	 	 </module>
+	</topbar>
+
+	<footer>
+		 <title>Footer Block</title>
+		 <description></description>
+	 	  <module>
+	 	 	<title>Contact Us</title>
+	 	 	<field>
+	 	 		<name>widget_contact_us</name>
+	 	 		<label>Contact Us</label>
+	 	 		<type>textarea</type>
+	 	 		<lang>1</lang>
+	 	 		<default> <![CDATA[
+				<ul class="contact">
+					<li><span class="fabox"><i class="fa fa-map-marker">&nbsp;</i></span> <span>Avenue of the American Independent, st. 133/2 New York City</span></li>
+					<li><span class="fabox"><i class="fa fa-mobile-phone">&nbsp;</i></span> <span>Phone: +01 888 (000) 1234</span></li>
+					<li><span class="fabox"><i class="fa fa-envelope-o">&nbsp;</i></span> <span>Email: themelexus@gmail.com</span></li>
+				</ul>
+
+	 	 		 ]]> </default>		
+	 		</field>
+	 	 </module>
+	 	 <module>
+	 	 	<title>Paypal</title>
+	 	 	<field>
+	 	 		<name>widget_paypal</name>
+	 	 		<label>Paypal</label>
+	 	 		<type>textarea</type>
+	 	 		<lang>1</lang>
+	 	 		<default> <![CDATA[
+					<p><img src="image/catalog/paypal.png" alt="" /></p>
+	 	 		 ]]> </default>		
+	 		</field>
+	 	 </module>
+
+
+	</footer>	
+	
+</theme>
+

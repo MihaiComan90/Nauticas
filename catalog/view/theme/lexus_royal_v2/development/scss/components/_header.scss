@@ -1,0 +1,59 @@
+header {
+    // Search input
+    input[name="search"] {
+        border: 0;
+        border-bottom: 1px solid $gray;
+    }
+
+    .button-search { 
+        border: 0;
+        border-bottom: 1px solid $gray;
+        background: none;
+    }
+
+    .user-section {
+        i {
+            font-size: 25px;
+            vertical-align: middle;
+
+            &.fa-shopping-cart {
+                color: $black;
+                position: relative;
+
+                sup {
+                    color: $white;
+                    background: $pink;
+                    position: absolute;
+                    right: -2px;
+                    top: -5px;
+                    line-height: 15px;
+                    display: block;
+                    width: 15px;
+                    height: 15px;
+                    @include font-size(18px);
+                    @include border-radius(100%);
+                }
+            }
+        }
+
+        .language {
+            img { 
+                height: 17px;
+            }
+
+            img, span {
+                vertical-align: middle;
+            }
+        }
+    }
+
+    // Mini Cart
+    .minicart {
+
+    }
+}
+
+// Heaer banner
+.header-banner {
+    text-align: right;
+}
