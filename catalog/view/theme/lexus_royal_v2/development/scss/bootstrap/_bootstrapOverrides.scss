@@ -20,6 +20,12 @@
     display: block;
 }
 
+.dropdown-menu > li > a:hover {
+    text-decoration: underline;
+    color: inherit;
+    background-color: transparent;
+}
+
 
 // Navigation
 
@@ -100,14 +106,19 @@
     border-radius: 0; 
 }
 
-// overwrite btn-primary
+// overwrite btn
+
+.btn {
+    font-weight: 300;
+    text-transform: uppercase;
+}
 
 .btn-primary {
     @include button-variant($pink, $pink);
-    text-transform: uppercase;
 }
 
 .btn-secondary {
     background: $white;
     @include button-outline-variant($black, $color-hover: $white);
 }
+

@@ -80,8 +80,8 @@ $objlang = $this->registry->get('language');
 					<?php } else { ?>
 						<button class="btn btn-theme-normal"><i class="fa fa-user"></i>&nbsp;<?php echo $text_my_account; ?></button>
 						<div class="dropdown-menu">
-							<a href="<?php echo $register; ?>"><?php echo $text_register; ?></a>
-							<a href="<?php echo $login; ?>"><?php echo $text_login; ?></a>  
+							<a class="btn btn-block btn-link" href="<?php echo $register; ?>"><?php echo $text_register; ?></a>
+							<a class="btn btn-block btn-link" href="<?php echo $login; ?>"><?php echo $text_login; ?></a>  
 						</div>
 					<?php } ?>
 					</div>

@@ -41,9 +41,9 @@ $container-max-widths: (
 $fa-font-path:                "../../fonts";
 $img-path:                    "../../image/";
 $font-size-base:              1.4rem !default; // 14px
-$font-family-base:            'Roboto', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
-$font-family-secondary: 'Roboto Condensed' !default;
-$headings-font-family: $font-family-base;
+$font-family-base:            'Roboto', -apple-system, Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif !default;
+$font-family-secondary:       'Roboto Condensed' !default;
+$headings-font-family:         $font-family-base;
 //== Media queries breakpoints
 //
 //## Define the breakpoints at which your layout will change, adapting to different screen sizes.

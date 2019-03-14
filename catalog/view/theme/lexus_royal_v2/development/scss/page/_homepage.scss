@@ -1,4 +1,5 @@
-.page-home {
+.page-home,
+.common-home {
     .benefits {
         color: $white;
         font-weight: 100;
@@ -30,7 +31,6 @@
 
     .middle-promo-banner {
         margin: 100px 0;
-    
         .card {
             border: 0;
         }
