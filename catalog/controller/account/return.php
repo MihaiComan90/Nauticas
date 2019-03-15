@@ -350,6 +350,12 @@ class ControllerAccountReturn extends Controller {
 		$data['button_submit'] = $this->language->get('button_submit');
 		$data['button_back'] = $this->language->get('button_back');
 
+        if (isset($this->error['variant_missing'])) {
+            $data['variant_missing'] = $this->error['variant_missing'];
+        } else {
+            $data['variant_missing'] = '';
+        }
+
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -422,7 +428,19 @@ class ControllerAccountReturn extends Controller {
 
 		if (isset($this->request->get['product_id'])) {
 			$product_info = $this->model_catalog_product->getProduct($this->request->get['product_id']);
+            if (isset($this->request->get['variant_id']) && !empty($product_info)) {
+                $data['variant_id'] = (int)$this->request->get['variant_id'];
+                $this->load->model('catalog/product_variant');
+                $variant_info = $this->model_catalog_product_variant->loadProductVariant($data['variant_id']);
+                if($variant_info && $variant_info['product_id'] == $product_info['product_id']) {
+                    $product_info['name'] .= ' - ' .$variant_info['variant_name'];
+                }
+            }
 		}
+
+        if (isset($this->request->post['variant_id'])) {
+            $data['variant_id'] = $this->request->post['variant_id'];
+        }
 
 		if (isset($this->request->post['order_id'])) {
 			$data['order_id'] = $this->request->post['order_id'];
@@ -651,6 +669,15 @@ class ControllerAccountReturn extends Controller {
 				$this->error['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
 			}
 		}
+
+        if (isset($this->request->post['variant_id']) && is_numeric($this->request->post['variant_id'])) {
+            $this->load->language('product/product_variant');
+            $this->load->model('catalog/product_variant');
+            $variant_info = $this->model_catalog_product_variant->loadProductVariant((int)$this->request->post['variant_id']);
+            if(!$variant_info) {
+                $this->error['variant_missing'] = $this->language->get('variant_no_longer_exists');
+            }
+        }
 
 		return !$this->error;
 	}

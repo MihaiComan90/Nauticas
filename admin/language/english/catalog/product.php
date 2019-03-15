@@ -64,6 +64,13 @@ $_['entry_date_start']       = 'Date Start';
 $_['entry_date_end']         = 'Date End';
 $_['entry_priority']         = 'Priority';
 $_['entry_attribute']        = 'Attribute';
+/* Variants section*/
+$_['entry_attribute_option'] = 'Attribute Option';
+$_['option_variant_label']   = 'Mark as variant of this product';
+$_['option_variant_customurl_label'] = 'Custom url for your variant';
+$_['option_variant_customimage_label'] = 'Custom image for your variant';
+$_['option_variant_customprice_label'] = 'Custom price for your variant';
+/**/
 $_['entry_attribute_group']  = 'Attribute Group';
 $_['entry_text']             = 'Text';
 $_['entry_option']           = 'Option';

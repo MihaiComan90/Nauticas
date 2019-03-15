@@ -73,9 +73,13 @@ class ControllerCheckoutCart extends Controller {
 
 			$data['products'] = array();
 
-			$products = $this->cart->getProducts();
+            $products = $this->cart->getProducts();
 
-			foreach ($products as $product) {
+            if(isset($this->session->data['cart_variant_ids']) && $this->config->get('product_variant_enable')) {
+                $this->event->trigger('post.cart.items.update', $products);
+            }
+
+			foreach ($this->cart->getProducts() as $product) {
 				$product_total = 0;
 
 				foreach ($products as $product_2) {
@@ -333,9 +337,34 @@ class ControllerCheckoutCart extends Controller {
 			}
 
 			if (!$json) {
-				$this->cart->add($this->request->post['product_id'], $quantity, $option, $recurring_id);
+                $successUrl = $this->url->link('product/product', 'product_id=' . (int)$product_id);
 
-				$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'product_id=' . $this->request->post['product_id']), $product_info['name'], $this->url->link('checkout/cart'));
+                if($this->config->get('product_variant_enable')) {
+                    $args = array(
+                        'product_id' => $product_id,
+                        'quantity'   => $quantity,
+                        'option'     => $option,
+                        'recurring_id' => $recurring_id
+                    );
+                    if (isset($this->request->post['variant_id'])) {
+                        $variant_id = (int)$this->request->post['variant_id'];
+                        $this->load->model('catalog/product_variant');
+                        $variantKey = $this->model_catalog_product_variant->getVariantCartKey($product_id, $variant_id);
+                        if(isset($this->session->data['cart_variant_ids']) && array_key_exists($variantKey, $this->session->data['cart_variant_ids'])) {
+                            $this->session->data['cart_variant_ids'][$variantKey] += $quantity;
+                        } else {
+                            $this->session->data['cart_variant_ids'][$variantKey] = $quantity;
+                        }
+
+                        $successUrl = $this->url->link('product/product_variant', 'product_id=' . (int)$product_id . '&variant_id=' . (int)$variant_id);
+                        $args['variant_id'] = $variant_id;
+                    }
+                    $this->reflection->invokeMethod('cart-add', $args);
+                } else {
+                    $this->cart->add($product_id, $quantity, $option, $recurring_id);
+                }
+
+				$json['success'] = sprintf($this->language->get('text_success'), $successUrl, $product_info['name'], $this->url->link('checkout/cart'));
 
 				unset($this->session->data['shipping_method']);
 				unset($this->session->data['shipping_methods']);
@@ -422,7 +451,12 @@ class ControllerCheckoutCart extends Controller {
 			$this->cart->remove($this->request->post['key']);
 
 			unset($this->session->data['vouchers'][$this->request->post['key']]);
-
+            if($this->config->get('product_variant_enable') && isset($this->session->data['cart_variant_ids'])) {
+                unset($this->session->data['cart_variant_ids'][$this->request->post['key']]);
+                if(!count($this->session->data['cart_variant_ids'])) {
+                    unset($this->session->data['cart_variant_ids']);
+                }
+            }
 			$this->session->data['success'] = $this->language->get('text_remove');
 
 			unset($this->session->data['shipping_method']);
@@ -469,7 +503,7 @@ class ControllerCheckoutCart extends Controller {
 
 			$json['total'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total));
 		}
-
+        //$this->session->data['cart_variant_ids']
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}

@@ -20,7 +20,7 @@ class Cart {
 	public function getProducts() {
 		if (!$this->data) {
 			foreach ($this->session->data['cart'] as $key => $quantity) {
-				$product = unserialize(base64_decode($key));
+                    $product = unserialize(base64_decode($key));
 
 				$product_id = $product['product_id'];
 
