@@ -1,12 +1,19 @@
 <?php
+
 class ControllerCommonCart extends Controller {
 	public function index() {
 		$this->load->language('common/cart');
+        /*ProductVariant start analysing the basket*/
+		$productVariant = false;
+        $products = $this->cart->getProducts();
 
-		// Totals
-		$this->load->model('extension/extension');
-
-		$total_data = array();
+        if(isset($this->session->data['cart_variant_ids']) && $this->config->get('product_variant_enable')) {
+            $this->event->trigger('post.cart.items.update', $products);
+        }
+        /*End ProductVariant*/
+        // Totals
+        $this->load->model('extension/extension');
+        $total_data = array();
 		$total = 0;
 		$taxes = $this->cart->getTaxes();
 
@@ -110,7 +117,12 @@ class ControllerCommonCart extends Controller {
 				'quantity'  => $product['quantity'],
 				'price'     => $price,
 				'total'     => $total,
-				'href'      => $this->url->link('product/product', 'product_id=' . $product['product_id'])
+				'href'      => (isset($product['product_variant']) && $product['product_variant'] ?
+                                    $this->url->link('product/product_variant', 'product_id=' . $product['product_id'] . '&variant_id=' . (int)$product['product_variant']['variant_id']) :
+                                    $this->url->link('product/product', 'product_id=' . $product['product_id'])
+                               ),
+                'tax_class_id' => $product['tax_class_id'],
+                'product_variant' => $productVariant
 			);
 		}
 

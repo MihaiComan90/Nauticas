@@ -49,7 +49,31 @@ class ControllerApiCart extends Controller {
 					}
 
 					if (!isset($json['error']['option'])) {
-						$this->cart->add($this->request->post['product_id'], $quantity, $option);
+                        if ($this->config->get('product_variant_enable') && isset($this->request->post['product_variant_id']) && $this->request->post['product_variant_id'] != '') {
+                            $product_id = (int)$this->request->post['product_id'];
+
+                            $args = array(
+                                'product_id' => $product_id,
+                                'quantity' => $quantity,
+                                'option' => $product_options,
+                                'recurring_id' => false
+                            );
+
+                            $this->load->model('catalog/product_variant');
+                            $variantKey = $this->model_catalog_product_variant->getVariantCartKey((int)$this->request->post['product_id'], (int)$this->request->post['variant_id']);
+                            if (isset($this->session->data['cart_variant_ids']) && array_key_exists($variantKey, $this->session->data['cart_variant_ids'])) {
+                                $this->session->data['cart_variant_ids'][$variantKey] += $quantity;
+                            } else {
+                                $this->session->data['cart_variant_ids'][$variantKey] = $quantity;
+                            }
+
+                            $args['variant_id'] = (int)$this->request->post['variant_id'];
+                            $this->reflection->invokeMethod('cart-add', $args);
+                            $cartProducts = $this->cart->getProducts();
+                            $this->event->trigger('post.cart.items.update', $cartProducts);
+                        } else {
+                            $this->cart->add($this->request->post['product_id'], $quantity, $option);
+                        }
 
 						$json['success'] = $this->language->get('text_success');
 

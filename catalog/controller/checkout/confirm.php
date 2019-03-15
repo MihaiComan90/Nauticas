@@ -37,7 +37,11 @@ class ControllerCheckoutConfirm extends Controller {
 		// Validate minimum quantity requirements.
 		$products = $this->cart->getProducts();
 
-		foreach ($products as $product) {
+		if(isset($this->session->data['cart_variant_ids']) && $this->config->get('product_variant_enable')) {
+            $this->event->trigger('post.cart.items.update', $products);
+        }
+
+		foreach ($this->cart->getProducts() as $product) {
 			$product_total = 0;
 
 			foreach ($products as $product_2) {
@@ -196,7 +200,7 @@ class ControllerCheckoutConfirm extends Controller {
 
 			$order_data['products'] = array();
 
-			foreach ($this->cart->getProducts() as $product) {
+			foreach ($this->cart->getProducts() as $rowNr => $product) {
 				$option_data = array();
 
 				foreach ($product['option'] as $option) {
@@ -211,7 +215,7 @@ class ControllerCheckoutConfirm extends Controller {
 					);
 				}
 
-				$order_data['products'][] = array(
+				$order_data['products'][$rowNr] = array(
 					'product_id' => $product['product_id'],
 					'name'       => $product['name'],
 					'model'      => $product['model'],
@@ -222,8 +226,14 @@ class ControllerCheckoutConfirm extends Controller {
 					'price'      => $product['price'],
 					'total'      => $product['total'],
 					'tax'        => $this->tax->getTax($product['price'], $product['tax_class_id']),
-					'reward'     => $product['reward']
+					'reward'     => $product['reward'],
 				);
+
+				if(isset($product['product_variant']) && $product['product_variant']) {
+                    $order_data['products'][$rowNr]['variant_id']    = $product['product_variant']['variant_id'];
+                    $order_data['products'][$rowNr]['variant_name']  = $product['name'];
+                    $order_data['products'][$rowNr]['variant_price'] = $product['price'];
+                }
 			}
 
 			// Gift Voucher
@@ -381,7 +391,8 @@ class ControllerCheckoutConfirm extends Controller {
 					'subtract'   => $product['subtract'],
 					'price'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'))),
 					'total'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity']),
-					'href'       => $this->url->link('product/product', 'product_id=' . $product['product_id']),
+					'href'       => (isset($product['product_variant']) && $product['product_variant']? $this->url->link('product/product_variant', 'product_id=' . $product['product_id'] . '&variant_id=' . (int)$product['product_variant']['variant_id']) :
+                            $this->url->link('product/product', 'product_id=' . $product['product_id']) )
 				);
 			}
 

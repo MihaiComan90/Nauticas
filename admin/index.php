@@ -151,6 +151,9 @@ foreach ($query->rows as $result) {
 	$event->register($result['trigger'], $result['action']);
 }
 
+if($config->get('product_variant_enable') && class_exists('GeneralReflection')) {
+    $registry->set('reflection', new GeneralReflection($registry));
+}
 // Front Controller
 $controller = new Front($registry);
 
@@ -172,3 +175,4 @@ $controller->dispatch($action, new Action('error/not_found'));
 
 // Output
 $response->output();
+

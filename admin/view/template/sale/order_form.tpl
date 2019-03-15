@@ -245,6 +245,7 @@
                       <td class="text-left"><?php echo $column_product; ?></td>
                       <td class="text-left"><?php echo $column_model; ?></td>
                       <td class="text-right"><?php echo $column_quantity; ?></td>
+                      <td class="text-right"><?php echo $column_variant; ?></td>
                       <td class="text-right"><?php echo $column_price; ?></td>
                       <td class="text-right"><?php echo $column_total; ?></td>
                       <td></td>
@@ -272,6 +273,13 @@
                       <td class="text-left"><?php echo $order_product['model']; ?></td>
                       <td class="text-right"><?php echo $order_product['quantity']; ?>
                         <input type="hidden" name="product[<?php echo $product_row; ?>][quantity]" value="<?php echo $order_product['quantity']; ?>" /></td>
+                      <td class="text-right">
+                          <?php if(isset($order_product['variant_name'])) : ?>
+                            <?php echo $order_product['variant_name']; ?>
+                          <?php else : ?>
+                            <?php echo $variant_label_none; ?>
+                          <?php endif; ?>
+                      </td>
                       <td class="text-right"></td>
                       <td class="text-right"></td>
                       <td class="text-center"></td>
@@ -329,6 +337,7 @@
                         <input type="text" name="quantity" value="1" id="input-quantity" class="form-control" />
                       </div>
                     </div>
+                      <div id="variants"></div>
                     <div id="option"></div>
                   </fieldset>
                   <div class="text-right">
@@ -1377,11 +1386,12 @@ $('#tab-product input[name=\'product\']').autocomplete({
 			success: function(json) {
 				response($.map(json, function(item) {
 					return {
+					    product_variants: item['product_variants'],
 						label: item['name'],
 						value: item['product_id'],
 						model: item['model'],
 						option: item['option'],
-						price: item['price']						
+						price: item['price']
 					}
 				}));
 			}
@@ -1390,7 +1400,28 @@ $('#tab-product input[name=\'product\']').autocomplete({
 	'select': function(item) {
 		$('#tab-product input[name=\'product\']').val(item['label']);
 		$('#tab-product input[name=\'product_id\']').val(item['value']);
-		
+
+        var variantCount = Object.keys(item.product_variants).length;
+
+        if(variantCount > 0) {
+            var variants = item.product_variants;
+            html = '<div class="form-group">';
+            html += '  <label class="col-sm-2 control-label" for="variant-option"><?php echo $column_variant; ?></label>';
+            html += '  <div class="col-sm-10">';
+            html += '    <select name="product_variant_id" class="form-control">';
+            html += '      <option value=""><?php echo $variant_label_none; ?></option>';
+            $.each(variants, function (i,v) {
+                html += '      <option value="'+ v.variant_id +'">'+ v.attribute_name + ' - ' + v.variant_name +'</option>';
+            });
+
+            html += '    </select>';
+            html += '  </div>';
+            html += '</div>';
+            $('#variants').html(html);
+        } else {
+            $('#variants').html('');
+        }
+
 		if (item['option'] != '') {
  			html  = '<fieldset>';
             html += '  <legend><?php echo $entry_option; ?></legend>';
@@ -1541,7 +1572,7 @@ $('#tab-product input[name=\'product\']').autocomplete({
 					html += '</div>';					
 				}
 			}
-			
+
 			html += '</fieldset>';
 			
 			$('#option').html(html);
@@ -1568,7 +1599,7 @@ $('#button-product-add').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/cart/add&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		type: 'post',
-		data: $('#tab-product input[name=\'product_id\'], #tab-product input[name=\'quantity\'], #tab-product input[name^=\'option\'][type=\'text\'], #tab-product input[name^=\'option\'][type=\'hidden\'], #tab-product input[name^=\'option\'][type=\'radio\']:checked, #tab-product input[name^=\'option\'][type=\'checkbox\']:checked, #tab-product select[name^=\'option\'], #tab-product textarea[name^=\'option\']'),
+		data: $('#tab-product input[name=\'product_id\'], #tab-product select[name^=\'product_variant_id\'], #tab-product input[name=\'quantity\'], #tab-product input[name^=\'option\'][type=\'text\'], #tab-product input[name^=\'option\'][type=\'hidden\'], #tab-product input[name^=\'option\'][type=\'radio\']:checked, #tab-product input[name^=\'option\'][type=\'checkbox\']:checked, #tab-product select[name^=\'option\'], #tab-product textarea[name^=\'option\']'),
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-product-add').button('loading');

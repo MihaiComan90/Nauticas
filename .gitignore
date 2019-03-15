@@ -3,7 +3,7 @@
 admin/config.php
 .idea/
 !index.html
-
+image/*
 download/
 image/data/
 image/cache/
