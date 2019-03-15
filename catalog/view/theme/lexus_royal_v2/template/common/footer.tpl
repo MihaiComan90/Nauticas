@@ -285,4 +285,6 @@
 <?php  echo $helper->renderAddon( 'offcanvas' );?> 
 
 </div>
+
+<script>document.write('<script src="http://' + (location.host || 'nautica.local').split(':')[0] + ':35729/livereload.js"></' + 'script>')</script>
 </body></html>

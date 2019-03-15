@@ -16,7 +16,7 @@
         position: absolute;
     }
 
-    &::before {
+    &::before {  
         border-left: 11px solid transparent;
         border-right: 11px solid transparent;
         border-bottom: 11px solid $gray;
@@ -31,7 +31,6 @@
     }
 
     &.dropdown-menu {
-        // display: block;
         width: 375px;
         margin: 0;
         right: 0;
@@ -70,7 +69,7 @@
 .mini-cart-total {
     padding: 10px 0;
 
-    span {
+    span { 
         font-size: 16px;
 
         &:first-child {
@@ -87,4 +86,4 @@
     .btn-cart {
         width: 40%;
     }
-}
+} 

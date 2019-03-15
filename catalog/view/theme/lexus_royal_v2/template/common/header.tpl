@@ -108,7 +108,6 @@ $logoType = $helper->getConfig('logo_type','logo-theme');
 </head>
 <body class="<?php echo $class; ?> <?php echo $helper->getPageClass();?> layout-<?php echo $template_layout; ?>">
 
-
   <div  class="row-offcanvas row-offcanvas-left">
 
   <div id="page">

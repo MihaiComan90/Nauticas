@@ -10,7 +10,7 @@
             background-color: desaturate($nt-blue-dianne, 0%);
             background-size: 50% 50%; 
             background-position: -15% 50%;
-            padding-left: 120px;
+            padding-left: 30%;
             background-repeat: no-repeat;
             @include font-size($h3-font-size);
         }
@@ -64,11 +64,12 @@
                 content: '';
                 height: 580px;
                 width: 580px;
-                background: url('#{$img-path}motor_mercury.png') no-repeat / contain;
+                background: url('#{$img-path}motor_mercury.png') no-repeat;
                 display: block;
                 position: absolute;
                 top: -60px;
                 left: -30%;
+                background-size: contain;
             }
         }
     
