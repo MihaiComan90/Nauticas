@@ -1,0 +1,66 @@
+.product-block {
+    img {
+        max-width: 100%;
+    }
+
+    .product-image {
+        position: relative;
+    } 
+
+    .quick-view {
+        display: none;
+        text-align: center;
+        text-decoration: none;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        background: rgba(210, 201, 201, .2);
+        @include button-size(10px, 10px, 100%, 1, 0);
+        &:hover {
+            background: $black;
+            color: $white;
+        }
+    }
+
+    .add-to-wishlist {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        color: $nt-darkred;
+        font-size: 24px;
+        text-decoration: none;
+        &:hover {
+            &::before {
+                content:"\f004";
+            }
+        }
+    }
+
+    .product-name {
+        font-size: 16px;
+        font-weight: 500;
+        text-align: center;
+        min-height: 38px;
+    }
+
+    .rating {
+        color: $nt-yellow;
+        font-size: 24px;
+        font-size: 16px;
+    }
+
+    .price {
+        font-size: 16px;
+
+        .special-price {
+            color: $nt-lightpink;
+            font-weight: 600;
+        }
+    }
+
+    &:hover {
+        .quick-view {
+            display: block;
+        }
+    }
+}

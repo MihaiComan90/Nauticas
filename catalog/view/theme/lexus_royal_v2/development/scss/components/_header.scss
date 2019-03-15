@@ -1,0 +1,117 @@
+// Mini Cart
+@import './minicart';
+
+header {
+    // Search input
+    input[name="search"] {
+        border: 0;
+        border-bottom: 1px solid $gray;
+    }
+
+    .button-search { 
+        border: 0;
+        border-bottom: 1px solid $gray;
+        background: none;
+    }
+
+    .user-section {
+        i {
+            font-size: 25px;
+            vertical-align: middle;
+
+            &.fa-shopping-cart {
+                color: $black;
+                position: relative;
+
+                sup {
+                    color: $white;
+                    background: $pink;
+                    position: absolute;
+                    right: -2px;
+                    top: -5px;
+                    line-height: 15px;
+                    display: block;
+                    width: 15px;
+                    height: 15px;
+                    font-family: $font-family-base;
+                    @include font-size(18px);
+                    @include border-radius(100%);
+                }
+            }
+        }
+
+        .language,
+        .login {
+            .dropdown-menu {
+                margin: 0;
+                &::after,
+                &::before {
+                    content: '';
+                    width: 0;
+                    height: 0;
+                    right: 45%;
+                    top: -11px;
+                    position: absolute;
+                }
+
+                &::before {
+                    border-left: 11px solid transparent;
+                    border-right: 11px solid transparent;
+                    border-bottom: 11px solid $gray;
+                }
+                &::after {
+                    border-bottom: 10px solid $white;
+                    border-left: 10px solid transparent;
+                    border-right: 10px solid transparent;
+                    top: -10px;
+                }
+            }
+        }
+
+        .language {
+            img { 
+                height: 17px;
+            }
+
+            img, span {
+                vertical-align: middle;
+            }
+
+            .dropdown li a {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: nowrap;
+
+                img {
+                    margin-right: 10px;
+                }
+            }
+
+            .dropdown-menu {
+
+                &::after {
+                    right: 46%;
+                }
+
+            }
+        }
+
+        .login {
+            .dropdown-menu{
+                a {
+                    padding: 0 5px;
+                    font-weight: 400;
+                }
+
+                &::after {
+                    right: 45.5%;
+                }
+            }
+        }
+    }
+}
+
+// Heaer banner
+.header-banner {
+    text-align: right;
+}

@@ -1,0 +1,48 @@
+form {
+	padding: 0;
+	margin: 0;
+	display: inline;
+}
+input[type='text'], input[type='password'], textarea {
+	background:@input-bg;
+	border: 1px solid @input-border;
+	.rounded-corners( @input-border-radius );
+	padding: 3px;
+	margin-left: 0px;
+	margin-right: 0px;
+    .box-shadow(none);
+}
+.checkout .radio label{
+    padding-right: 15px;
+}
+.newsletter_block .input-group {
+    background: none repeat scroll 0 0 #363636;
+    border: 1px solid #414141;
+}
+.input-group{
+    .error, .alert-danger, .alert-success{
+        border: none;
+        .rounded-corners(0);
+        margin-bottom: 0;
+        padding: 5px;
+    }
+    .inputNew {
+        background: #363636;
+        border: none;
+        .rounded-corners(0);
+        height: 40px;
+        color: #848484;
+        padding-left: 10px;
+        width: 189px;
+        float: left;
+    }
+    .button_mini {
+        background: url('@{image-theme-path}icon.png') no-repeat 0 10px;
+        border: none;
+        height: 40px;
+        padding-right: 15px;
+        cursor: pointer;
+        float: right;
+    }
+}
+

@@ -30,6 +30,7 @@ class ControllerModuleHTML extends Controller {
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_title'] = $this->language->get('entry_title');
 		$data['entry_description'] = $this->language->get('entry_description');
+		$data['entry_class'] = $this->language->get('entry_class');
 		$data['entry_status'] = $this->language->get('entry_status');
 
 		$data['button_save'] = $this->language->get('button_save');

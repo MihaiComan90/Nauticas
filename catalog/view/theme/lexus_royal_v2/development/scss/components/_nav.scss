@@ -1,0 +1,90 @@
+nav {
+    background: $nt-tarawera;
+
+    ul {
+        margin: 0;
+        padding: 0;
+
+        li {
+            list-style-type: none;
+            list-style: none;
+        }
+    }
+
+    li.home > a::before{
+        content:"\f0c9";
+        font-family: 'FontAwesome';
+        position: relative;
+        margin-left: 3px;
+        margin-right: 5px;
+    }
+
+    .dropdown-submenu:hover {
+        .dropdown-menu {
+            display: block;
+        }
+    }
+
+    .dropdown-menu-inner {
+        a {
+            display: block;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+        }
+    }
+
+    .level1 {
+        width: 288px;
+        height: 442px;
+        display: block; 
+
+        .dropdown-submenu {
+            border-top: 1px solid transparent;
+            border-bottom: 1px solid transparent;
+
+            &:hover {
+                border-top-color: $nt-graylight;
+                border-bottom-color: $nt-graylight;
+            }
+        }
+    }
+
+    .level2,
+    .cols2 {
+        width: 1160px;
+        top: -8px;
+        left: 95%;
+        right: 0;
+        //display: block;
+
+        .dropdown-submenu {
+            border-top: 1px solid transparent;
+            border-bottom: 1px solid transparent;
+
+            &:hover {
+                border-top-color: transparent;
+                border-bottom-color: transparent;
+            }
+        }
+
+        .mega-group > a {
+            font-weight: 600;
+        }
+
+        .dropdown-menu {
+            display: block;
+            border: 0;
+            position: relative !important;
+        }
+    }
+
+    .level3 {
+        display: block;
+        position: relative;
+    }
+}
+
+.dropdown-menu {
+    @include border-radius(0);
+    box-shadow:unset;
+}

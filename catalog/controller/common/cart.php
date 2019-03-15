@@ -46,6 +46,10 @@ class ControllerCommonCart extends Controller {
 			array_multisort($sort_order, SORT_ASC, $total_data);
 		}
 
+		$data['text_minicart_total'] = $this->language->get('text_minicart_total');
+		$data['text_quantity'] = $this->language->get('text_quantity');
+		$data['text_model'] = $this->language->get('text_model');
+		$data['text_price_unit'] = $this->language->get('text_price_unit');
 		$data['text_empty'] = $this->language->get('text_empty');
 		$data['text_cart'] = $this->language->get('text_cart');
 		$data['text_checkout'] = $this->language->get('text_checkout');

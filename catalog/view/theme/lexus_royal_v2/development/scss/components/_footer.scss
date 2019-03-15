@@ -1,0 +1,86 @@
+footer {
+    background-color: $nt-cinder;
+    color: $white;
+    padding: 20px 0 5px;
+    margin-top: 20px;
+
+    a {
+        color: $white;
+
+        &:hover {
+            color: $white;
+            text-decoration: underline;
+        }
+    }
+
+    ul {
+        padding: 0;
+        margin: 0;
+
+        li {
+            list-style-type: none;
+            list-style: none;
+            margin-bottom: 5px;
+        }
+    }
+
+    .box-heading {
+        margin-bottom: 20px;
+        @include font-size($h5-font-size);
+    }
+
+    // Newsletter form
+    
+    .formNewLestter {
+
+        input[type="text"] {
+            height: 40px
+        }
+
+        .button_mini {
+            width: 110px;
+            color: $white;
+            @include button-variant($pink, $pink);
+        }
+    }
+
+    .contact {
+        li {
+            padding-left: 30px;
+            position: relative;
+
+            &::before {
+                font-family: 'FontAwesome';
+                font-size: 20px;
+                position: absolute;
+                left: 0;
+                margin: auto;
+            }
+
+            &.location::before {
+                content:"\f124";
+                line-height: 44px;
+            }
+
+            &.phone::before {
+                content:"\f095";
+                font-size: 23px;
+                line-height: 1;
+            }
+
+            &.email::before {
+                content:"\f003";
+                line-height: 23px;
+            }
+        }
+    }
+
+    .powered {
+        border-top: 1px solid darken($gray, 55%);
+
+        .copyright {
+            color: darken($gray, 40%);
+        }
+    }
+} 
+

@@ -1,0 +1,12 @@
+// Carousel homepage
+.page-home {
+    .productcarousel {
+        margin-top: 40px;
+
+        .box-heading h4 {
+            @include font-size($h3-font-size);
+            border-bottom: 1px solid $gray;
+            padding-bottom: 5px;
+        }
+    }
+}

@@ -1,0 +1,52 @@
+@import '../bootstrap/variables';
+
+$styles: (
+    thin: -Thin 100 normal,
+    thinItalic: -ThinItalic 100 italic,
+    xlight: -XLight 200 normal,
+    xlightItalic: XLightItalic 200 italic,
+    light: -Light 300 normal, 
+    lightItalic: -LightItalic 300 italic,
+    book: -Book 400 normal,
+    bookItalic: -BookItalic 400 italic,
+    medium: -Medium 600 normal,
+    mediumItalic: -Medium 600 italic,
+    bold: -Bold 700 normal, 
+    boldItalic: -Bold 700 italic, 
+    black: -Black 800 normal, 
+    blackItalic: -Black 800 italic, 
+    ultra: -Ultra 900 normal,
+    ultraItalic: -UltraItalic 900 italic
+);
+
+@each $style in map-values($styles) {
+    @font-face {
+        font-family: 'Roboto';
+        font-weight: nth($style, 2);
+        font-style: nth($style, 3);
+        src: url('#{$fa-font-path}/Roboto/Roboto#{nth($style, 1)}.ttf') format('ttf')
+    }
+}
+
+@font-face {
+    font-family: 'PT Sans Caption';
+    font-weight: 400;
+    font-style: regular;
+    src: url('#{$fa-font-path}/PT_Sans_Caption/PT_Sans-Caption-Web-Regular.ttf') format('ttf')
+}
+
+@font-face {
+    font-family: 'Copperplate';
+    font-weight: 300;
+    font-style: regular;
+    src: url('#{$fa-font-path}/Copperplate/Copperplate-Light.ttf') format('ttf')
+}
+
+@each $style in map-values($styles) {
+    @font-face {
+        font-family: 'Roboto Condensed';
+        font-weight: nth($styles, 2);
+        font-style: nth($styles, 3);
+        src: url('#{$fa-font-path}/Roboto_Condensed/RobotoCondensed#{nth($style, 1)}.ttf') format('ttf')
+    }
+}
