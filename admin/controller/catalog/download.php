@@ -396,9 +396,9 @@ class ControllerCatalogDownload extends Controller {
 			$this->error['filename'] = $this->language->get('error_filename');
 		}
 
-		if (!is_file(DIR_DOWNLOAD . $this->request->post['filename'])) {
+		/*if (!is_file(DIR_DOWNLOAD . $this->request->post['filename'])) {
 			$this->error['filename'] = $this->language->get('error_exists');
-		}
+		}*/
 
 		if ((utf8_strlen($this->request->post['mask']) < 3) || (utf8_strlen($this->request->post['mask']) > 128)) {
 			$this->error['mask'] = $this->language->get('error_mask');
@@ -492,9 +492,9 @@ class ControllerCatalogDownload extends Controller {
 		}
 
 		if (!$json) {
-			$file = $filename . '.' . md5(mt_rand());
+			$file = md5(mt_rand()) . $filename;
 
-			move_uploaded_file($this->request->files['file']['tmp_name'], DIR_DOWNLOAD . $file);
+			move_uploaded_file($this->request->files['file']['tmp_name'], '/home/nauticas/public_html/docs/' . $file);
 
 			$json['filename'] = $file;
 			$json['mask'] = $filename;

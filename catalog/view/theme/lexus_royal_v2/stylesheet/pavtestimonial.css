@@ -1,0 +1,50 @@
+.pavtestimonial {
+	position:relative;
+	margin:0;
+}
+.pavtestimonial .carousel-inner{
+	position:relative;
+}
+ 
+
+.pavtestimonial .carousel-indicators{
+	position:absolute;
+	bottom:10px;
+	left:20px;
+
+}
+.pavtestimonial .carousel-indicators li{ display:block;float:left;	z-index:20;
+	padding:10px; 
+	margin:3px; background:red; }
+.pavtestimonial .carousel-indicators li.active{ background:#000 }	
+
+.pavtestimonial  .thumb-indicators li {text-indent:0; 
+	display: block;
+    float: left;
+    height: 97px;
+    margin: 3px;
+    padding: 3px;
+    width: 23%;
+    z-index: 20;
+}
+
+.testimonial-item {
+  margin-bottom: 20px;
+}
+.testimonial-item .profile > h4 {
+  font-weight: 600;
+  padding-bottom: 5px;
+}
+.testimonial-item .t-avatar .img-circle {
+  margin-right: 30px;
+  margin-bottom: 40px;
+}
+.testimonial-item .testimonial {
+  color: #7c7c7c;
+}
+.testimonial-item .testimonial a {
+  color: #7c7c7c;
+}
+.testimonial-item .testimonial a:hover {
+  color: #f7942d;
+}

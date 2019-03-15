@@ -1,0 +1,178 @@
+.page-home,
+.common-home {
+    .benefits {
+        color: $white;
+        font-weight: 100;
+        letter-spacing: 1.5px;
+    
+        [class^='benefits'] {
+            height: 100px;
+            background-color: desaturate($nt-blue-dianne, 0%);
+            background-size: 50% 50%; 
+            background-position: -15% 50%;
+            padding-left: 120px;
+            background-repeat: no-repeat;
+            @include font-size($h3-font-size);
+        }
+    
+        [class$='__order'] {
+            background-image: url('#{$img-path}svg/special_orders.svg');
+        }
+        [class$='__deliver'] {
+            background-image: url('#{$img-path}svg/quick_delivery.svg');
+        }
+        [class$='__payment-method'] {
+            background-image: url('#{$img-path}svg/payment_methods.svg');
+        }
+        [class$='__order-return'] {
+            background-image: url('#{$img-path}svg/order_return.svg');
+        }
+    }
+
+    .middle-promo-banner {
+        margin: 100px 0;
+        .card {
+            border: 0;
+        }
+    
+        .card-title {
+            font-family: 'Copperplate';
+            font-size: 42px;
+            font-weight: 100;
+            letter-spacing: 1.5px;
+        }
+    
+        .card-body {
+            background-color: $nt-vulcan;
+            color: $white;
+            position: relative;
+            height: 460px;
+            width: 70%;
+            margin-left: auto;
+            padding-left: 250px;
+    
+            &::after {
+                content: '';
+                position: absolute;
+                height: 100%;
+                background-color: $nt-vulcan;
+                left: 100%;
+                top: 0;
+            }
+    
+            &::before {
+                content: '';
+                height: 580px;
+                width: 580px;
+                background: url('#{$img-path}motor_mercury.png') no-repeat / contain;
+                display: block;
+                position: absolute;
+                top: -60px;
+                left: -30%;
+            }
+        }
+    
+        .card-text {
+            font-family: 'Roboto Condensed';
+            font-weight: 300;
+            font-size: 26px;
+            letter-spacing: 1.3px;
+            margin: 15px 0 25px;
+        }
+    
+        .card-action {
+            width: 50%;
+            
+            a {
+                color: $white;
+            }
+        }
+    }
+    
+    // Mercury Cards
+    .engine-box {
+        .card {
+            border: 0;
+        }
+
+        .card-img-top {
+            border: 0;
+            max-width: 50%;
+            margin: 0 auto 5px;
+            display: block;
+        }
+
+        .card-body {
+            border-top: 1px solid $gray;
+        }
+
+        .card-title {
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .card-subtitle {
+            font-family: 'Apple SD Gothic Neo';
+            font-size: 46px;
+            color: $nt-darkred;
+            text-align: center;
+            font-weight: 600;
+            margin: 20px 0 10px;
+        }
+
+        .card-text {
+            font-weight: 200;
+            font-size: 14px;
+        }
+    }
+
+    // Services
+    .footer-services {
+
+        .card {
+            border: 0;
+        }
+
+        .card-img-top {
+            width: 120px;
+            height: 120px;
+            text-align: center;
+            margin: auto;
+
+            i {
+                font-size: 50px;
+                line-height: 2.4;
+                color: $nt-cinder;
+            }
+        }
+
+        .card-title {
+            font-size: 21px;
+            text-align: center;
+            font-weight: 600;
+            font-family: $font-family-secondary;
+            text-transform: uppercase;
+            letter-spacing: 1.3px;
+        }
+
+        .card-text {
+            text-align: center;
+            margin: 20px 0;
+            min-height: 85px;
+            font-weight: 100;
+        }
+
+        .section-title {
+            background: $nt-taraweraapprox;
+            color: $white;
+            text-align: center;
+            text-transform: uppercase;
+            font-weight: 300;
+            font-size: 24px;
+            letter-spacing: 1.5px;
+            padding: 15px 0;
+            margin: 20px 0;
+        }
+    }
+}
+

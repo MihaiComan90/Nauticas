@@ -1,0 +1,245 @@
+.offcanvas-menu .button-close-menu {
+  right: inherit;
+  left: 20px;
+}
+.topbar ul li .text-link {
+  float: left;
+}
+#header #cart .heading {
+  background-position: 90% center;
+  float: left;
+  padding-left: 0;
+  padding-right: 35px;
+}
+#search .button-search {
+  left: 5px;
+  right: inherit;
+}
+.box-services .media-body {
+  background-position: 100% center;
+  float: right;
+  padding-left: 0;
+  padding-right: 45px;
+}
+.navbar-header {
+  float: right;
+}
+.navbar-nav > li {
+  float: right;
+}
+.dropdown-menu {
+  left: inherit;
+  right: 0;
+  float: right;
+}
+#pav-mainnav .navbar {
+  margin-right: 80px;
+  margin-left: 0;
+}
+#pav-mainnav .megamenu .menu-icon {
+  background-position: right center !important;
+  padding-right: 30px;
+  padding-left: 0;
+}
+.pav-megamenu .dropdown .dropdown-menu li a:hover {
+  padding-right: 10px;
+}
+#header-main #pav-mainnav .widget-product-list .image {
+  float: right;
+}
+#header-main #pav-mainnav .widget-product-list .products-meta {
+  text-align: right;
+}
+#header-main #pav-mainnav .widget-product-list .action,
+#header-main #pav-mainnav .widget-product-list .price-old {
+  float: right;
+  padding-left: 5px;
+  padding-right: 0;
+}
+.box-heading .headding-title {
+  float: right;
+}
+.box.producttabs .box-heading {
+  padding-right: 0;
+}
+.box .box-heading .heading-image {
+  margin-left: 10px;
+  margin-right: 0;
+}
+.carousel-controls {
+  left: 0;
+  right: inherit;
+}
+.producttabs .nav-tabs {
+  left: 0;
+  right: inherit;
+}
+.producttabs .nav-tabs li {
+  float: right;
+  padding-right: 0;
+  padding-left: 25px;
+}
+.product-block .image .pav-colorbox span {
+  margin-right: 0;
+  margin-left: 6px;
+}
+.product-block .action .action-inner .wishlist {
+  margin-left: 0;
+}
+.product-block .price-old {
+  float: left;
+}
+.contact .fabox {
+  float: right;
+  margin-left: 10px;
+}
+.contact .fabox i {
+  padding-left: 0;
+  padding-right: 5px;
+}
+.htabs a {
+  float: right;
+}
+.addthis_default_style {
+  float: right;
+}
+.sidebar .box .box-heading {
+  padding-right: 45px;
+  padding-left: 0;
+}
+.sidebar .box .box-heading:before {
+  right: 14px;
+  left: inherit;
+}
+.sidebar .product-meta {
+  text-align: right;
+}
+.sidebar .product-block .image {
+  float: right;
+  margin-left: 12px;
+  margin-right: 0;
+}
+.sidebar .subcart {
+  left: 7px;
+  right: inherit;
+}
+.t-avatar .img-circle {
+  margin-right: 0;
+  margin-left: 30px;
+}
+.box-static .static {
+  background-position: right center;
+  float: right;
+  padding-left: 0;
+  padding-right: 60px;
+}
+.box-static .static.support {
+  background-position: right center;
+  padding-left: 0;
+  padding-right: 53px;
+}
+.box-static .static.feature {
+  background-position: right center;
+}
+.box-static .static.mauris {
+  background-position: right center;
+}
+.box-static li {
+  border-width: 0 0 0 1px;
+}
+.box-static li:last-child {
+  border: none;
+}
+.product-info .quantity-adder span,
+.product-info .quantity-adder span.add-down {
+  left: -18px;
+  right: inherit;
+}
+.product-info .quantity-adder {
+  margin-left: 32px;
+  margin-right: 0;
+}
+.product-info .column-image {
+  margin-right: 0;
+  margin-left: 25px;
+}
+.product-info .product-extra .wishlist {
+  margin-left: 0;
+  margin-right: 12px;
+}
+.heading-title > .title {
+  float: right;
+}
+.product-filter .display a > span {
+  border-left: none;
+  border-right: 1px solid #e3e3e3;
+}
+.product-filter .display a.grid > span {
+  border-left: 1px solid #e3e3e3;
+}
+.product-filter .display,
+.product-filter .sort,
+.product-filter .limit {
+  float: right;
+}
+.product-filter .product-compare {
+  float: left;
+}
+#footer .box .box-heading {
+  padding-right: 0;
+}
+.input-group .inputNew {
+  padding-left: 0;
+  padding-right: 10px;
+  float: right;
+}
+.input-group .button_mini {
+  margin-left: 10px;
+  float: left;
+}
+.product-list .product-block .group-item {
+  float: right;
+}
+.product-list .product-block .cart .addtocart {
+  float: right;
+}
+.product-list .product-block .action span {
+  padding-right: 5px;
+  padding-left: 0;
+}
+.product-list .product-block .price {
+  float: right;
+  width: 70%;
+}
+.offcanvas-menu .widget-product-list .image {
+  float: right;
+}
+.offcanvas-menu .widget-product-list .price-old {
+  float: right !important;
+  padding-left: 5px;
+}
+.zoomWindow {
+  left: -400px !important;
+}
+.zoomLens {
+  float: left !important;
+}
+#header #cart .dropdown-menu {
+  right: -122px;
+}
+.rtl .pavblogs-comments-box img {
+  float: right;
+  padding-left: 12px;
+}
+.rtl .blog-social .social-wrap > div,
+.rtl .productdeals .product-filter > div,
+.rtl .blog-meta > span {
+  float: right;
+}
+.rtl .reassurances-center .static span {
+  float: right;
+  padding: 0 19px;
+}
+.rtl .nav-tabs > li {
+  float: right;
+}

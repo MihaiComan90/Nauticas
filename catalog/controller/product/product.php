@@ -14,6 +14,7 @@ class ControllerProductProduct extends Controller {
 
 		$this->load->model('catalog/category');
 
+
 		if (isset($this->request->get['path'])) {
 			$path = '';
 
@@ -209,6 +210,10 @@ class ControllerProductProduct extends Controller {
 				$url .= '&limit=' . $this->request->get['limit'];
 			}
 
+
+			//$data['link'] = $product_info['url'];
+			//$data['filename'] = $product_info['filename'];
+
 			$data['breadcrumbs'][] = array(
 				'text' => $product_info['name'],
 				'href' => $this->url->link('product/product', $url . '&product_id=' . $this->request->get['product_id'])
@@ -268,6 +273,11 @@ class ControllerProductProduct extends Controller {
 			$data['model'] = $product_info['model'];
 			$data['reward'] = $product_info['reward'];
 			$data['points'] = $product_info['points'];
+
+
+            $data['filename'] = $product_info['filename'];
+            $data['url'] = $product_info['url'];
+
 
 			if ($product_info['quantity'] <= 0) {
 				$data['stock'] = $product_info['stock_status'];
@@ -455,6 +465,9 @@ class ControllerProductProduct extends Controller {
 
 			$data['text_payment_recurring'] = $this->language->get('text_payment_recurring');
 			$data['recurrings'] = $this->model_catalog_product->getProfiles($this->request->get['product_id']);
+
+            $data['download'] = $this->model_catalog_product->getDocumentProduct($this->request->get['product_id']);
+
 
 			$this->model_catalog_product->updateViewed($this->request->get['product_id']);
 
@@ -705,6 +718,8 @@ class ControllerProductProduct extends Controller {
 
 				$json['success'] = $text;
 			}
+
+
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

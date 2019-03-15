@@ -55,6 +55,12 @@
                     <textarea name="module_description[<?php echo $language['language_id']; ?>][description]" placeholder="<?php echo $entry_description; ?>" id="input-description<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset($module_description[$language['language_id']]['description']) ? $module_description[$language['language_id']]['description'] : ''; ?></textarea>
                   </div>
                 </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-class<?php echo $language['language_id']; ?>"><?php echo $entry_class; ?></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="module_description[<?php echo $language['language_id']; ?>][class]" placeholder="<?php echo $entry_class; ?>" id="input-class<?php echo $language['language_id']; ?>" value="<?php echo isset($module_description[$language['language_id']]['class']) ? $module_description[$language['language_id']]['class'] : ''; ?>" class="form-control" />
+                  </div>
+                </div>
               </div>
               <?php } ?>
             </div>

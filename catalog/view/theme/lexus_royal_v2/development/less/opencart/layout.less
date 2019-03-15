@@ -1,0 +1,271 @@
+/******************************************************
+ * @package Pav Opencart Theme Framework for Opencart 1.5.x
+ * @version 1.1
+ * @author http://www.pavothemes.com
+ * @copyright	Copyright (C) Augus 2013 PavoThemes.com <@emai:pavothemes@gmail.com>.All rights reserved.
+ * @license		GNU General Public License version 2
+*******************************************************/
+/*
+ * HEADER 
+ */
+ #page{
+    margin: 0 auto;
+}
+body{
+    &.layout-boxed-md{
+        background: url("@{image-theme-path-base}pattern2.png");
+        #page{  max-width: @container-desktop; .box-shadow(0 0 5px #888); background: @white;}
+    }
+    &.layout-boxed-lg{
+        background: url("@{image-theme-path-base}pattern2.png");
+        #page{  max-width: @container-lg-desktop; .box-shadow(0 0 5px #888); background: @white; }
+    }
+    &.fullwidth{ }
+ }
+ #topbar{
+    background: @topbar-bg;
+    max-height: 42px;
+    font-weight: 600;
+ }
+.topbar  {
+    .caret{
+        border-color: #B4B4B4 rgba(0, 0, 0, 0);
+    }
+    ul {
+        li {
+            a {
+                font-size: @topbar-font-size;
+                color: @topbar-link-color;
+            }
+            &:hover a{
+                color:@theme-color-hover;   
+            }
+            .text-link{
+                display: inline-block; 
+            }
+        }
+        
+    }
+}
+
+#header{
+    border-bottom: 1px solid #dfdfdf;
+    .box-shadow (0 0 5px #dfdfdf);
+    position: relative;
+    z-index: 999;
+}
+#header-main{
+    background-color: @orange;    
+    #logo{
+        padding-top: 22px;
+        padding-bottom: 22px;
+    }
+    #logo-theme{
+        padding-top: 22px;
+        padding-bottom: 22px;
+        a{
+            background: url('@{image-theme-path}logo.png') no-repeat;
+            .size(194px, 28px);
+            display: inline-block;
+            span{
+                display: none;
+            }
+        }
+    }
+    .inner{
+        & > *{
+            display: table-cell;
+            vertical-align: middle;
+        }
+    }
+}
+ 
+/*
+ * NAVIGATION
+ */
+#pav-mainnav {
+    .mainnav-wrap {
+        background: @mainnav-wrap-bg;
+        margin-bottom: @box-module-margin - 3;
+    }
+}
+
+
+/*
+ * SLIDESHOW 
+ */
+#pav-slideshow {}
+
+/*
+ * Sidebar
+ */
+.sidebar {
+    margin-top: 30px;
+}
+
+/*
+ * PROMOTION TOP 
+ */
+#pavo-promotion {
+    border-top: 1px solid #e6e6e6;
+    border-bottom: 1px solid #e6e6e6;
+    background: #f3f3f3;
+    padding-top: 30px;
+}
+/*
+ * MAIN CONTENT
+ */  
+#content {
+    margin-top: 30px;
+    min-height: 400px;
+}
+
+.sidebar  [class*="col-"] {
+    width: 100%
+}
+
+#pav-mass-bottom {
+    border-top: 1px solid #e6e6e6;
+    background: #f3f3f3;
+    padding-top: 30px;
+}
+/*contact*/
+.contact-location{
+    margin-bottom: @padding-base-horizontal;
+    img{
+        max-width: none;
+    }    
+}
+.wrapper h1{
+    text-transform: uppercase;
+    padding-bottom: 10px;
+}
+.contact-content{
+    .content{
+        background-color: @contact-bg;
+        padding: @contact-padding ;
+        border: @contact-border;
+        a{
+            color: @gray-light;
+        }
+    }
+    h3{
+        text-transform: uppercase;
+        padding-bottom: 10px;
+        padding-top: 10px;
+    }
+    .buttons{
+        border: 0;
+        padding: 0;
+        margin-top: 20px;
+        background:transparent;
+    }
+    .contact-info{
+        .content{
+            padding-bottom: 0;
+        }
+        .media{
+            &:hover{
+                .fa{
+                    background-color: @contact-icon-hover-bg;
+                } 
+            }
+        }
+        .fa{
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            color: @contact-icon-color;
+            background-color: @contact-icon-bg;
+            font-size: @contact-icon-font-size;
+            margin-bottom: 10px;
+            .transition(all 0.2s ease-in 0s);
+            .rounded-corners(50%);
+        
+        }
+    }
+}
+/* FOOTER*/
+#footer {
+    .container-inner{
+        padding-top: 10px;
+        color: #848484;
+    }
+    background: #2E2E2E;
+    .box { 
+        .box-heading{
+            .clearboxstyle(); 
+            color: @footer-heading-color;
+            font-size: @footer-heading-font-size;
+            margin-bottom: 0;
+            font-weight: 400;
+            line-height: 40px;
+            text-transform: uppercase;
+        }
+        .box-content{
+            .clearboxstyle(); 
+        }
+    } 
+    .footer-top{
+        background: @white;
+        border-bottom: 1px solid #E6E6E6;
+        border-top: 1px solid #E6E6E6;
+    }
+    .footer-center{
+        border-bottom: 1px solid #363636;
+    }
+    .footer-bottom{
+        .newsletter-social{
+            border: 1px solid @gray-light;
+            padding: @footer-padding - 8;
+        }
+    }
+    .column {
+        a {
+            text-decoration: none;
+            color: @footer-link-color;
+            .transition ( padding 0.5s ease 0s);
+            &:hover {
+                color:@footer-link-hover-color;
+                padding-left: 10px;
+            }
+        }
+        ul {
+            li {
+                a {
+                    background: none;
+                    padding-left: 0;
+                    text-transform: none;
+                }
+            }
+        }
+    }
+}
+
+/* POWER BY */
+.powered {
+    padding: @footer-padding 0; 
+    color:@gray-light;
+    overflow: hidden;
+    border-top: 1px solid #363636;
+    a{
+        color: @theme-color-secondary;
+    }
+    .paypal{
+        padding-top: @footer-padding - 5;
+    }
+}
+
+.banner {
+    div {
+        text-align: center;
+        width: 100%;
+        display: none;
+        img {
+            margin-bottom: 20px;
+        }
+    }
+}
+
+
