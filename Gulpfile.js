@@ -75,7 +75,8 @@ gulp.task('js', function() {
 				.pipe(sourcemaps.init({loadMaps: true}))
 				.pipe(sourcemaps.write('./'))
 			//
-			.pipe(gulp.dest(paths.js.dest));
+			.pipe(gulp.dest(paths.js.dest))
+			.pipe(livereload());
 	}
 	
 	return rebundle();
@@ -85,11 +86,7 @@ gulp.task('js', function() {
 /* Watch JS & SCSS */
 gulp.task('watch', ['enable-watch-mode', 'js', 'scss'], function () {
 	livereload.listen();
-	livereload.reload({
-		port: 35729,
-		host: 'http://nautica.local/',
-		isChromeExtension: true
-	});
+	livereload.reload();
 	gulp.watch(paths.scss.src, ['scss']);
 });
 

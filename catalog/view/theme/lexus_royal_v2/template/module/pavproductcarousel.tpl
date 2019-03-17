@@ -42,44 +42,16 @@
 	<div class="<?php echo $prefix;?> box productcarousel box-normal" id="module<?php echo $id; ?>">
 		<div class="box-heading"><h4><span><?php echo $heading_title; ?></span></h4></div>
 		<div class="box-content" >
-			<div class="box-products slide" id="productcarousel<?php echo $id;?>">
-	<!-- 			<?php if( trim($message) ) { ?>
-				<div class="box-description"><?php echo $message;?></div>
-				<?php } ?> -->
-			
-				<?php if( count($products) > $itemsperpage ) { ?>
-			<div class="carousel-controls">
-				<a class="carousel-control left center" href="#productcarousel<?php echo $id;?>"   data-slide="prev">
-					<i class="fa fa-angle-left"></i>
-				</a>
-				<a class="carousel-control right center" href="#productcarousel<?php echo $id;?>"  data-slide="next">
-					<i class="fa fa-angle-right"></i>
-				</a>
-			</div>
-			<?php } ?>
-				<div class="carousel-inner product-grid">		
-					<?php $pages = array_chunk( $products, $itemsperpage); ?>	
-					<?php foreach ($pages as  $k => $tproducts ) {   ?>
-					<div class="item <?php if($k==0) {?>active<?php } ?> products-block">
-						<?php foreach( $tproducts as $i => $product ) {  $i=$i+1;?>
-							<?php if( $i%$cols == 1 || $cols == 1) { ?>
-							<div class="row products-row <?php ;if($i == count($tproducts) - $cols +1) { echo "last";} ?>"><?php //start box-product?>
-							<?php } ?>
-								<div class="col-lg-<?php echo $span;?> col-md-<?php echo $span;?> col-sm-6 col-xs-12 <?php if($i%$cols == 0) { echo "last";} ?> product-col">
-									<?php require( $productLayout );  ?>   
-								</div>
-									
-							<?php if( $i%$cols == 0 || $i==count($tproducts) ) { ?>
-							</div><?php //end box-product?>
-							<?php } ?>
-						<?php } //endforeach; ?>
-					</div>
-					<?php } ?>
-				</div>  
+			<div class="box-products slide" id="productcarousel-<?php echo $id;?>">
+				<?php $pages = array_chunk( $products, $itemsperpage); ?>	
+				<?php foreach ($pages as  $k => $tproducts ) {   ?>
+					<?php foreach( $tproducts as $i => $product ) { ?>
+							<div class="product-col">
+								<?php require( $productLayout );  ?>   
+							</div>
+					<?php } //endforeach; ?>
+				<?php } ?>
 			</div>
 		</div>
 	</div>
 </div>
-<script type="text/javascript"><!--
-	$('#productcarousel<?php echo $id;?>').carousel({interval:<?php echo ( $auto_play_mode?$interval:'false') ;?>,auto:<?php echo $auto_play;?>,pause:'hover'});
---></script>

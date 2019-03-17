@@ -19,6 +19,7 @@ $helper->addScript( 'catalog/view/javascript/jquery/jquery-2.1.1.min.js' );
 $helper->addScript('catalog/view/javascript/jquery/magnific/jquery.magnific-popup.min.js');
 $helper->addScript( 'catalog/view/javascript/bootstrap/js/bootstrap.min.js' );
 $helper->addScript( 'catalog/view/theme/'.$themeName.'/javascript/static/default/js/lib/slick.min.js' );
+$helper->addScript( 'catalog/view/theme/'.$themeName.'/javascript/static/default/js/lib/jquery.mmenu.all.js' );
 $helper->addScript( 'catalog/view/javascript/common.js' );
 $helper->addScript( 'catalog/view/theme/'.$themeName.'/javascript/common.js' );
 $helper->addScript( 'catalog/view/theme/'.$themeName.'/javascript/static/default/js/app.js' );

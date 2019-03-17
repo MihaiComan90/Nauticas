@@ -1,9 +1,10 @@
 @import '../scss/bootstrap/variables';
 @import '../../../../../../node_modules/bootstrap/scss/bootstrap.scss';
 @import '../scss/bootstrap/bootstrapOverrides';
-@import '../scss/lib/_slick.less';
+@import '../scss//lib/jquery.mmenu.all';
 @import './typo/fonts.scss';
-@import './components/header'; 
+@import './lib/slick';
+@import './components/header';
 @import './components/footer';
 @import './components/nav';
 @import './components/productTile'; 

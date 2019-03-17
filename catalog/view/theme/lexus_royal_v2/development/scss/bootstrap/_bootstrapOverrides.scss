@@ -26,40 +26,13 @@
     background-color: transparent;
 }
 
-
 // Navigation
-
 .navbar-inverse {
     background: $nt-tarawera;
     border-color: transparent;
     margin-bottom: 0;
     min-height: auto;
 }
-
-.navbar {
-    padding: 0;
-}
-
-.navbar-nav {
-    flex-direction: inherit;
-}
-
-.navbar-nav .dropdown-menu:not(.level3) {
-    position: absolute;
-}
-
-.nav .caret {
-    display: none;
-}
-
-.navbar-inverse .navbar-nav > li > a {
-    padding-left: 0;
-}
-
-.navbar-collapse {
-    padding: 0;
-}
-
 
 // Carousel
 .carousel-control {
@@ -121,4 +94,3 @@
     background: $white;
     @include button-outline-variant($black, $color-hover: $white);
 }
-

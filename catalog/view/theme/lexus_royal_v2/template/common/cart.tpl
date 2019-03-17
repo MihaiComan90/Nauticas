@@ -1,6 +1,6 @@
 <div id="cart" class="position-relative dropdown">
 	<div data-loading-text="<?php echo $text_loading; ?>" class="media-body heading">
-		<a class="btn"><span id="cart-total"><?php echo $text_items; ?></span></a>
+		<a class="btn" href="<?php echo $shopping_cart; ?>"><span id="cart-total"><?php echo $text_items; ?></span></a>
 	</div>
 	<div class="minicart dropdown-menu">
 		<?php if ($products || $vouchers) { ?>

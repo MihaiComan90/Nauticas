@@ -30,26 +30,41 @@
     }
 
     .middle-promo-banner {
-        margin: 100px 0;
+        margin: 10px 0;
+
+        @include media-breakpoint-up(md) {
+            margin: 100px 0;
+        }
         .card {
             border: 0;
-        }
+        } 
     
         .card-title {
             font-family: 'Copperplate';
-            font-size: 42px;
+            font-size: 23px;
             font-weight: 100;
             letter-spacing: 1.5px;
+            text-align: center;
+
+            @include media-breakpoint-up(md) {
+                font-size: 42px;
+                text-align: left;
+            }
         }
-    
+
         .card-body {
             background-color: $nt-vulcan;
             color: $white;
             position: relative;
-            height: 460px;
-            width: 70%;
+            height: 200px;
+            width: 100%;
             margin-left: auto;
-            padding-left: 250px;
+            
+            @include media-breakpoint-up(md) {
+                height: 460px;
+                padding-left: 250px; 
+                width: 70%;
+            }
     
             &::after {
                 content: '';
@@ -62,30 +77,44 @@
     
             &::before {
                 content: '';
+                display: none;
                 height: 580px;
                 width: 580px;
                 background: url('#{$img-path}motor_mercury.png') no-repeat;
-                display: block;
+                background-size: contain; 
                 position: absolute;
                 top: -60px;
                 left: -30%;
-                background-size: contain;
+                
+                @include media-breakpoint-up(md) {
+                    display: block;
+                }
             }
         }
     
         .card-text {
             font-family: 'Roboto Condensed';
             font-weight: 300;
-            font-size: 26px;
+            font-size: 14px;
             letter-spacing: 1.3px;
-            margin: 15px 0 25px;
+            text-align: center;
+
+            @include media-breakpoint-up(md) {
+                font-size: 26px;
+                margin: 15px 0 25px;
+                text-align: left;
+            }
         }
     
         .card-action {
-            width: 50%;
+            width: 100%;
             
             a {
                 color: $white;
+            }
+
+            @include media-breakpoint-up(md) {
+                width: 250px;
             }
         }
     }
@@ -143,8 +172,8 @@
             i {
                 font-size: 50px;
                 line-height: 2.4;
-                color: $nt-cinder;
-            }
+                color: $nt-cinder; 
+            } 
         }
 
         .card-title {
@@ -168,11 +197,30 @@
             color: $white;
             text-align: center;
             text-transform: uppercase;
-            font-weight: 300;
-            font-size: 24px;
+            font-weight: 300; 
+            font-size: 12px;
             letter-spacing: 1.5px;
             padding: 15px 0;
             margin: 20px 0;
+
+            @include media-breakpoint-up(md) {
+                font-size: 24px;
+            }
+        }
+    }
+
+    // Slick
+    .productcarousel {
+        margin-top: 40px;
+
+        .box-heading {
+            margin-bottom: 20px;
+            
+            h4 {
+                @include font-size($h4-font-size);
+                border-bottom: 1px solid $gray;
+                padding-bottom: 5px;
+            }
         }
     }
 }
