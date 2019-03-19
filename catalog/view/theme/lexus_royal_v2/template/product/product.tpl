@@ -252,18 +252,11 @@ $('#button-cart').on('click', function() {
 			
 
 			if (json['success']) {
-
 				$('#notification').html('<div class="alert alert-success">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-				
-
-				$('#cart-total').html(json['total']);
-
-				
+				//$('#cart-total').html(json['total']);
 
 				$('html, body').animate({ scrollTop: 0 }, 'slow');
-
-				
 
 				$('#cart > ul').load('index.php?route=common/cart/info ul li');
 

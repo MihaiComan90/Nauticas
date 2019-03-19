@@ -164,20 +164,19 @@ class ModelCatalogProduct extends Model {
                         /*Start variant options here*/
                         $this->load->model('catalog/product_variant');
 
-                        if(isset($product_attribute['option_variant']) && is_array($product_attribute['option_variant'])) {
-                            if(isset($data[self::PRODUCT_VARIANT_IMAGE_LABEL.$row])) {
-                                $data['product_attribute'][$row]['option_variant']['variant_image'] = $data[self::PRODUCT_VARIANT_IMAGE_LABEL.$row];
-                                unset($data[self::PRODUCT_VARIANT_IMAGE_LABEL.$row]);
-                            }
-                            $variantOptions = $data['product_attribute'][$row]['option_variant'];
-                            if(isset($variantOptions['enable'])) {
-                                if($variantOptions['variant_id']) {
-                                    $this->model_catalog_product_variant->editProductVariant($product_id, $variantOptions);
-                                } else {
-                                    $this->model_catalog_product_variant->addProductVariant($product_id, $product_attribute['attribute_id'], $variantOptions);
+                        if(isset($product_attribute['is_variant']) && is_array($product_attribute['option_variant'])) {
+                            foreach($product_attribute['option_variant'] as $key => $variant) {
+                                $imageInput = $data[self::PRODUCT_VARIANT_IMAGE_LABEL . $row . '_' . $key];
+                                if (isset($imageInput) && $imageInput['name']) {
+                                    $variant['variant_image'] = $imageInput;
+                                    unset($data[self::PRODUCT_VARIANT_IMAGE_LABEL . $row . '_' . $key]);
                                 }
-                            } elseif(isset($variantOptions['variant_id'])) {
-                                $this->model_catalog_product_variant->deleteProductVariant($product_id, $product_attribute['attribute_id'], $variantOptions['variant_id']);
+
+                                if ($variant['variant_id']) {
+                                    $this->model_catalog_product_variant->editProductVariant($product_id, $variant);
+                                } else {
+                                    $this->model_catalog_product_variant->addProductVariant($product_id, $product_attribute['attribute_id'], $variant);
+                                }
                             }
                         } else {
                             $this->model_catalog_product_variant->deleteProductVariant($product_id, $product_attribute['attribute_id']);

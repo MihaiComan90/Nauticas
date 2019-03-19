@@ -433,7 +433,7 @@ class ControllerAccountReturn extends Controller {
                 $this->load->model('catalog/product_variant');
                 $variant_info = $this->model_catalog_product_variant->loadProductVariant($data['variant_id']);
                 if($variant_info && $variant_info['product_id'] == $product_info['product_id']) {
-                    $product_info['name'] .= ' - ' .$variant_info['variant_name'];
+                    $product_info['name'] .= ' - ' .$variant_info['name'];
                 }
             }
 		}

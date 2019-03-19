@@ -7,8 +7,10 @@ $_['heading_title']          = 'Variante de produs';
 $_['entry_attribute_option'] = 'Optiuni varianta';
 $_['option_variant_label']   = 'Marcheaza atributul ca varianta';
 $_['option_variant_customurl_label'] = 'URL-ul variantei';
-$_['option_variant_customimage_label'] = 'Imagine varianta';
-$_['option_variant_customprice_label'] = 'Pretul variante';
+$_['variant_nr_label'] = 'Varianta #';
+$_['add_variant_label'] = 'Adauga varianta';
+$_['option_variant_name_label'] = 'Numele variantei';
+$_['option_variant_customprice_label'] = 'Pretul variantei';
 /**/
 $_['text_success'] = 'Setari actualizate';
 $_['option_label_disable'] = 'Inactiv';

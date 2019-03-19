@@ -99,7 +99,7 @@ class ControllerProductProductVariants extends Controller {
                             $data[$key]['total'] = (float)$variant['price'] * $data[$key]['quantity'];
                         }
 
-                        $data[$key]['name'] .= ' - '. $variant['variant_name'];
+                        $data[$key]['name'] .= ' - '. $variant['name'];
                         $sufferedChanges = true;
                     }
                 }

@@ -582,7 +582,10 @@ class ControllerCatalogProduct extends Controller {
         $data['entry_attribute_option'] = $this->language->get('entry_attribute_option');
         $data['option_variant_label'] = $this->language->get('option_variant_label');
         $data['option_variant_customurl_label'] = $this->language->get('option_variant_customurl_label');
+        $data['variant_nr_label'] = $this->language->get('variant_nr_label');
+        $data['add_variant_label'] = $this->language->get('add_variant_label');
         $data['option_variant_customimage_label'] = $this->language->get('option_variant_customimage_label');
+        $data['option_variant_name_label'] = $this->language->get('option_variant_name_label');
         $data['option_variant_customprice_label'] = $this->language->get('option_variant_customprice_label');
         $data['variants_img_dir'] = DIR_IMAGE . VARIANT_IMAGE_PATH;
         /* End*/
