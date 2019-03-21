@@ -71,9 +71,10 @@ $objlang = $this->registry->get('language');
 <!-- Navigation -->  		  
 <nav id="topbar">
   <div class="container">
+	<a href="#mobile_menu" class="hamburger d-lg-none"><i class="fa fa-bars"></i></a>
+	<a href="javascript:;"><i class="fa fa-bars"></i> Produse</a>
   	<div class="topbar">
-	  <a href="#mobile_menu">Menu</button>
-  		<div class="pull-left menu inner">
+  		<div class="menu inner">
 			<div id="pav-mainnav">
 				<div class="container-inner">
 					<div class="row">
