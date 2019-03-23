@@ -1,7 +1,7 @@
 <?php $olang = $this->registry->get('language'); ?>
 <div class="product-filter clearfix">
   <div class="display">
-  <span><?php echo $olang->get('text_display'); ?></span>
+    <span><?php echo $olang->get('Tip afisare'); ?></span>
     <div class="btn-group group-switch">
       <button type="button" id="list-view" class="btn-switch list" data-toggle="tooltip" title="<?php echo $button_list; ?>"><span class="fa fa-th-list"></span></button>
       <button type="button" id="grid-view" class="btn-switch grid" data-toggle="tooltip" title="<?php echo $button_grid; ?>"><span class="fa fa-th-large"></span></button>

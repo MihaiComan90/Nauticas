@@ -1,6 +1,26 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 'use strict';
 
+module.exports = {
+    init: function () {
+        this.toggle();
+    },
+
+    toggle: function () {
+        var $container = $('#sidebar-left .list-box');
+        $container.each(function() {
+            var $listHeader = $(this).find('a.list-group-item'),
+                $listBody = $(this).find('div.list-group-item');
+            $listHeader.off('click').on('click', function() {
+                $listBody.slideToggle();
+                $(this).toggleClass('active');
+            });
+        });
+    }
+}
+},{}],2:[function(require,module,exports){
+'use strict';
+
 var util = require('./util/_util');
 
 module.exports = {
@@ -28,7 +48,7 @@ module.exports = {
         }
     }
 }
-},{"./util/_util":4}],2:[function(require,module,exports){
+},{"./util/_util":5}],3:[function(require,module,exports){
 'use strict';
 
 var options = {
@@ -73,19 +93,22 @@ module.exports = {
         $sContainer.slick(options);
     }
 }
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 'use strict';
 
 var slick = require('./_slick');
 var nav = require('./_nav');
+var filters = require('./_filters');
 
 $(function(){
     // Mobile navigation
     nav.init();
+    // Filters
+    filters.init();
     // Slick sliders - homepage
     slick.homepage();
 });
-},{"./_nav":1,"./_slick":2}],4:[function(require,module,exports){
+},{"./_filters":1,"./_nav":2,"./_slick":3}],5:[function(require,module,exports){
 'use strict';
 
 var util = {
@@ -104,6 +127,6 @@ var util = {
 }
 
 module.exports = util;
-},{}]},{},[3]);
+},{}]},{},[4]);
 
 //# sourceMappingURL=app.js.map
