@@ -28,7 +28,7 @@ nav {
 }
 
 .navbar-ex1-collapse {
-    display: none;
+    //display: none;
     @include media-breakpoint-up(lg) {
         display: none;
     }

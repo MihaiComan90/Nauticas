@@ -15,7 +15,7 @@ echo $header; ?>
     <?php if( $SPAN[0] ): ?>
 			<aside id="sidebar-left" class="col-md-<?php echo $SPAN[0];?>">
         <?php if( true &&  $categories = $helper->getCategoriesById() ){   ?>
-          <div class="panel panel-default category-list">
+          <div class="panel panel-default category-list d-none d-md-block">
           <div class="list-group">
           <div class="list-box">
             <a class="list-group-item">

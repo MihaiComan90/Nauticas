@@ -1,6 +1,8 @@
+
+
 <div class="filters">
+<div class="panel-heading filter-mobile-heading d-block d-md-none"><?php echo $heading_title; ?></div>
 <div class="panel panel-default">
-  <div class="panel-heading"><?php echo $heading_title; ?></div>
   <div class="list-group">
     <?php foreach ($filter_groups as $filter_group) { ?>
     <div class="list-box">

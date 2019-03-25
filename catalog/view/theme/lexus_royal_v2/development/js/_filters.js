@@ -2,10 +2,11 @@
 
 module.exports = {
     init: function () {
-        this.toggle();
+        this.toggleFiltersBox();
+        this.toggleFiltersContainerMobile();
     },
 
-    toggle: function () {
+    toggleFiltersBox: function () {
         var $container = $('#sidebar-left .list-box');
         $container.each(function() {
             var $listHeader = $(this).find('a.list-group-item'),
@@ -14,6 +15,15 @@ module.exports = {
                 $listBody.slideToggle();
                 $(this).toggleClass('active');
             });
+        });
+    },
+
+    toggleFiltersContainerMobile: function () {
+        var $filterBtn = $('.filter-mobile-heading'),
+            $filterContainer = $filterBtn.next();
+        
+        $filterBtn.on('click', function () {  
+            $filterContainer.slideToggle();
         });
     }
 }
