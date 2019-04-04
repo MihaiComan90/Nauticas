@@ -26,40 +26,13 @@
     background-color: transparent;
 }
 
-
 // Navigation
-
 .navbar-inverse {
     background: $nt-tarawera;
     border-color: transparent;
     margin-bottom: 0;
     min-height: auto;
 }
-
-.navbar {
-    padding: 0;
-}
-
-.navbar-nav {
-    flex-direction: inherit;
-}
-
-.navbar-nav .dropdown-menu:not(.level3) {
-    position: absolute;
-}
-
-.nav .caret {
-    display: none;
-}
-
-.navbar-inverse .navbar-nav > li > a {
-    padding-left: 0;
-}
-
-.navbar-collapse {
-    padding: 0;
-}
-
 
 // Carousel
 .carousel-control {
@@ -122,3 +95,45 @@
     @include button-outline-variant($black, $color-hover: $white);
 }
 
+// Custom inputs
+.custom-select {
+    -webkit-appearance: none;
+    border-radius: 0;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+}
+
+// Pagination
+.pagination > .active > a, 
+.pagination > .active > span, 
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+    background: transparent;
+    border-color: transparent;
+    color: $black;
+    font-weight: 600;
+}
+
+.pagination > li > a, 
+.pagination > li > span {
+    border-color: transparent;
+    font-weight: 300;
+}
+
+.pagination > li > a:hover, 
+.pagination > li > span:hover, 
+.pagination > li > a:focus,
+.pagination > li > span:focus {
+    background: transparent;
+    font-weight: 600;
+}
+
+// Turn Off Number Input Spinners 
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}

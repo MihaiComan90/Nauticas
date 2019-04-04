@@ -1,0 +1,130 @@
+.page-category {
+    // PLP filters
+    a.list-group-item {
+        &:hover,
+        &:active {
+            background: transparent;    
+        }
+    }
+
+    .filter-mobile-heading {
+        background: transparent;
+        margin-bottom: 10px;
+        
+        @extend .btn;
+        @extend .btn-secondary;
+        // hide filters container on mobile
+        + .panel {
+            display: none;
+
+            @include media-breakpoint-up(md) {
+                display: block;
+            }
+        }
+    }
+
+    .panel {
+        border-color: $white;
+        border-radius: 0;
+        box-shadow: none;
+
+
+        .list-group {
+
+            .list-group-item {
+                text-transform: capitalize;
+                background: transparent;
+                border: 0;
+            }
+
+            a.list-group-item {
+                font-weight: 600;
+                border-bottom-color: transparent;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                cursor: pointer;
+
+                &::after {
+                    content:"\f077";
+                    font-family: 'FontAwesome';
+                    font-weight: 100;
+                }
+
+                &.active {
+                    &::after {
+                        content:"\f078";
+                    }
+                }
+            }
+
+            div.list-group-item {
+                border: 0;
+            }
+
+            .list-box {
+                background-color: lighten($nt-graylight, 5%);
+
+                + .list-box {
+                    margin-top: 10px;
+                }
+            }
+        }
+
+        .panel-footer {
+            border-radius: 0;
+            background: transparent;
+            margin-top: 10px;
+            border-top-color: $nt-graylight;
+        }
+
+        &.category-list {
+            margin-bottom: 10px;
+            
+            a {
+                display: block;
+                text-overflow: ellipsis;
+                margin: 5px 0;
+            }
+        }
+    }
+
+    // Page title
+    .heading-title {
+        border-bottom: 1px solid $gray;
+        margin-bottom: 10px;
+        padding: 5px 0;
+        @include font-size($h5-font-size);
+
+        @include media-breakpoint-up(lg) {
+            @include font-size($h1-font-size);
+        }
+    }
+
+    // PLP actions
+    .product-filter {
+        margin-bottom: 30px;
+        label {
+            margin: 0;
+            vertical-align: middle;
+            font-size:12px;
+
+            @include media-breakpoint-up(md) {
+                font-size: 14px;
+            }
+        }
+
+        .custom-select {
+            width: 100%;
+            vertical-align: middle;
+
+            @include media-breakpoint-up(lg) {
+                width: auto;
+            }
+        }
+
+        .sort {
+            margin-right: 30px;
+        }
+    }
+}

@@ -490,6 +490,8 @@ class ControllerProductProduct extends Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 
+			$data['controller'] = $this;
+
             if($this->config->get('product_variant_enable')) {
                 /* ProductVariant check for the variant in case it exists */
                 $this->load->model('catalog/product_variant');

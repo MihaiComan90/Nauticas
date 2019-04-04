@@ -59,7 +59,10 @@ footer {
 
             &.location::before {
                 content:"\f124";
-                line-height: 44px;
+                display: block;
+                height: 20px;
+                line-height: 20px;
+
             }
 
             &.phone::before {

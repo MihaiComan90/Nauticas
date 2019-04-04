@@ -1,36 +1,58 @@
+const webpack = require('webpack');
+const autoprefixer = require('autoprefixer');
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
+
 
 module.exports = {
-  module: {
-    rules: [
-      {
-        test: /\.(scss)$/,
-        use: [
-          {
-            // Adds CSS to the DOM by injecting a `<style>` tag
-            loader: 'style-loader'
-          },
-          {
-            // Interprets `@import` and `url()` like `import/require()` and will resolve them
-            loader: 'css-loader'
-          },
-          {
-            // Loader for webpack to process CSS with PostCSS
-            loader: 'postcss-loader',
+   entry: {
+        app: ['./catalog/view/theme/lexus_royal_v2/development/js/app.js', './catalog/view/theme/lexus_royal_v2/development/scss/global.scss']
+   },
+   output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'app.js'
+   },
+   plugins: [
+        new HtmlWebpackPlugin({
+            title: 'Custom template',
+            minify: {
+                collapseWhitespace: true
+            },
+            hash: true,
+            template: './src/index.html'
+        }),
+        new MiniCssExtractPlugin({
+            filename: 'global.css'
+        }),
+        new webpack.LoaderOptionsPlugin({
             options: {
-              plugins: function () {
-                return [
-                  require('autoprefixer')
-                ];
-              }
+                postcss: [
+                    autoprefixer()
+                ]
             }
-          },
-          {
-            // Loads a SASS/SCSS file and compiles it to CSS
-            loader: 'sass-loader'
-          }
-        ]
-      }
+        })
+   ],
+   module: {
+       rules: [{
+           test: /\.js?$/,
+           exclude: /node_modules/,
+           loader: 'babel-loader',
+           query: {
+               presets: ['env']
+           }
+        },
+        {
+            test: /\.scss$/,
+            exclude: /node_modules/,
+            use: [
+                MiniCssExtractPlugin.loader,
+                "css-loader",
+                "postcss-loader",
+                "sass-loader"
+            ]
+        }
     ]
-  }
-};
+   }
+}

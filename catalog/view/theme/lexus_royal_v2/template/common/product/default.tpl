@@ -9,11 +9,7 @@
 			<div class="image-container">
 				<a href="<?php echo $product['href']; ?>" class="img front"><img src="<?php echo $product['thumb']; ?>" title="<?php echo $product['name']; ?>" alt="<?php echo $product['name']; ?>" /></a>
 			</div>
-			<?php if ($quickview){ ?>
-				<a class="iframe-link pav-colorbox quick-view" href="<?php echo $ourl->link('themecontrol/product','product_id='.$product['product_id']);?>">
-					<?php echo $objlang->get('quick_view'); ?>
-				</a>
-			<?php } ?>
+			
 			<a class="fa fa-heart-o add-to-wishlist" href="javascript:;" onclick="wishlist.addwishlist('<?php echo $product['product_id']; ?>');"  title="<?php echo $objlang->get("button_wishlist"); ?>" ></a>
 		</div>
 		<?php } ?>

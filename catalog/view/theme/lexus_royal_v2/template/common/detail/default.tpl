@@ -1,6 +1,6 @@
 <?php $objlang = $this->registry->get('language'); ?>
 <?php if ($thumb || $images) { ?>
-<div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 image-container">
+<div class="col-12 col-md-6 image-container">
     <?php if ($thumb) { ?>
     <div id="img-detail" class="image">
 

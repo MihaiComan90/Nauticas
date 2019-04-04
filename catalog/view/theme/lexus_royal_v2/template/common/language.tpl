@@ -7,7 +7,7 @@
     <img src="image/flags/<?php echo $language['image']; ?>" alt="<?php echo $language['name']; ?>" title="<?php echo $language['name']; ?>">
     <?php } ?>
     <?php } ?>
-    <span class="text-label"><?php echo $text_language; ?></span></button>
+    <span class="text-label d-none d-lg-inline"><?php echo $text_language; ?></span></button>
     <ul class="dropdown-menu">
       <?php foreach ($languages as $language) { ?>
       <li class="mb-3"><a class="btn btn-link" href="<?php echo $language['code']; ?>"><img src="image/flags/<?php echo $language['image']; ?>" alt="<?php echo $language['name']; ?>" title="<?php echo $language['name']; ?>" /><span class="hidden-sm hidden-xs"><?php echo $language['name']; ?></span></a></li>

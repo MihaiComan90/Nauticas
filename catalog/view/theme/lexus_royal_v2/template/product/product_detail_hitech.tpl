@@ -11,8 +11,12 @@
     <div class="row">
     <?php require( ThemeControlHelper::getLayoutPath( 'common/detail/'.$mode.'.tpl' ) );  ?> 
    
-	<div class="col-xs-12 col-sm-<?php echo $cols[1]; ?> col-md-<?php echo $cols[1]; ?> col-lg-<?php echo $cols[1]; ?>">
-		<h2><?php echo $heading_title; ?></h2>
+	<div class="col-12 col-md-6">
+        <div class="product-info__detail">
+        <?php if ($manufacturer) { ?>
+            <a href="<?php echo $manufacturers; ?>" class"product-brand"><?php echo $manufacturer; ?></a>
+        <?php } ?>
+		<h1 class="product-title"><?php echo $heading_title; ?></h1>
         <?php if ($review_status) { ?>
             <div class="rating">
                 <p>
@@ -31,11 +35,11 @@
             <div class="price">
                 <ul class="list-unstyled">
                     <?php if (!$special) { ?>
-                        <li class="price-gruop">
+                        <li class="price-group">
                             <span class="text-price"> <?php echo $price; ?> </span>
                         </li>
                     <?php } else { ?>
-                        <li> <span class="price-new"> <?php echo $special; ?> </span> <span class="price-old"><?php echo $price; ?></span> </li>
+                        <li> <span class="price-old"><?php echo $price; ?></span> <span class="price-new"> <?php echo $special; ?> </span>  </li>
                     <?php } ?>
                     <?php /*if ($tax) { ?>
                         <li class="price-tax"><?php echo $text_tax; ?> <?php echo $tax; ?></li>
@@ -53,22 +57,35 @@
         <?php } ?>
 
         <!-- AddThis Button BEGIN -->
-        <div class="addthis_toolbox addthis_default_style"><a class="addthis_button_facebook_like" fb:like:layout="button_count"></a> <a class="addthis_button_tweet"></a> <a class="addthis_button_pinterest_pinit"></a> <a class="addthis_counter addthis_pill_style"></a></div>
+        <!--
+        <div class="addthis_toolbox addthis_default_style">
+            <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+            <a class="addthis_button_tweet"></a>
+            <a class="addthis_button_pinterest_pinit"></a>
+            <a class="addthis_counter addthis_pill_style"></a>
+        </div>
         <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-515eeaf54693130e"></script> 
+        -->
         <!-- AddThis Button END --> 
 
         <ul class="list-unstyled description">
-            <?php if ($manufacturer) { ?>
-                <li><span><?php echo $text_manufacturer; ?></span> <a href="<?php echo $manufacturers; ?>"><?php echo $manufacturer; ?></a></li>
-            <?php } ?>
-            <li><span><?php echo $text_model; ?></span> <?php echo $model; ?></li>
+            <li class="product-code"><span><?php echo $text_model; ?></span> <span><?php echo $model; ?></span></li>
+
             <?php if ($reward) { ?>
-                <li><span><?php echo $text_reward; ?></span> <?php echo $reward; ?></li>
+            <li><span><?php echo $text_reward; ?></span> <span><?php echo $reward; ?></span></li>
             <?php } ?>
+
             <?php if ($points) { ?>
-                <li><span><?php echo $text_points; ?></span> <?php echo $points; ?></li>
+            <li><span><?php echo $text_points; ?></span> <span><?php echo $points; ?></span></li>
             <?php } ?>
-            <li><span class="availability"><?php echo $text_stock; ?></span> <?php echo $stock; ?></li>
+
+            <li class="availability"><span><?php echo $text_stock; ?></span> <span><?php echo $stock; ?></span></li>
+
+            <?php if($download['filename']) { ?>
+            <li = "productinfo">
+                <a href = "http://www.nautica-shop.ro/docs/<?php echo $download['filename']; ?>" target="_blank"> Descarca document: <?php echo $download['name']; ?> </a>
+            </li>
+            <?php } ?>
         </ul>
 
         <div id="product" class="product-extra">
@@ -208,42 +225,54 @@
                     <div class="help-block" id="recurring-description"></div>
                 </div>
             <?php } ?>
-            <div class="quantity-adder pull-left">
-                <?php echo $olang->get('entry_qty'); ?>        
-                <input type="text" name="quantity" value="<?php echo $minimum; ?>" size="2" id="input-quantity" />
-                <span class="add-up add-action">+</span> 
-                <span class="add-down add-action">-</span>          
-            </div>
-            <input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
-            <?php if(isset($product_variants)) :?>
+
+            <!-- Product variation -->
+             <?php if(isset($product_variants)) :?>
+             <!--
             <select name="product_variants" id="product_variants">
                 <option value="<?php echo $parent_product_url; ?>"><?php echo $choose_variant_label; ?></option>
                 <?php foreach($product_variants as $variant) : ?>
                 <option <?php if(isset($product_variant) && $product_variant['variant_id'] && $product_variant['variant_id'] == $variant['variant_id']) : ?> selected <?php endif; ?> value="<?php echo $variant['custom_url'];?>"><?php echo $variant['attribute_name'] .' - '. $variant['variant_name']; ?></option>
                 <?php endforeach; ?>
             </select>
+            -->
+
+                <div class="variations">
+                    <?php foreach($product_variants as $variant) : ?>
+                    <div class="divider">
+                        <div class="variations__title"><?php echo $variant['attribute_name']; ?></div>
+                        <ul class="variations__<?php echo $variant['attribute_name'] == 'Culoare' ? 'color' : ''?>">
+                            <li>
+                                <a 
+                                    href="<?php echo $parent_product_url; ?>" 
+                                    title="" 
+                                    class="<?php if(isset($product_variant) && $product_variant['variant_id'] && $product_variant['variant_id'] == $variant['variant_id']) : ?> selected <?php endif; ?>"
+                                    style="background-color:<?php echo $variant['variant_name']; ?>">
+                                </a>
+                            </li>  
+                        </ul>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
             <?php endif; ?>
+            
+            <!-- end product variation -->
+
             <?php if(isset($product_variant) && $product_variant['variant_id']) : ?>
             <input type="hidden" name="variant_id" value="<?php echo $product_variant['variant_id']; ?>" />
             <?php endif; ?>
-            <div class="product-action pull-left">
-                <div class="cart pull-left">
-                    <button type="button" id="button-cart" data-loading-text="<?php echo $text_loading; ?>" class="button"><?php echo $button_cart; ?></button>
+            
+            <div class="d-flex flex-column flex-lg-row">
+                <!-- Quantity -->
+                <div class="quantity-adder">
+                    <span class="add-down add-action">-</span>
+                    <input type="number" readOnly="true" name="quantity" min="1" value="<?php echo $minimum; ?>" size="2" id="input-quantity" />
+                    <span class="add-up add-action">+</span> 
                 </div>
-                <div class="wishlist">  
-                    <a class="fa fa-heart" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.addwishlist('<?php echo $product_id; ?>');"><span><?php echo $button_wishlist; ?></span></a>
-                </div>
-                <div class="compare">
-                    <a class="fa fa-retweet" data-toggle="tooltip"  title="<?php echo $button_compare; ?>" onclick="compare.addcompare('<?php echo $product_id; ?>');"><span><?php echo $button_compare; ?></span></a>
-                </div>
+                <input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
+                
+                <button type="button" id="button-cart" data-url='index.php?route=checkout/cart/add' data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary btn-lg add-to-cart"><?php echo $button_cart; ?></button>
             </div>
-            <br> <br>
-            <br><br>
-            <?php if($download['filename']) { ?>
-            <div class = "productinfo">
-                <a href = "http://www.nautica-shop.ro/docs/<?php echo $download['filename']; ?>" target="_blank"> Descarca document: <?php echo $download['name']; ?> </a>
-            </div>
-            <?php } ?>
         </div>
         <?php if ($minimum > 1) { ?>
             <div class="minimum"><?php echo $text_minimum; ?></div>
@@ -260,8 +289,16 @@
             <?php } ?>
           </p>
         <?php } ?>
-
-	</div>
+        <!-- Social Icons -->
+        <div class="social-icons">
+            <a class="fa fa-heart-o wishlist" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.addwishlist('<?php echo $product_id; ?>');"></a>
+            <a class="facebook" href="https://www.facebook.com/sharer.php?u=<?php echo $controller->url->link('product/product', 'product_id=' . $product_id); ?>"><i class="fa fa-facebook"></i></a>
+            <a class="email" href="mailto:{email_address}?subject={title}&body=<?php echo $controller->url->link('product/product', 'product_id=' . $product_id); ?>"><i class="fa fa-envelope-o"></i></a>
+        </div>
+	
+    
+    </div>
+    </div>
     </div>
 </div>
 
