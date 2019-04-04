@@ -1,0 +1,38 @@
+@mixin rating-stars {
+    color: $nt-yellow;
+    font-size: 12px;
+
+    @include media-breakpoint-up(md) {
+        font-size: 14px;
+    }
+}
+
+@mixin addToWishlist($position, $top, $left) {
+    position: $position;
+    top: $top;
+    left: $left;
+    color: $nt-darkred;
+    font-size: 24px;
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover {
+        color: $nt-darkred;
+
+        &::before {
+            content:"\f004";
+        }
+    }
+}
+
+@mixin reset-list {
+    ul {
+        margin: 0;
+        padding: 0;
+    
+        li {
+            list-style: none;
+            list-style-type: none;
+        }   
+    }
+}

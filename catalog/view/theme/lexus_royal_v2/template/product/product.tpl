@@ -84,7 +84,7 @@
 
   
 
-   <section id="sidebar-main" class="col-md-<?php echo $SPAN[1];?>">
+   <section id="sidebar-main" class="col-12">
 
    	<?php require( PAVO_THEME_DIR."/template/common/breadcrumb.tpl" );  ?>
 
@@ -115,19 +115,7 @@
       <span style="font-size: 15px; font-weight: bold; font-style: italic;"> ​Pretul  se poate schimba fara  o notificare prealabila . Poza este doar orientativa, este posibil ca  in poza sa existe  accesorii neinlcuse  in  pret.​ </span>
 
    </section> 
-
-
-<?php if( $SPAN[2] ): ?>
-
-	<aside id="sidebar-right" class="col-md-<?php echo $SPAN[2];?>">	
-
-		<?php echo $column_right; ?>
-
-	</aside>
-
-
-
-<?php endif; ?></div>
+</div>
 
 </div>
 
@@ -177,103 +165,7 @@ $('select[name=\'recurring_id\'], input[name="quantity"]').change(function(){
 
 <script type="text/javascript"><!--
 
-$('#button-cart').on('click', function() {
 
-	$.ajax({
-
-		url: 'index.php?route=checkout/cart/add',
-
-		type: 'post',
-
-		data: $('#product input[type=\'text\'], #product input[type=\'hidden\'], #product input[type=\'radio\']:checked, #product input[type=\'checkbox\']:checked, #product select, #product textarea'),
-
-		dataType: 'json',
-
-		beforeSend: function() {
-
-			$('#button-cart').button('loading');
-
-		},
-
-		complete: function() {
-
-			$('#button-cart').button('reset');
-
-		},
-
-		success: function(json) {
-
-			$('.alert, .text-danger').remove();
-
-			$('.form-group').removeClass('has-error');
-
-
-
-			if (json['error']) {
-
-				if (json['error']['option']) {
-
-					for (i in json['error']['option']) {
-
-						var element = $('#input-option' + i.replace('_', '-'));
-
-						
-
-						if (element.parent().hasClass('input-group')) {
-
-							element.parent().after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
-
-						} else {
-
-							element.after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
-
-						}
-
-					}
-
-				}
-
-				
-
-				if (json['error']['recurring']) {
-
-					$('select[name=\'recurring_id\']').after('<div class="text-danger">' + json['error']['recurring'] + '</div>');
-
-				}
-
-				
-
-				// Highlight any found errors
-
-				$('.text-danger').parent().addClass('has-error');
-
-			}
-
-			
-
-			if (json['success']) {
-
-				$('#notification').html('<div class="alert alert-success">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-
-				
-
-				$('#cart-total').html(json['total']);
-
-				
-
-				$('html, body').animate({ scrollTop: 0 }, 'slow');
-
-				
-
-				$('#cart > ul').load('index.php?route=common/cart/info ul li');
-
-			}
-
-		}
-
-	});
-
-});
 
 //--></script> 
 

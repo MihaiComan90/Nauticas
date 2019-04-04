@@ -4,6 +4,7 @@
 @import '../scss//lib/jquery.mmenu.all';
 @import './typo/fonts.scss';
 @import './lib/slick';
+@import './mixins/mixins';
 @import './components/header';
 @import './components/footer';
 @import './components/nav';
@@ -12,3 +13,4 @@
 @import './components/breadcrumbs';
 @import './page/homepage';
 @import './page/category';
+@import './page/product';

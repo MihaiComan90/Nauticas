@@ -59,7 +59,9 @@ $objlang = $this->registry->get('language');
 				</div>
 
 				<!-- Mini Cart -->
-				<?php echo $cart; ?>
+				<div id="minicart-container">
+					<?php echo $cart; ?>
+				</div>
   			</div>
 
 			<!-- Search -->
@@ -72,7 +74,6 @@ $objlang = $this->registry->get('language');
 <nav id="topbar">
   <div class="container">
 	<a href="#mobile_menu" class="hamburger d-lg-none"><i class="fa fa-bars"></i></a>
-	<a href="javascript:;"><i class="fa fa-bars"></i> Produse</a>
   	<div class="topbar">
   		<div class="menu inner">
 			<div id="pav-mainnav">

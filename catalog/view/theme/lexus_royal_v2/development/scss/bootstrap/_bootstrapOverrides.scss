@@ -130,3 +130,10 @@
     background: transparent;
     font-weight: 600;
 }
+
+// Turn Off Number Input Spinners 
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
