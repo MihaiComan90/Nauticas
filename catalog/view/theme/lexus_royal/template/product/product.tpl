@@ -257,7 +257,7 @@ $('#button-cart').on('click', function() {
 
 				
 
-				$('#cart-total').html(json['total']);
+				//$('#cart-total').html(json['total']);
 
 				
 

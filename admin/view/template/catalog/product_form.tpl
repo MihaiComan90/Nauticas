@@ -175,7 +175,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="input-ean"><span data-toggle="tooltip"
-                                                                                            title="<?php echo $help_ean; ?>"><?php echo $entry_ean; ?></span></label>
+                                title="<?php echo $help_ean; ?>"><?php echo $entry_ean; ?></span></label>
                                 <div class="col-sm-10">
                                     <input type="text" name="ean" value="<?php echo $ean; ?>"
                                            placeholder="<?php echo $entry_ean; ?>" id="input-ean" class="form-control"/>
@@ -590,46 +590,71 @@
                                             <?php } ?></td>
                                         <?php if($is_module_variant_enabled) : ?>
                                         <td class="text-left attribute-option-box_<?php echo $attribute_row; ?>" data-row="<?php echo $attribute_row; ?>" style="width: 40%;">
-                                            <?php if($product_attribute['product_variants'][$attribute_row]['variant_id']) : ?>
-                                                <input type="hidden" id="option_variant_<?php echo $attribute_row;?>" checked name="product_attribute[<?php echo $attribute_row ?>][option_variant][variant_id]" value="<?php echo $product_attribute['product_variants'][$attribute_row]['variant_id']; ?>">
-                                            <?php endif; ?>
                                             <div class="input-group">
                                                 <span class="input-group-addon">
                                                     <label for="option_variant_<?php echo $attribute_row; ?>"><?php echo $option_variant_label?></label>
                                                 </span>
                                                 <span class="input-group-addon">
-                                                    <input type="checkbox" id="option_variant_<?php echo $attribute_row; ?>" name="product_attribute[<?php echo $attribute_row ?>][option_variant][enable]" value="1" <?php if($product_attribute['product_variants']) { echo "checked"; } ?>/>
+                                                    <input type="checkbox" id="option_variant_<?php echo $attribute_row; ?>" name="product_attribute[<?php echo $attribute_row ?>][is_variant]" value="1" <?php echo (isset($product_attribute['product_variants']) && count($product_attribute['product_variants'])) ? "checked" : "";?>/>
                                                 </span>
                                             </div>
-                                            <?php if($product_attribute['product_variants']) { ?>
-                                            <div class="input-group attribute_option_box">
-                                                <span class="input-group-addon">
-                                                    <label for=""><?php echo $option_variant_customurl_label?></label>
-                                                </span>
-                                                <span class="input-group-addon">
-                                                    <input type="text" class="form-control" id="variant_customurl_<?php echo $attribute_row; ?>" name="product_attribute[<?php echo $attribute_row ?>][option_variant][custom_url]" value="<?php echo $product_attribute['product_variants'][$attribute_row]['custom_url']; ?>">
-                                                </span>
-                                            </div>
-                                            <div class="input-group attribute_option_box">
-                                                <span class="input-group-addon">
-                                                    <label for=""><?php echo $option_variant_customimage_label?></label>
-                                                </span>
-                                                <span class="input-group-addon">
-                                                    <?php if ($product_attribute['product_variants'][$attribute_row]['image']) : ?>
-                                                        <img src="<?php echo $product_attribute['product_variants'][$attribute_row]['thumb_image']; ?>" alt="" />
-                                                        <input type="hidden" name="product_attribute[<?php echo $attribute_row ?>][option_variant][image]" value="<?php echo $product_attribute['product_variants'][$attribute_row]['image']; ?>">
-                                                    <?php endif; ?>
-                                                    <input type="file" accept="image/*" class="form-control" id="variant_customimage_<?php echo $attribute_row?>" name="variant_image_<?php echo $attribute_row; ?>">
-                                                </span>
-                                            </div>
-                                            <div class="input-group attribute_option_box">
-                                                <span class="input-group-addon">
-                                                    <label for=""><?php echo $option_variant_customprice_label?></label>
-                                                </span>
-                                                <span class="input-group-addon">
-                                                    <input type="number" step="0.01" class="form-control" id="variant_customprice_<?php $attribute_row; ?>" name="product_attribute[<?php echo $attribute_row ?>][option_variant][price]" value="<?php echo $product_attribute['product_variants'][$attribute_row]['price']; ?>"/>
-                                                </span></div>
-                                            <?php } ?>
+                                            <?php if(isset($product_attribute['product_variants']) && count($product_attribute['product_variants'])): ?>
+                                                <ul class="nav nav-tabs tabs-<?php echo $attribute_row; ?>">
+                                                    <!-- Start variant tabs -->
+                                                <?php foreach($product_attribute['product_variants'] as $index => $variant): ?>
+                                                    <li><a data-toggle="tab" href="#variant-<?php echo $attribute_row; ?>-<?php echo $index; ?>-content"><?php echo $variant_nr_label;?> <?php echo ($index+1); ?></a></li>
+                                                <?php endforeach; ?>
+                                                    <li>
+                                                        <button type="button" onclick="addVariant(this,<?php echo count($product_attribute['product_variants']); ?>,<?php echo $attribute_row; ?>);" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="<?php echo $add_variant_label; ?>"><i class="fa fa-plus-circle"></i></button>
+                                                    </li>
+                                                </ul>
+                                                <!-- End variant tabs -->
+                                                <div class="tab-content tabs-<?php echo $attribute_row; ?>">
+                                                    <!-- Start variant tab content -->
+                                                    <?php foreach($product_attribute['product_variants'] as $index => $variant): ?>
+                                                        <div class="tab-pane" id="variant-<?php echo $attribute_row; ?>-<?php echo $index; ?>-content">
+                                                            <input type="hidden" id="option_variant_<?php echo $attribute_row;?>_<?php echo $index;?>" checked name="product_attribute[<?php echo $attribute_row ?>][option_variant][<?php echo $index; ?>][variant_id]" value="<?php echo $variant['variant_id']; ?>">
+                                                            <div class="input-group attribute_option_box">
+                                                                <span class="input-group-addon">
+                                                                    <label for=""><?php echo $option_variant_name_label?></label>
+                                                                </span>
+                                                                <span class="input-group-addon">
+                                                                    <input type="text" class="form-control" id="variant_name_<?php echo $attribute_row; ?>_<?php echo $index; ?>" name="product_attribute[<?php echo $attribute_row ?>][option_variant][<?php echo $index; ?>][name]" value="<?php echo $variant['name']; ?>">
+                                                                </span>
+                                                            </div>
+                                                            <div class="input-group attribute_option_box">
+                                                                <span class="input-group-addon">
+                                                                    <label for=""><?php echo $option_variant_customurl_label?></label>
+                                                                </span>
+                                                                <span class="input-group-addon">
+                                                                    <input type="text" class="form-control" id="variant_customurl_<?php echo $attribute_row; ?>_<?php echo $index; ?>" name="product_attribute[<?php echo $attribute_row ?>][option_variant][<?php echo $index; ?>][custom_url]" value="<?php echo $variant['custom_url']; ?>">
+                                                                </span>
+                                                            </div>
+                                                            <div class="input-group attribute_option_box">
+                                                                <span class="input-group-addon">
+                                                                    <label for=""><?php echo $option_variant_customimage_label?></label>
+                                                                </span>
+                                                                <span class="input-group-addon">
+                                                                <?php if ($variant['image']) : ?>
+                                                                    <img src="<?php echo $variant['thumb_image']; ?>" alt="" />
+                                                                    <input type="hidden" name="product_attribute[<?php echo $attribute_row ?>][option_variant][<?php echo $index;?>][image]" value="<?php echo $variant['image']; ?>">
+                                                                <?php endif; ?>
+                                                                <input type="file" accept="image/*" class="form-control" id="variant_customimage_<?php echo $attribute_row?>_<?php echo $index; ?>" name="variant_image_<?php echo $attribute_row; ?>_<?php echo $index; ?>">
+                                                                </span>
+                                                            </div>
+                                                            <div class="input-group attribute_option_box">
+                                                                <span class="input-group-addon">
+                                                                    <label for=""><?php echo $option_variant_customprice_label?></label>
+                                                                </span>
+                                                                <span class="input-group-addon">
+                                                                    <input type="number" step="0.01" class="form-control" id="variant_customprice_<?php echo $attribute_row; ?>_<?php echo $index; ?>" name="product_attribute[<?php echo $attribute_row ?>][option_variant][<?php echo $index; ?>][price]" value="<?php echo $variant['price']; ?>"/>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    <?php endforeach; ?>
+                                                    <!-- Start variant tab content -->
+                                                </div>
+                                            <?php endif; ?>
                                         </td>
                                     <?php endif; ?>
                                         <td class="text-left">
@@ -1493,47 +1518,90 @@ $('#product-related').delegate('.fa-minus-circle', 'click', function() {
           return;
       });
 
-      $(document).on('click', 'input[id*="option_variant_"]', function(){
+      $(document).on('click', 'input[name*="is_variant"]', function(){
+          $('button[form="form-product"]').attr('disabled','disabled');
           var currentClickedRow = $(this).parents('td').attr('data-row'),
               attributeBox = $('.attribute-option-box_' + currentClickedRow),
-              attributeBoxClassName = 'attribute_option_box',
               currentKeyWord = $('input[name="keyword"]').val().length ? $('input[name="keyword"]').val() : false,
               currentPrice = $('input[name="price"]').val().length ? $('input[name="price"]').val() : false,
               html = '';
 
           if(attributeBox.length){
               if($(this).prop('checked')) {
-                  /*1st input variant type*/
-                  html = '<div class="input-group '+ attributeBoxClassName +'">';
-                  html += '<span class="input-group-addon">';
-                  html += '<label for=""><?php echo $option_variant_customurl_label?></label>';
-                  html += '</span>';
-                  html += '<span class="input-group-addon">';
-                  html += '<input type="text" class="form-control" id="variant_customurl_' + currentClickedRow + '" name="product_attribute[' + currentClickedRow + '][option_variant][custom_url]" value="'+(currentKeyWord ? currentKeyWord : "")+'">';
-                  html += '</span></div>';
-                  /*2nd input file*/
-                  html += '<div class="input-group '+ attributeBoxClassName +'">';
-                  html += '<span class="input-group-addon">';
-                  html += '<label for=""><?php echo $option_variant_customimage_label?></label>';
-                  html += '</span>';
-                  html += '<span class="input-group-addon">';
-                  html += '<input type="file" accept="image/*" class="form-control" id="variant_customimage_' + currentClickedRow + '" name="variant_image_' + currentClickedRow + '">';
-                  html += '</span></div>';
-                  /*3rd input price*/
-                  html += '<div class="input-group '+ attributeBoxClassName +'">';
-                  html += '<span class="input-group-addon">';
-                  html += '<label for=""><?php echo $option_variant_customprice_label?></label>';
-                  html += '</span>';
-                  html += '<span class="input-group-addon">';
-                  html += '<input type="number" class="form-control" id="variant_customprice_' + currentClickedRow + '" name="product_attribute[' + currentClickedRow + '][option_variant][price]" value="' +( currentPrice ? currentPrice : '' )+ '">';
-                  html += '</span></div>';
-                  attributeBox.append(html);
+                  addVariant(null,0,currentClickedRow);
+                  attributeBox.find('input[name*="custom_url"]').val(currentKeyWord);
+                  attributeBox.find('input[name*="price"]').val(currentPrice);
               } else {
-                  attributeBox.find('.' + attributeBoxClassName).remove();
+                  attributeBox.find('.tabs-' + currentClickedRow).remove();
                   $('button[form="form-product"]').removeAttr('disabled');
               }
           }
       });
+
+      function addVariant( object, variantNr, attributeRow ) {
+          if(object === null) {
+              var attributeBox = $('.attribute-option-box_' + attributeRow),
+                  html = '<ul class="nav nav-tabs tabs-'+ attributeRow +'">' +
+                  '<li>' +
+                      '<button type="button" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="<?php echo $add_variant_label; ?>"><i class="fa fa-plus-circle"></i></button>'+
+                 '</li>' +
+              '</ul>' +
+              '<div class="tab-content tabs-' + attributeRow + '"></div>';
+
+              attributeBox.append(html);
+              object = attributeBox.find('button');
+          }
+
+          $(object).parents('ul').find('li').removeClass('active');
+
+          var liItem = '<li class="active temp"><a data-toggle="tab" href="#variant-'+attributeRow+'-'+variantNr+'-content"><?php echo $variant_nr_label;?>'+(variantNr + 1)+'</a></li>',
+              tabContent = $(object).parents('ul').first().next(),
+              populateNext = '',
+              nextVariantNr = variantNr;
+
+          $(object).parents('ul li:last').before(liItem);
+          $(object).attr('onclick', 'addVariant(this,'+ (nextVariantNr+1) +','+ attributeRow +')');
+
+          tabContent.find('.tab-pane').removeClass('active');
+
+          populateNext +=
+              '<div class="tab-pane active" id="variant-'+attributeRow+'-'+nextVariantNr+'-content">' +
+              '<div class="input-group attribute_option_box">\n' +
+              '<span class="input-group-addon">\n' +
+              '    <label for=""><?php echo $option_variant_name_label; ?></label>\n' +
+              '</span>\n' +
+              '<span class="input-group-addon">\n' +
+              '    <input type="text" class="form-control" id="variant_name_'+attributeRow+'_'+nextVariantNr+'" name="product_attribute['+attributeRow+'][option_variant]['+nextVariantNr+'][name]" value="">\n' +
+              '</span>\n' +
+              '</div>\n' +
+              '<div class="input-group attribute_option_box">\n' +
+              '<span class="input-group-addon">\n' +
+              '    <label for=""><?php echo $option_variant_customurl_label; ?></label>\n' +
+              '</span>\n' +
+              '<span class="input-group-addon">\n' +
+              '    <input type="text" class="form-control" id="variant_customurl_'+attributeRow+'_'+nextVariantNr+'" name="product_attribute['+attributeRow+'][option_variant]['+nextVariantNr+'][custom_url]" value="">\n' +
+              '</span>\n' +
+              '</div>\n' +
+              '<div class="input-group attribute_option_box">\n' +
+              '<span class="input-group-addon">\n' +
+              '    <label for=""><?php echo $option_variant_customimage_label; ?></label>\n' +
+              '</span>\n' +
+              '<span class="input-group-addon">\n' +
+              '<input type="file" accept="image/*" class="form-control" id="variant_customimage_'+attributeRow+'_'+nextVariantNr+'" name="variant_image_'+attributeRow+'_'+nextVariantNr+'">\n' +
+              '</span>\n' +
+              '</div>\n' +
+              '<div class="input-group attribute_option_box">\n' +
+              '<span class="input-group-addon">\n' +
+              '    <label for=""><?php echo $option_variant_customprice_label; ?></label>\n' +
+              '</span>\n' +
+              '<span class="input-group-addon">\n' +
+              '    <input type="number" step="0.01" class="form-control" id="variant_customprice_'+attributeRow+'_'+nextVariantNr+'" name="product_attribute['+attributeRow+'][option_variant]['+nextVariantNr+'][price]" value="">\n' +
+              '</span>\n' +
+              '</div></div>';
+
+          tabContent.append(populateNext);
+          return false;
+      }
   <?php endif; ?>
 
 function addAttribute() {
@@ -1545,7 +1613,7 @@ function addAttribute() {
     <?php } ?>
 	html += '  </td>';
     <?php if($is_module_variant_enabled) : ?>
-    html += '  <td class="text-left attribute-option-box_'+ attribute_row + '" data-row="'+ attribute_row + '"><div class="input-group"><span class="input-group-addon"><label for="option_variant_' + attribute_row + '"><?php echo $option_variant_label?></label></span><span class="input-group-addon"><input type="checkbox" id="option_variant_' + attribute_row + '" name="product_attribute[' + attribute_row + '][option_variant][enable]" value="1"></span></div></td>';
+    html += '  <td class="text-left attribute-option-box_'+ attribute_row + '" data-row="'+ attribute_row + '"><div class="input-group"><span class="input-group-addon"><label for="option_variant_' + attribute_row + '"><?php echo $option_variant_label?></label></span><span class="input-group-addon"><input type="checkbox" id="option_variant_' + attribute_row + '" name="product_attribute[' + attribute_row + '][is_variant]" value="1"></span></div></td>';
 	<?php endif; ?>
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#attribute-row' + attribute_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
     html += '</tr>';
@@ -1556,6 +1624,7 @@ function addAttribute() {
 
 	attribute_row++;
 }
+
 
 function attributeautocomplete(attribute_row) {
 	$('input[name=\'product_attribute[' + attribute_row + '][name]\']').autocomplete({

@@ -18,6 +18,7 @@ class ModelCatalogProductVariant extends Model {
 			  `variant_id` INT(11) NOT NULL AUTO_INCREMENT,
 			  `product_id` INT(11) NOT NULL,
 			  `attribute_id` INT(11) NOT NULL,
+			  `name` VARCHAR(100) NULL,
 			  `price` FLOAT(12,4) NULL,
 			  `image` VARCHAR(100) NULL,
 			  `custom_url` VARCHAR(100) NULL,
@@ -126,7 +127,8 @@ class ModelCatalogProductVariant extends Model {
         $this->db->query("INSERT INTO " . DB_PREFIX . "product_variants 
                             SET 
                                 product_id = '" . (int)($product_id) . "', 
-                                attribute_id = '" . (int)($attribute_id) . "', 
+                                attribute_id = '" . (int)($attribute_id) . "',
+                                `name` = '".$this->db->escape($data['name'])."', 
                                 price = '" . (float)($data['price']) . "', 
                                 image = '" . $this->db->escape($filename) . "',
                                 custom_url = '" . $this->db->escape($data['custom_url']) . "', 
@@ -167,6 +169,7 @@ class ModelCatalogProductVariant extends Model {
         $this->db->query("UPDATE " . DB_PREFIX . "product_variants 
                             SET 
                                 price = '" . (float)($variantOptions['price']) . "', 
+                                `name` = '".$this->db->escape($variantOptions['name'])."',
                                 image = '" . $this->db->escape($filename) . "',
                                 custom_url = '" . $this->db->escape($variantOptions['custom_url']) . "', 
                                 date_modified = NOW()
