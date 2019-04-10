@@ -41,7 +41,7 @@ $_['text_month']                     = 'luna';
 $_['text_year']                      = 'an';
 
 // Column
-$_['column_name']                    = 'Nume produs';
+$_['column_name']                    = 'Produs';
 $_['column_model']                   = 'Model';
 $_['column_quantity']                = 'Cantitate';
 $_['column_price']                   = 'Preț unitar';

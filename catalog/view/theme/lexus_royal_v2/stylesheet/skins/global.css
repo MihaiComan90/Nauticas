@@ -10426,7 +10426,7 @@ nav {
   padding: 20px 0;
   border-top: 1px solid #eee;
   border-bottom: 1px solid #eee;
-  margin-bottom: 0; }
+  margin-bottom: 0px; }
   .page-product .product-info__detail .list-unstyled.description li + li {
     margin-top: 10px; }
   .page-product .product-info__detail .list-unstyled.description span:last-child {
@@ -10497,7 +10497,7 @@ nav {
     margin-left: 20px; }
 
 .page-product .product-info__detail .variations {
-  margin-bottom: 20px;
+  margin-bottom: 0;
   border-bottom: 1px solid #eee;
   padding: 20px 0; }
   .page-product .product-info__detail .variations ul {
@@ -10505,20 +10505,29 @@ nav {
     padding: 0; }
     .page-product .product-info__detail .variations ul li {
       list-style-type: none;
-      list-style: none; }
+      list-style: none;
+      display: inline-block; }
   .page-product .product-info__detail .variations .divider + .divider {
     margin-top: 20px; }
-  .page-product .product-info__detail .variations .variations__color a {
+  .page-product .product-info__detail .variations .variations__circle a {
     display: block;
     width: 20px;
     height: 20px;
     border-radius: 100%;
     border: 2px solid transparent; }
-    .page-product .product-info__detail .variations .variations__color a.selected, .page-product .product-info__detail .variations .variations__color a:hover {
+    .page-product .product-info__detail .variations .variations__circle a.selected, .page-product .product-info__detail .variations .variations__circle a:hover {
+      border-color: #000; }
+  .page-product .product-info__detail .variations .variations__rectangle a {
+    padding: 5px;
+    border: 1px solid #D8D8D8; }
+    .page-product .product-info__detail .variations .variations__rectangle a.selected {
       border-color: #000; }
   .page-product .product-info__detail .variations .variations__title {
     margin-bottom: 10px;
     font-weight: 600; }
+
+.page-product .product-info__detail .product-actions {
+  padding: 20px 0; }
 
 .page-product .box.special .box-heading {
   font-size: 2.1rem;
@@ -10556,5 +10565,15 @@ nav {
 
 .page-product .tab-content {
   margin-top: 40px; }
+
+.page-checkout-cart h3 {
+  background-color: #f2f2f2;
+  font-size: 18px;
+  line-height: 40px;
+  margin: 0 0 15px;
+  padding: 0 15px;
+  text-transform: uppercase;
+  border: 0;
+  font-weight: 400; }
 
 /*# sourceMappingURL=catalog/view/theme/lexus_royal_v2/stylesheet/skins/global.css.map */
