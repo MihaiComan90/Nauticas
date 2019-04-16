@@ -9412,9 +9412,6 @@ input.mm-check:checked ~ label.mm-check:before {
 body.modal-open .mm-slideout {
   z-index: unset; }
 
-* {
-  -webkit-font-smoothing: antialiased; }
-
 @font-face {
   font-family: 'Roboto';
   font-weight: 100;
@@ -10566,7 +10563,7 @@ nav {
 .page-product .tab-content {
   margin-top: 40px; }
 
-.page-checkout-cart h3 {
+.page-checkout-cart h3.cart-title {
   background-color: #f2f2f2;
   font-size: 18px;
   line-height: 40px;
@@ -10575,5 +10572,39 @@ nav {
   text-transform: uppercase;
   border: 0;
   font-weight: 400; }
+
+.page-checkout-cart table.order-summary {
+  margin-bottom: 40px; }
+  .page-checkout-cart table.order-summary tr:last-of-type td {
+    font-size: 18px;
+    font-weight: 500; }
+  .page-checkout-cart table.order-summary td {
+    border: 0; }
+
+.page-checkout-cart .checkout-actions {
+  width: 70%;
+  margin: auto; }
+  .page-checkout-cart .checkout-actions .divider {
+    position: relative;
+    margin: 15px 0; }
+    .page-checkout-cart .checkout-actions .divider span {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-transform: uppercase;
+      background-color: #fff;
+      padding: 0 10px; }
+
+.page-checkout-cart .checkout-discounts {
+  margin-top: 20px; }
+  .page-checkout-cart .checkout-discounts .input-group {
+    margin-bottom: 15px; }
+
+.page-checkout-cart .box.special .box-heading {
+  font-size: 2.1rem;
+  border-bottom: 1px solid #D8D8D8;
+  padding-bottom: 5px;
+  margin-bottom: 20px; }
 
 /*# sourceMappingURL=catalog/view/theme/lexus_royal_v2/stylesheet/skins/global.css.map */
