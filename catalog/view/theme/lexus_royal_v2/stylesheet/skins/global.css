@@ -1,3 +1,9 @@
+.mm-menu {
+  --mm-color-background: #0C4056;
+  --mm-color-text: #111;
+  --mm-color-text-dimmed: #fff;
+  --mm-color-button: #fff; }
+
 /*!
  * Bootstrap v4.3.1 (https://getbootstrap.com/)
  * Copyright 2011-2019 The Bootstrap Authors
@@ -9412,6 +9418,12 @@ input.mm-check:checked ~ label.mm-check:before {
 body.modal-open .mm-slideout {
   z-index: unset; }
 
+.mm-menu {
+  --mm-color-background: #0C4056;
+  --mm-color-text: #111;
+  --mm-color-text-dimmed: #fff;
+  --mm-color-button: #fff; }
+
 @font-face {
   font-family: 'Roboto';
   font-weight: 100;
@@ -9929,6 +9941,10 @@ footer {
 nav {
   background: #0C4056; }
 
+.hamburger {
+  color: #fff;
+  font-size: 24px; }
+
 .megamenu .caret {
   display: none; }
 
@@ -9948,20 +9964,70 @@ nav {
 .mm-panel, .mm-panels {
   background: #fff; }
 
+.mm-btn_next:after {
+  border-color: #000; }
+
+.desktop-nav {
+  font-size: 16px;
+  color: #fff;
+  font-weight: 500;
+  line-height: 40px;
+  background-color: #D92375;
+  min-width: 300px;
+  padding: 0 10px; }
+  .desktop-nav:hover {
+    text-decoration: none;
+    color: #fff; }
+
 @media (min-width: 992px) {
-  .megamenu {
-    display: flex;
-    flex-direction: row;
-    margin: 0;
-    padding: 0; }
-    .megamenu > li {
+  .topbar {
+    position: absolute;
+    background: #fff; }
+    .topbar ul {
+      padding-left: 0;
       list-style: none;
-      list-style-type: none; }
-    .megamenu li a {
-      display: block;
-      padding: 5px 10px;
-      color: #fff;
-      text-transform: uppercase; } }
+      margin: 0; }
+    .topbar ul.megamenu {
+      width: 300px;
+      box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.1); }
+      .topbar ul.megamenu > li.dropdown {
+        border-top: 1px solid transparent;
+        border-bottom: 1px solid transparent;
+        position: relative; }
+        .topbar ul.megamenu > li.dropdown:hover {
+          border-top-color: #f2f2f2;
+          border-bottom-color: #f2f2f2; }
+          .topbar ul.megamenu > li.dropdown:hover::before {
+            content: '';
+            display: block;
+            height: 100%;
+            width: 5px;
+            background-color: #fff;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            z-index: 9999; }
+          .topbar ul.megamenu > li.dropdown:hover > ul {
+            display: block; }
+        .topbar ul.megamenu > li.dropdown a {
+          display: block;
+          padding: 5px 10px;
+          color: #000;
+          text-decoration: none; }
+        .topbar ul.megamenu > li.dropdown > ul {
+          display: none;
+          position: absolute;
+          right: 0;
+          left: 100%;
+          padding: 0 5px;
+          width: 300px;
+          height: 442px;
+          background: #fff;
+          border: 0;
+          padding: 5px 10px;
+          box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.1); } }
 
 .product-block img {
   max-width: 100%;
@@ -10605,6 +10671,27 @@ nav {
   font-size: 2.1rem;
   border-bottom: 1px solid #D8D8D8;
   padding-bottom: 5px;
+  margin-bottom: 20px; }
+
+.page-checkout-checkout h1 {
+  font-weight: 300;
+  font-size: 28px;
+  margin-bottom: 20px; }
+
+.page-checkout-checkout .panel-heading {
+  background-color: #f2f2f2;
+  padding: 15px;
+  border: 0;
+  border-radius: 0; }
+  .page-checkout-checkout .panel-heading h4 {
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: 400; }
+
+.page-checkout-checkout .collapse.in {
+  display: block; }
+
+.page-checkout-checkout #accordion {
   margin-bottom: 20px; }
 
 /*# sourceMappingURL=catalog/view/theme/lexus_royal_v2/stylesheet/skins/global.css.map */

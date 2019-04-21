@@ -15,6 +15,16 @@ $nt-blue-dianne:    #1E4252 !default;
 $nt-vulcan:         #131821 !default;
 $nt-taraweraapprox: #0D4056 !default;
 
+
+//mmenu js
+
+.mm-menu {
+  --mm-color-background: #0C4056;
+  --mm-color-text: #111;
+  --mm-color-text-dimmed: #fff;
+  --mm-color-button: #fff;
+}
+
 // Body
 //
 // Settings for the `<body>` element.
