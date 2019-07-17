@@ -1,0 +1,61 @@
+.page-checkout-cart {
+    h3.cart-title {
+        background-color: lighten($gray, 10%);
+        font-size: 18px;
+        line-height: 40px;
+        margin: 0 0 15px;
+        padding: 0 15px;
+        text-transform: uppercase;
+        border: 0;
+        font-weight: 400;
+    }
+
+    table.order-summary {
+        margin-bottom: 40px;
+        tr:last-of-type {
+            td {
+                font-size: 18px;
+                font-weight: 500;
+            }
+        }
+        
+        td {
+            border: 0;
+        }
+    }
+
+    .checkout-actions {
+        width: 70%;
+        margin: auto;
+
+        .divider {
+            position: relative;
+            margin: 15px 0;
+            span {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+                text-transform: uppercase;
+                background-color: $white;
+                padding: 0 10px;
+            }
+        }
+    }
+
+    .checkout-discounts {
+        margin-top: 20px;
+        .input-group {
+            margin-bottom: 15px;
+        }
+    }
+
+    .box.special {
+        .box-heading {
+            font-size: 2.1rem;
+            border-bottom: 1px solid #D8D8D8;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+        }
+    }
+}

@@ -58,7 +58,7 @@
             padding: 20px 0;
             border-top: 1px solid #eee;
             border-bottom: 1px solid #eee;
-            margin-bottom: 0;
+            margin-bottom: 0px;
     
             li + li {
                 margin-top: 10px;
@@ -146,7 +146,7 @@
 
          // Product - variations
         .variations {
-            margin-bottom: 20px;
+            margin-bottom: 0;
             border-bottom: 1px solid #eee;
             padding: 20px 0; 
             ul {
@@ -156,6 +156,7 @@
                 li {
                     list-style-type: none;
                     list-style: none;
+                    display: inline-block;
                 }
             }
 
@@ -163,7 +164,7 @@
                 margin-top: 20px;
             }
 
-            .variations__color {
+            .variations__circle {
                 a {
                     display: block;
                     width: 20px;
@@ -178,10 +179,25 @@
                 }
             }
 
+            .variations__rectangle {
+                a {
+                    padding: 5px;
+                    border: 1px solid $gray;
+
+                    &.selected {
+                        border-color: $black;
+                    }
+                }
+            }
+
             .variations__title {
                 margin-bottom: 10px;
                 font-weight: 600;
             }
+        }
+
+        .product-actions {
+            padding: 20px 0;
         }
     }
 
