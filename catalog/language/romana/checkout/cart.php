@@ -28,7 +28,7 @@ $_['text_payment_until_canceled_description'] = '%s la fiecare %d %s(s) până l
 
 // Column
 $_['column_image']          = 'Imagine';
-$_['column_name']           = 'Nume produs';
+$_['column_name']           = 'Produs';
 $_['column_model']          = 'Model';
 $_['column_quantity']       = 'Cantitate';
 $_['column_price']          = 'Preț unitar';

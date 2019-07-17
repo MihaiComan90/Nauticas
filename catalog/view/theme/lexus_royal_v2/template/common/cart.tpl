@@ -2,9 +2,8 @@
 	<div data-loading-text="<?php echo $text_loading; ?>" class="media-body heading">
 		<a class="btn" href="<?php echo $shopping_cart; ?>"><span id="cart-total"><?php echo $text_items; ?></span></a>
 	</div>
+	<?php if ($products || $vouchers) { ?>
 	<div class="minicart dropdown-menu">
-		<?php if ($products || $vouchers) { ?>
-			
 			<div class="mini-cart-info">
 				<?php foreach ($products as $product) { ?>
 					<div class="lineitem row no-gutters">
@@ -70,7 +69,6 @@
 					</div>
 				<?php } ?>
 			</div>
-
 			
 			<div class="mini-cart-total">
 				<div class="minicart__total">
@@ -88,11 +86,6 @@
 				<a class="btn btn-inline btn-md btn-info btn-cart" href="<?php echo $cart; ?>"><?php echo $text_cart; ?></a>
 				<a class="btn btn-inline btn-md btn-primary btn-checkout" href="<?php echo $checkout; ?>"><?php echo $text_checkout; ?></a>
 			</div>
-		<?php } else { ?>
-			
-			<div class="minicart__empty">
-				<p><?php echo $text_empty; ?></p>
-			</div>
-		<?php } ?>
 	</div>
+	<?php } ?>
 </div>

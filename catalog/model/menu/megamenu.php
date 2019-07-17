@@ -218,7 +218,7 @@ class ModelMenuMegamenu extends Model {
 			$attrw .= ' style="width:'.$menu['megaconfig']->subwidth.'px"' ;
 		}
 		$class  = 'dropdown-menu';
-		$output .= '<div class="'.$class.'" '.$attrw.' ><div class="dropdown-menu-inner">';
+		// $output .= '<div class="'.$class.'" '.$attrw.' ><div class="dropdown-menu-inner">';
 
 		foreach( $menu['megaconfig']->rows  as $row ){
 		
@@ -233,7 +233,7 @@ class ModelMenuMegamenu extends Model {
 		}
 		unset($colclass);
 
-		$output .= '</div></div>';
+		//$output .= '</div></div>';
 		$output .= '</li>';
 		return $output; 
 	}
@@ -317,7 +317,7 @@ class ModelMenuMegamenu extends Model {
 				if( !empty($parent['megaconfig']->rows) ) {
 					
 					$cols   = array_chunk( $data, ceil(count($data)/$parent['colums'])  );
-					$output = '<div class="'.$class.' level'.$level.'" '.$attrw.' ><div class="dropdown-menu-inner">';
+					//$output = '<div class="'.$class.' level'.$level.'" '.$attrw.' ><div class="dropdown-menu-inner">';
 					foreach( $parent['megaconfig']->rows as $rows ){ 
 						foreach( $rows as $rowcols ){
 							$output .='<div class="row">';
@@ -342,10 +342,10 @@ class ModelMenuMegamenu extends Model {
 							$output .= '</div>';
 						}
 					}
-					$output .= '</div></div>';
+					//$output .= '</div></div>';
 
 				}else {	
-					$output = '<div class="'.$class.' mega-cols cols'.$parent['colums'].'" '.$attrw.' ><div class="dropdown-menu-inner"><div class="row">';
+					//$output = '<div class="'.$class.' mega-cols cols'.$parent['colums'].'" '.$attrw.' ><div class="dropdown-menu-inner"><div class="row">';
 					$cols   = array_chunk( $data, ceil(count($data)/$parent['colums'])  );
 
 					$oSpans = $this->getColWidth( $parent, (int)$parent['colums'] );
@@ -359,7 +359,7 @@ class ModelMenuMegamenu extends Model {
 						$output .='</ul></div></div>';
 					}
 
-					$output .= '</div></div></div>';
+					//$output .= '</div></div></div>';
 				}	
 				return $output;
 			}else {
@@ -370,7 +370,7 @@ class ModelMenuMegamenu extends Model {
 
 			///	echo '<pre>' .print_r( $parent, 1 );
 				if( !empty($parent['megaconfig']->rows) ) {
-					$output = '<div class="'.$class.' level'.$level.'" '.$attrw.' ><div class="dropdown-menu-inner">';
+					//$output = '<div class="'.$class.' level'.$level.'" '.$attrw.' ><div class="dropdown-menu-inner">';
 					foreach( $parent['megaconfig']->rows as $rows ){ 
 						foreach( $rows as $rowcols ){
 							$output .='<div class="row">';
@@ -395,14 +395,15 @@ class ModelMenuMegamenu extends Model {
 							$output .= '</div>';
 						}
 
-					}$output .= '</div></div>';
+					}
+					//$output .= '</div></div>';
 				} else {
-					$output = '<div class="'.$class.' level'.$level.'" '.$attrw.' ><div class="dropdown-menu-inner">';
-					$row = '<div class="row"><div class="col-sm-12 mega-col" data-colwidth="12" data-type="menu" ><div class="mega-col-inner"><ul>';
+					//$output = '<div class="'.$class.' level'.$level.'" '.$attrw.' ><div class="dropdown-menu-inner">';
+					$row = '<ul class="'.$class.' level'.$level.'" '.$attrw.'>';
 					foreach( $data as $menu ){
 						$row .= $this->renderMenuContent( $menu , $level+1 );
 					}	
-					$row .= '</ul></div></div></div>';
+					$row .= '</ul>';
 
 					$output .= $row;
 					

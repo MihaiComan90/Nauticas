@@ -228,23 +228,24 @@
 
             <!-- Product variation -->
              <?php if(isset($product_variants)) :?>
-             <!--
+            <!--
             <select name="product_variants" id="product_variants">
                 <option value="<?php echo $parent_product_url; ?>"><?php echo $choose_variant_label; ?></option>
                 <?php foreach($product_variants as $variant) : ?>
                 <option <?php if(isset($product_variant) && $product_variant['variant_id'] && $product_variant['variant_id'] == $variant['variant_id']) : ?> selected <?php endif; ?> value="<?php echo $variant['custom_url'];?>"><?php echo $variant['name']; ?></option>
                 <?php endforeach; ?>
             </select>
-            -->
+            -->           
 
                 <div class="variations">
                     <?php foreach($product_variants as $variant) : ?>
+                    <?php if ($variant['attribute_name'] === 'Culoare') { ?>
                     <div class="divider">
                         <div class="variations__title"><?php echo $variant['attribute_name']; ?></div>
-                        <ul class="variations__<?php echo $variant['attribute_name'] == 'Culoare' ? 'color' : ''?>">
+                        <ul class="variations__color variations__circle">
                             <li>
                                 <a 
-                                    href="<?php echo $parent_product_url; ?>" 
+                                    href="<?php echo $variant['custom_url'] ? $variant['custom_url'] : $parent_product_url; ?>" 
                                     title="" 
                                     class="<?php if(isset($product_variant) && $product_variant['variant_id'] && $product_variant['variant_id'] == $variant['variant_id']) : ?> selected <?php endif; ?>"
                                     style="background-color:<?php echo $variant['variant_name']; ?>">
@@ -252,6 +253,22 @@
                             </li>  
                         </ul>
                     </div>
+                    <?php } else { ?>
+                    <div class="divider">
+                        <div class="variations__title"><?php echo $variant['attribute_name']; ?></div>
+                        <ul class="variations__<?php echo strtolower($variant['attribute_name']); ?> variations__rectangle">
+                            <li>
+                                <a 
+                                    href="<?php echo $variant['custom_url'] ? $variant['custom_url'] : $parent_product_url; ?>" 
+                                    title="" 
+                                    class="<?php if(isset($product_variant) && $product_variant['variant_id'] && $product_variant['variant_id'] == $variant['variant_id']) : ?> selected <?php endif; ?>"
+                                    >
+                                    <?php echo $variant['variant_name']; ?>
+                                </a>
+                            </li>  
+                        </ul>
+                    </div>
+                    <?php } ?>
                     <?php endforeach; ?>
                 </div>
             <?php endif; ?>
@@ -262,7 +279,7 @@
             <input type="hidden" name="variant_id" value="<?php echo $product_variant['variant_id']; ?>" />
             <?php endif; ?>
             
-            <div class="d-flex flex-column flex-lg-row">
+            <div class="d-flex flex-column flex-lg-row product-actions">
                 <!-- Quantity -->
                 <div class="quantity-adder">
                     <span class="add-down add-action">-</span>
