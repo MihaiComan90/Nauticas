@@ -314,7 +314,7 @@
               <select name="product_variants" id="product_variants">
                   <option value="<?php echo $parent_product_url; ?>"><?php echo $choose_variant_label; ?></option>
               <?php foreach($product_variants as $variant) : ?>
-                  <option <?php if(isset($product_variant) && $product_variant['variant_id'] && $product_variant['variant_id'] == $variant['variant_id']) : ?> selected <?php endif; ?> value="<?php echo $variant['custom_url'];?>"><?php echo $variant['attribute_name'] .' - '. $variant['variant_name']; ?></option>
+                  <option <?php if(isset($product_variant) && $product_variant['variant_id'] && $product_variant['variant_id'] == $variant['variant_id']) : ?> selected <?php endif; ?> value="<?php echo $variant['custom_url'];?>"><?php echo $variant['name']; ?></option>
               <?php endforeach; ?>
               </select>
             <?php endif; ?>
