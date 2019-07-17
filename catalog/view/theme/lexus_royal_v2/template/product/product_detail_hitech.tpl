@@ -238,10 +238,14 @@
             -->           
 
                 <div class="variations">
+                    <?php $currentVariant = array(); ?>
                     <?php foreach($product_variants as $variant) : ?>
                     <?php if ($variant['attribute_name'] === 'Culoare') { ?>
                     <div class="divider">
-                        <div class="variations__title"><?php echo $variant['attribute_name']; ?></div>
+                        <?php if(!in_array($variant['attribute_name'], $currentVariant)) : ?>
+                            <div class="variations__title"><?php echo $variant['attribute_name']; ?></div>
+                            <?php $currentVariant[] = $variant['attribute_name']; ?>
+                        <?php endif;?> 
                         <ul class="variations__color variations__circle">
                             <li>
                                 <a 
@@ -255,7 +259,10 @@
                     </div>
                     <?php } else { ?>
                     <div class="divider">
-                        <div class="variations__title"><?php echo $variant['attribute_name']; ?></div>
+                        <?php if(!in_array($variant['attribute_name'], $currentVariant)) : ?>
+                            <div class="variations__title"><?php echo $variant['attribute_name']; ?></div>
+                            <?php $currentVariant[] = $variant['attribute_name']; ?>
+                        <?php endif;?> 
                         <ul class="variations__<?php echo strtolower($variant['attribute_name']); ?> variations__rectangle">
                             <li>
                                 <a 
