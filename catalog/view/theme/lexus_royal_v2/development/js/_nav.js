@@ -6,6 +6,7 @@ module.exports = {
     init: function () {
         this.mobileMenu();
         this.desktopMenu();
+        this.displayMenu();
     },
     mobileMenu: function () {
        
@@ -37,10 +38,22 @@ module.exports = {
         if (!util.isMobile()) {
             $('ul.megamenu > li').each(function(index, el) {
                 $(el).on('mouseenter', function() {
+                    // set height for subcategories container
                     var marginTop = $(this).outerHeight() * index + 1;
                     $(this).find('ul.level1').css('top', -marginTop);
                 });
             });
         }
+    },
+    displayMenu: function () {
+        if (util.isMobile() || $('body').hasClass('page-home')) return;
+
+        $('nav')
+            .off('mouseenter').on('mouseenter', function() {
+                $('ul.megamenu').addClass('animated');
+            })
+            .off('mosueleave').on('mouseleave', function() {
+                $('ul.megamenu').removeClass('animated');
+            });
     }
 }
