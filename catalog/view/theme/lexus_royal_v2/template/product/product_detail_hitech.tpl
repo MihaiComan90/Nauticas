@@ -252,7 +252,7 @@
                                     href="<?php echo $variant['custom_url'] ? $variant['custom_url'] : $parent_product_url; ?>" 
                                     title="" 
                                     class="<?php if(isset($product_variant) && $product_variant['variant_id'] && $product_variant['variant_id'] == $variant['variant_id']) : ?> selected <?php endif; ?>"
-                                    style="background-color:<?php echo $variant['variant_name']; ?>">
+                                    style="background-color:<?php echo $variant['name']; ?>">
                                 </a>
                             </li>  
                         </ul>
@@ -270,7 +270,7 @@
                                     title="" 
                                     class="<?php if(isset($product_variant) && $product_variant['variant_id'] && $product_variant['variant_id'] == $variant['variant_id']) : ?> selected <?php endif; ?>"
                                     >
-                                    <?php echo $variant['variant_name']; ?>
+                                    <?php echo $variant['name']; ?>
                                 </a>
                             </li>  
                         </ul>
