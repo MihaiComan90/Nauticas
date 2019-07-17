@@ -602,7 +602,7 @@
                                                 <ul class="nav nav-tabs tabs-<?php echo $attribute_row; ?>">
                                                     <!-- Start variant tabs -->
                                                 <?php foreach($product_attribute['product_variants'] as $index => $variant): ?>
-                                                    <li><a data-toggle="tab" href="#variant-<?php echo $attribute_row; ?>-<?php echo $index; ?>-content"><?php echo $variant_nr_label;?> <?php echo ($index+1); ?></a></li>
+                                                    <li <?php if($index == 0) : ?> class="active" <?php endif; ?>><a data-toggle="tab" href="#variant-<?php echo $attribute_row; ?>-<?php echo $index; ?>-content"><?php echo $variant_nr_label;?> <?php echo ($index+1); ?></a></li>
                                                 <?php endforeach; ?>
                                                     <li>
                                                         <button type="button" onclick="addVariant(this,<?php echo count($product_attribute['product_variants']); ?>,<?php echo $attribute_row; ?>);" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="<?php echo $add_variant_label; ?>"><i class="fa fa-plus-circle"></i></button>
@@ -612,7 +612,7 @@
                                                 <div class="tab-content tabs-<?php echo $attribute_row; ?>">
                                                     <!-- Start variant tab content -->
                                                     <?php foreach($product_attribute['product_variants'] as $index => $variant): ?>
-                                                        <div class="tab-pane" id="variant-<?php echo $attribute_row; ?>-<?php echo $index; ?>-content">
+                                                        <div class="tab-pane <?php if($index == 0) : ?> active <?php endif; ?>" id="variant-<?php echo $attribute_row; ?>-<?php echo $index; ?>-content">
                                                             <input type="hidden" id="option_variant_<?php echo $attribute_row;?>_<?php echo $index;?>" checked name="product_attribute[<?php echo $attribute_row ?>][option_variant][<?php echo $index; ?>][variant_id]" value="<?php echo $variant['variant_id']; ?>">
                                                             <div class="input-group attribute_option_box">
                                                                 <span class="input-group-addon">
