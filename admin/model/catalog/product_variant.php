@@ -4,12 +4,11 @@ class ModelCatalogProductVariant extends Model {
     const VARIANT_IMAGE_DIRECTORY = 'product/variants/';
 
     public function uninstall() {
-        $this->db->query("
-          DROP TABLE IF EXISTS `" . DB_PREFIX . "product_variants`;
-          ALTER TABLE `" . DB_PREFIX . "order_product` DROP COLUMN `variant_id`;
-          ALTER TABLE `" . DB_PREFIX . "order_product` DROP COLUMN `variant_name`;
-          ALTER TABLE `" . DB_PREFIX . "order_product` DROP COLUMN `variant_price`;
-          ALTER TABLE `" . DB_PREFIX . "return` DROP COLUMN `variant_id`;");
+        $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "product_variants`;");
+        $this->db->query("ALTER TABLE `" . DB_PREFIX . "order_product` DROP COLUMN `variant_id`;");
+        $this->db->query("ALTER TABLE `" . DB_PREFIX . "order_product` DROP COLUMN `variant_name`;");
+        $this->db->query("ALTER TABLE `" . DB_PREFIX . "order_product` DROP COLUMN `variant_price`;");
+        $this->db->query("ALTER TABLE `" . DB_PREFIX . "return` DROP COLUMN `variant_id`;");
     }
 
     public function install() {
