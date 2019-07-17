@@ -285,6 +285,7 @@ class ControllerCheckoutCart extends Controller {
 
 		$json = array();
 
+
 		if (isset($this->request->post['product_id'])) {
 			$product_id = (int)$this->request->post['product_id'];
 		} else {
@@ -362,10 +363,10 @@ class ControllerCheckoutCart extends Controller {
                     $this->reflection->invokeMethod('cart-add', $args);
                 } else {
                     $this->cart->add($product_id, $quantity, $option, $recurring_id);
-                }
-
+				}
+				
 				$json['success'] = sprintf($this->language->get('text_success'), $successUrl, $product_info['name'], $this->url->link('checkout/cart'));
-
+				
 				unset($this->session->data['shipping_method']);
 				unset($this->session->data['shipping_methods']);
 				unset($this->session->data['payment_method']);
@@ -408,6 +409,9 @@ class ControllerCheckoutCart extends Controller {
 				}
 
 				$json['total'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total));
+				
+				// Send total products from minicart
+				$json['totalQty'] = $this->cart->countProducts();
 			} else {
 				$json['redirect'] = str_replace('&amp;', '&', $this->url->link('product/product', 'product_id=' . $this->request->post['product_id']));
 			}

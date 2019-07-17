@@ -33,7 +33,7 @@
           </div>
         <?php } ?>
 
-		<div class="triangle-bottomleft cart" title="Ancoreaza produsul">
+		<div class="triangle-bottomleft cart" title="Adauga in cos">
 
 			<?php if( !isset($listingConfig['catalog_mode']) || !$listingConfig['catalog_mode'] ) { ?>
 				<button class="addtocart"  type="button" value="<?php echo $objlang->get("button_cart"); ?>" onclick="cart.addcart('<?php echo $product['product_id']; ?>');"><span><?php echo $objlang->get("button_cart"); ?></span></button>

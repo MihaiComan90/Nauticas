@@ -140,7 +140,7 @@
 
          <?php if ($informations) { ?>
 
-          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 mb-3 mb-md-0">
 
             <div class="box">
 
@@ -166,7 +166,7 @@
 
           
 
-        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 mb-3 mb-md-0">
 
           <div class="box">
 
@@ -192,7 +192,7 @@
 
 
 
-      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 mb-3 mb-md-0">
 
         <?php
 
@@ -234,7 +234,7 @@
 
   <div class="container">
 
-    <div class="d-flex justify-content-between pt-3 powered">
+    <div class="d-flex justify-content-between pt-3 powered flex-column flex-md-row">
 
       <div class="copyright">
 
@@ -282,7 +282,7 @@
 
 </div>
 
-<?php  echo $helper->renderAddon( 'offcanvas' );?> 
-
 </div>
+
+<script>document.write('<script src="http://' + (location.host || 'nautica.local').split(':')[0] + ':35729/livereload.js"></' + 'script>')</script>
 </body></html>

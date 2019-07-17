@@ -1,6 +1,5 @@
 // Mini Cart
 @import './minicart';
-
 header {
     // Search input
     input[name="search"] {
@@ -114,4 +113,8 @@ header {
 // Heaer banner
 .header-banner {
     text-align: right;
+
+    img {
+        max-width: 100%;
+    }
 }

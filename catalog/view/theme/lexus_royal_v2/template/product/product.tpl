@@ -84,7 +84,7 @@
 
   
 
-   <section id="sidebar-main" class="col-md-<?php echo $SPAN[1];?>">
+   <section id="sidebar-main" class="col-12">
 
    	<?php require( PAVO_THEME_DIR."/template/common/breadcrumb.tpl" );  ?>
 
@@ -115,19 +115,7 @@
       <span style="font-size: 15px; font-weight: bold; font-style: italic;"> ​Pretul  se poate schimba fara  o notificare prealabila . Poza este doar orientativa, este posibil ca  in poza sa existe  accesorii neinlcuse  in  pret.​ </span>
 
    </section> 
-
-
-<?php if( $SPAN[2] ): ?>
-
-	<aside id="sidebar-right" class="col-md-<?php echo $SPAN[2];?>">	
-
-		<?php echo $column_right; ?>
-
-	</aside>
-
-
-
-<?php endif; ?></div>
+</div>
 
 </div>
 

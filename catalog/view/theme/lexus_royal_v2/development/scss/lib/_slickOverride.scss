@@ -1,0 +1,39 @@
+// General style for slick navigation
+
+.slick-arrow {
+    font-size: 30px;
+    height: 40px;
+    width: 40px;
+    border: 0;
+    padding: 0;
+    background: transparent;
+
+    i {
+        display: block;
+    }
+}
+
+// Adding margin between slides
+.slick-slide {
+    width:230px;
+    margin-right: 15px;
+    margin-left: 15px;
+}
+
+
+
+.page-home,
+.common-home {
+    .slick-arrow {
+        position: absolute;
+        top: -65px;
+        right: 0;
+    }
+
+    .slick-prev {
+        right: 44px;
+    }
+    .slick-next {
+        right: 0;
+    }
+}

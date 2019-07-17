@@ -1,5 +1,9 @@
 @import '../bootstrap/variables';
 
+* {
+    -webkit-font-smoothing: antialiased;
+}
+
 $styles: (
     thin: -Thin 100 normal,
     thinItalic: -ThinItalic 100 italic,

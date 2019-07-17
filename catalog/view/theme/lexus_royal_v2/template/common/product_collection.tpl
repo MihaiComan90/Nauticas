@@ -38,30 +38,24 @@
 	}
  
 ?>	
-<div id="products" class="product-<?php echo $DISPLAY_MODE; ?>"> 
-	<div class="products-block">
-		<?php
-		$cols = $MAX_ITEM_ROW ;
-		$span = floor(12/$cols);
-		$small = floor(12/$MAX_ITEM_ROW_SMALL);
-		$mini = floor(12/$MAX_ITEM_ROW_MINI);
-		foreach ($products as $i => $product) { ?>
-		<?php if( $i++%$cols == 0 ) { ?>
-		<div class="row products-row">
-		<?php } ?>
-		<?php
-			// echo $listingConfig['product_layout']; die;
-		?>
-		<div class="col-lg-<?php echo $span;?> col-md-<?php echo $span;?> col-sm-6 col-xs-<?php echo $mini;?> col-xs-12 col-fullwidth">			
+<div id="products" class="row product-<?php echo $DISPLAY_MODE; ?>"> 
+	<?php
+	$cols = $MAX_ITEM_ROW ;
+	$span = floor(12/$cols);
+	$small = floor(12/$MAX_ITEM_ROW_SMALL);
+	$mini = floor(12/$MAX_ITEM_ROW_MINI);
+	foreach ($products as $i => $product) { ?>
+	
+		<div class="col-6 col-sm-4 col-lg-3">			
 			<?php require( ThemeControlHelper::getLayoutPath( 'common/product/'.$listingConfig['product_layout'].'.tpl' ) );  ?>   	
 		</div>
-		
-		<?php if( $i%$cols == 0 || $i==count($products) ) { ?>
-		</div>
-		<?php } ?>				
-		<?php } ?>
-	</div>
+	<?php } ?>
 </div>
-<div class="pagination-link clearfix"><?php echo $pagination; ?>
-	<div class="results"><?php echo $results; ?></div>
+<div class="pagination-link d-flex flex-row justify-content-end">
+	<?php echo $pagination; ?>
+	<!--
+	<div class="results">
+		<?php echo $results; ?>
+	</div>
+	-->
 </div>

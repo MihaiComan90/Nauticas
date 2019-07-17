@@ -9,7 +9,8 @@ var browserify = require('browserify'),
 	source = require('vinyl-source-stream'),
 	watchify = require('watchify'),
 	sourcemaps = require('gulp-sourcemaps'),
-	concat = require('gulp-concat');
+	concat = require('gulp-concat'),
+	livereload = require('gulp-livereload');
 
 var paths = {
 	scss: {
@@ -33,12 +34,15 @@ gulp.task('enable-watch-mode', function () {
 gulp.task('scss', function() {
 	gulp
 		.src(paths.scss.src)
-        .pipe(sass().on('error', sass.logError))
-		.pipe(minifycss())
+		.pipe(sourcemaps.init())
+		.pipe(sass().on('error', sass.logError))
 		.pipe(concat('global.css'))
-        .pipe(gulp.dest(paths.scss.dest));
-});
-
+		.pipe(sourcemaps.write(paths.scss.dest))
+		.pipe(gulp.dest(paths.scss.dest))
+		.pipe(livereload());
+	});
+	
+	// .pipe(minifycss())
 /* Run Browserify on JS files */
 gulp.task('js', function() {
 	var opts = {
@@ -71,7 +75,8 @@ gulp.task('js', function() {
 				.pipe(sourcemaps.init({loadMaps: true}))
 				.pipe(sourcemaps.write('./'))
 			//
-			.pipe(gulp.dest(paths.js.dest));
+			.pipe(gulp.dest(paths.js.dest))
+			.pipe(livereload());
 	}
 	
 	return rebundle();
@@ -80,6 +85,8 @@ gulp.task('js', function() {
 
 /* Watch JS & SCSS */
 gulp.task('watch', ['enable-watch-mode', 'js', 'scss'], function () {
+	livereload.listen();
+	livereload.reload();
 	gulp.watch(paths.scss.src, ['scss']);
 });
 

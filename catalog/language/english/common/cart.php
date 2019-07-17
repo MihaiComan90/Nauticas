@@ -1,6 +1,6 @@
 <?php
 // Text
-$_['text_items']     = '<i class="fa fa-shopping-cart"><sup>%s</sup></i> Cart';
+$_['text_items']     = '<i class="fa fa-shopping-cart"><sup>%s</sup></i> <span class="d-none d-lg-inline">Cart</div>';
 $_['text_empty']     = 'Your shopping cart is empty!';
 $_['text_cart']      = 'View Cart';
 $_['text_checkout']  = 'Checkout';
