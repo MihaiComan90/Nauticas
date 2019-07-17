@@ -9973,11 +9973,26 @@ nav {
   font-weight: 500;
   line-height: 40px;
   background-color: #D92375;
-  min-width: 300px;
+  min-width: 350px;
   padding: 0 10px; }
   .desktop-nav:hover {
     text-decoration: none;
     color: #fff; }
+
+body:not(.page-home) ul.megamenu {
+  visibility: hidden;
+  opacity: 0;
+  z-index: -1;
+  transition-property: opacity;
+  transition-duration: .3s;
+  transition-timing-function: ease-in; }
+  body:not(.page-home) ul.megamenu.animated {
+    transition-property: opacity;
+    transition-duration: .3s;
+    transition-timing-function: ease-in;
+    opacity: 1;
+    visibility: visible;
+    z-index: 1; }
 
 @media (min-width: 992px) {
   .topbar {
@@ -9988,8 +10003,11 @@ nav {
       list-style: none;
       margin: 0; }
     .topbar ul.megamenu {
-      width: 300px;
-      box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.1); }
+      width: 350px;
+      box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.1);
+      z-index: 1;
+      position: relative;
+      background: #fff; }
       .topbar ul.megamenu > li.dropdown {
         border-top: 1px solid transparent;
         border-bottom: 1px solid transparent;
