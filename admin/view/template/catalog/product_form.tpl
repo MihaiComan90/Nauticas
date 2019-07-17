@@ -1503,17 +1503,40 @@ $('#product-related').delegate('.fa-minus-circle', 'click', function() {
 //--></script>
 
   <script type="text/javascript"><!--
-  var attribute_row = '<?php echo $attribute_row; ?>';
+      var attribute_row = '<?php echo $attribute_row; ?>';
+      function countInArray(array, what) {
+          var count = 0;
+          for (var i = 0; i < array.length; i++) {
+              if (array[i] === what) {
+                  count++;
+              }
+          }
+          return count;
+      }
+
   <?php if($is_module_variant_enabled) : ?>
-      $(document).on('blur','input[name*="custom_url"]', function(){
+      $(document).on('keyup blur','input[name*="custom_url"]', function(){
           var currentKeyWord = $('input[name="keyword"]').val().length ? $('input[name="keyword"]').val() : false,
-              currentVariantKeyword = $(this).val().length ? $(this).val() : false;
+              currentVariantKeyword = $(this).val().length ? $(this).val() : false,
+              error = false,
+              inputs = $('input[name*="custom_url"]')
+              values = inputs.map(function(){return $(this).val();}).get();
 
           if(currentKeyWord && currentVariantKeyword && currentKeyWord == currentVariantKeyword) {
-              alert('Variant url and product url must not match');
+              error = true;
+          }
+
+          inputs.each(function(i,v){
+               if(countInArray(values,v.value) > 1) {
+                  error = true;
+               }
+          });
+
+          if(error === true) {
               $('button[form="form-product"]').attr('disabled','disabled');
               return false;
           }
+
           $('button[form="form-product"]').removeAttr('disabled');
           return;
       });
@@ -1539,6 +1562,7 @@ $('#product-related').delegate('.fa-minus-circle', 'click', function() {
       });
 
       function addVariant( object, variantNr, attributeRow ) {
+          $('button[form="form-product"]').attr('disabled','disabled');
           if(object === null) {
               var attributeBox = $('.attribute-option-box_' + attributeRow),
                   html = '<ul class="nav nav-tabs tabs-'+ attributeRow +'">' +
