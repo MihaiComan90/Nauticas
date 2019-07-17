@@ -166,6 +166,10 @@ class ModelCatalogProduct extends Model {
 
                         if(isset($product_attribute['is_variant']) && is_array($product_attribute['option_variant'])) {
                             foreach($product_attribute['option_variant'] as $key => $variant) {
+                                if(!strlen($variant['name']) || !strlen($variant['price']) || !strlen($variant['custom_url'])) {
+                                    continue;
+                                }
+
                                 $imageInput = $data[self::PRODUCT_VARIANT_IMAGE_LABEL . $row . '_' . $key];
                                 if (isset($imageInput) && $imageInput['name']) {
                                     $variant['variant_image'] = $imageInput;
