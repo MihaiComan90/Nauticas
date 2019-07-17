@@ -26,15 +26,10 @@ class ModelCatalogProductVariant extends Model {
 			  PRIMARY KEY (`variant_id`)
 			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
 
-        $this->db->query("
-            ALTER TABLE `".DB_PREFIX."order_product` ADD `variant_id` INT(10) NULL;
-            ALTER TABLE `".DB_PREFIX."order_product` ADD `variant_name` VARCHAR(100) NULL;
-            ALTER TABLE `".DB_PREFIX."order_product` ADD `variant_price` FLOAT(15,4) NULL;
-        ");
-
-        $this->db->query("
-            ALTER TABLE `".DB_PREFIX."return` ADD `variant_id` INT(10) NULL AFTER `product_id`;
-        ");
+        $this->db->query("ALTER TABLE `".DB_PREFIX."order_product` ADD `variant_id` INT(10) NULL;");
+        $this->db->query("ALTER TABLE `".DB_PREFIX."order_product` ADD `variant_name` VARCHAR(100) NULL;");
+        $this->db->query("ALTER TABLE `".DB_PREFIX."order_product` ADD `variant_price` FLOAT(15,4) NULL;");
+        $this->db->query("ALTER TABLE `".DB_PREFIX."return` ADD `variant_id` INT(10) NULL AFTER `product_id`;");
     }
 
     public function handleVariantImage($data)
