@@ -20,3 +20,4 @@ vqmod/checked.cache
 vqmod/mods.cache
 node_modules
 .vscode/settings.json
+*.json
