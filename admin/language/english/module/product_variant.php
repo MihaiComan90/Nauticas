@@ -8,6 +8,7 @@ $_['option_variant_label']   = 'Mark as variant of this product';
 $_['option_variant_customurl_label'] = 'Custom url for your variant';
 $_['option_variant_customimage_label'] = 'Custom image for your variant';
 $_['option_variant_customprice_label'] = 'Custom price for your variant';
+$_['option_variant_delete_label'] = 'Delete variant';
 /**/
 $_['text_success'] = 'Module setting successfully updated';
 $_['option_label_disable'] = 'Disabled';

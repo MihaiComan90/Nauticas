@@ -166,6 +166,11 @@ class ModelCatalogProduct extends Model {
 
                         if(isset($product_attribute['is_variant']) && is_array($product_attribute['option_variant'])) {
                             foreach($product_attribute['option_variant'] as $key => $variant) {
+                                if(isset($variant['delete'])) {
+                                    $this->model_catalog_product_variant->deleteProductVariant($product_id, $product_attribute['attribute_id'], $variant['variant_id']);
+                                    continue;
+                                }
+
                                 if(!strlen($variant['name']) || !strlen($variant['price']) || !strlen($variant['custom_url'])) {
                                     continue;
                                 }

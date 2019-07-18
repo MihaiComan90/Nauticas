@@ -587,6 +587,7 @@ class ControllerCatalogProduct extends Controller {
         $data['option_variant_customimage_label'] = $this->language->get('option_variant_customimage_label');
         $data['option_variant_name_label'] = $this->language->get('option_variant_name_label');
         $data['option_variant_customprice_label'] = $this->language->get('option_variant_customprice_label');
+        $data['option_variant_delete_label'] = $this->language->get('option_variant_delete_label');
         $data['variants_img_dir'] = DIR_IMAGE . VARIANT_IMAGE_PATH;
         /* End*/
 		$data['entry_text'] = $this->language->get('entry_text');
