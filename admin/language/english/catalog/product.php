@@ -71,6 +71,7 @@ $_['option_variant_customurl_label'] = 'Custom url for your variant';
 $_['option_variant_name_label'] = 'Variant name';
 $_['option_variant_customimage_label'] = 'Custom image for your variant';
 $_['option_variant_customprice_label'] = 'Custom price for your variant';
+$_['option_variant_delete_label'] = 'Delete variant';
 $_['variant_nr_label'] = 'Variant #';
 /**/
 $_['entry_attribute_group']  = 'Attribute Group';

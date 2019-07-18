@@ -3,7 +3,7 @@
     <div class="page-header">
         <div class="container-fluid">
             <div class="pull-right">
-                <button type="submit" form="form-product" data-toggle="tooltip" title="<?php echo $button_save; ?>"
+                <button type="submit" onclick="return false;" form="form-product" data-toggle="tooltip" title="<?php echo $button_save; ?>"
                         class="btn btn-primary"><i class="fa fa-save"></i></button>
                 <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>"
                    class="btn btn-default"><i class="fa fa-reply"></i></a></div>
@@ -605,7 +605,7 @@
                                                     <li <?php if($index == 0) : ?> class="active" <?php endif; ?>><a data-toggle="tab" href="#variant-<?php echo $attribute_row; ?>-<?php echo $index; ?>-content"><?php echo $variant_nr_label;?> <?php echo ($index+1); ?></a></li>
                                                 <?php endforeach; ?>
                                                     <li>
-                                                        <button type="button" onclick="addVariant(this,<?php echo count($product_attribute['product_variants']); ?>,<?php echo $attribute_row; ?>);" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="<?php echo $add_variant_label; ?>"><i class="fa fa-plus-circle"></i></button>
+                                                        <button type="button" data-next-row="<?php echo count($product_attribute['product_variants']); ?>" onclick="addVariant(this,<?php echo count($product_attribute['product_variants']); ?>,<?php echo $attribute_row; ?>);" data-toggle="tooltip" title="" class="add-var-btn btn btn-primary" data-original-title="<?php echo $add_variant_label; ?>"><i class="fa fa-plus-circle"></i></button>
                                                     </li>
                                                 </ul>
                                                 <!-- End variant tabs -->
@@ -648,6 +648,14 @@
                                                                 </span>
                                                                 <span class="input-group-addon">
                                                                     <input type="number" step="0.01" class="form-control" id="variant_customprice_<?php echo $attribute_row; ?>_<?php echo $index; ?>" name="product_attribute[<?php echo $attribute_row ?>][option_variant][<?php echo $index; ?>][price]" value="<?php echo $variant['price']; ?>"/>
+                                                                </span>
+                                                            </div>
+                                                            <div class="input-group attribute_option_box">
+                                                                 <span class="input-group-addon">
+                                                                    <label for=""><?php echo $option_variant_delete_label?></label>
+                                                                </span>
+                                                                <span class="input-group-addon">
+                                                                    <input type="checkbox" id="variant_delete_<?php echo $attribute_row; ?>_<?php echo $index; ?>" name="product_attribute[<?php echo $attribute_row ?>][option_variant][<?php echo $index; ?>][delete]" value="1"/>
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -1503,17 +1511,40 @@ $('#product-related').delegate('.fa-minus-circle', 'click', function() {
 //--></script>
 
   <script type="text/javascript"><!--
-  var attribute_row = '<?php echo $attribute_row; ?>';
+      var attribute_row = '<?php echo $attribute_row; ?>';
+      function countInArray(array, what) {
+          var count = 0;
+          for (var i = 0; i < array.length; i++) {
+              if (array[i] === what) {
+                  count++;
+              }
+          }
+          return count;
+      }
+
   <?php if($is_module_variant_enabled) : ?>
-      $(document).on('blur','input[name*="custom_url"]', function(){
+      $(document).on('keyup blur','input[name*="custom_url"]', function(){
           var currentKeyWord = $('input[name="keyword"]').val().length ? $('input[name="keyword"]').val() : false,
-              currentVariantKeyword = $(this).val().length ? $(this).val() : false;
+              currentVariantKeyword = $(this).val().length ? $(this).val() : false,
+              error = false,
+              inputs = $('input[name*="custom_url"]')
+              values = inputs.map(function(){return $(this).val();}).get();
 
           if(currentKeyWord && currentVariantKeyword && currentKeyWord == currentVariantKeyword) {
-              alert('Variant url and product url must not match');
+              error = true;
+          }
+
+          inputs.each(function(i,v){
+               if(countInArray(values,v.value) > 1 || v.value == '') {
+                  error = true;
+               }
+          });
+
+          if(error === true) {
               $('button[form="form-product"]').attr('disabled','disabled');
               return false;
           }
+
           $('button[form="form-product"]').removeAttr('disabled');
           return;
       });
@@ -1538,7 +1569,50 @@ $('#product-related').delegate('.fa-minus-circle', 'click', function() {
           }
       });
 
+      $(document).on('click', '.remove-temp', function(){
+
+          var tabBoxTargetId = $(this).parent().attr('href'),
+              parentTab = $(this).parents('.temp'),
+              parentTabUl = $(this).parents('ul'),
+              addVarBtn = parentTabUl.find('.add-var-btn'),
+              tabBoxTarget = $(tabBoxTargetId);
+
+          if(tabBoxTarget.length){
+              var navTabs = $(this).parents('.nav-tabs'),
+                  nextRow = addVarBtn.attr('data-next-row');
+
+              if(navTabs.find('li:first').length){
+                  navTabs.find('li:first').addClass('active');
+              }
+
+              if (navTabs.siblings('.tab-content').find('div:first').length) {
+                  navTabs.siblings('.tab-content').find('div:first').addClass('active');
+              }
+
+              if(nextRow >= 1) nextRow--;
+
+              addVarBtn.attr('onclick', 'addVariant(this,'+ nextRow +','+ (attribute_row-1) +')');
+              addVarBtn.attr('data-next-row', nextRow);
+
+              tabBoxTarget.remove();
+              parentTab.remove();
+
+              var tabCount = parentTabUl.find('li').length;
+              if(tabCount == 1) {
+                  $('#option_variant_' + (attribute_row-1)).click();
+              }
+
+              if($('.remove-temp').length == 0) {
+                  $('button[form="form-product"]').removeAttr('disabled');
+              } else {
+                  $('button[form="form-product"]').attr('disabled','disabled');
+              }
+          }
+          return false;
+      });
+
       function addVariant( object, variantNr, attributeRow ) {
+          $('button[form="form-product"]').attr('disabled','disabled');
           if(object === null) {
               var attributeBox = $('.attribute-option-box_' + attributeRow),
                   html = '<ul class="nav nav-tabs tabs-'+ attributeRow +'">' +
@@ -1554,14 +1628,14 @@ $('#product-related').delegate('.fa-minus-circle', 'click', function() {
 
           $(object).parents('ul').find('li').removeClass('active');
 
-          var liItem = '<li class="active temp"><a data-toggle="tab" href="#variant-'+attributeRow+'-'+variantNr+'-content"><?php echo $variant_nr_label;?>'+(variantNr + 1)+'</a></li>',
+          var liItem = '<li class="active temp"><a data-toggle="tab" href="#variant-'+attributeRow+'-'+variantNr+'-content"><?php echo $variant_nr_label;?>'+(variantNr + 1)+'<i data-toggle="tooltip" style="margin-left: 10px; color:red;" class="remove-temp fa fa-minus-circle"></i></a></li>',
               tabContent = $(object).parents('ul').first().next(),
               populateNext = '',
               nextVariantNr = variantNr;
 
           $(object).parents('ul li:last').before(liItem);
-          $(object).attr('onclick', 'addVariant(this,'+ (nextVariantNr+1) +','+ attributeRow +')');
-
+          $(object).attr('onclick', 'addVariant(this,'+ (nextVariantNr+1) +','+ attributeRow +')').addClass('add-var-btn');
+          $(object).attr('data-next-row', (nextVariantNr+1));
           tabContent.find('.tab-pane').removeClass('active');
 
           populateNext +=
